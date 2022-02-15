@@ -32,12 +32,13 @@ export default function dashboard() {
       fat: option.fat,
       carbs: option.carbs,
       protein: option.protein,
-      serving_size: option.serving_size,
+      serving_size: option.serving_size.toFixed(2),
       img_url: option.img_url,
     }),
   });
 
   const [waterConsume, setWaterConsume] = useState(0);
+  const [offcanvas, setOffcanvas] = useState(false);
 
   return (
     <div>
@@ -142,28 +143,28 @@ export default function dashboard() {
           </div>
           <div>
             {food.data.map((food) => (
-              <div className="bg-white w-full flex p-4 rounded-lg mb-2 items-center">
-                <div>
+              <div className="bg-white w-full flex lg:flex-row flex-col lg:p-4 pb-4 rounded-lg mb-2 items-center shadow-md">
+                <div className="w-full lg:w-1/6 lg:h-1/5">
                   <img
-                    className="rounded-lg bg-cover"
+                    className="h-48 w-full lg:rounded-lg rounded-t-lg object-cover"
                     src={food.img_url}
-                    width={100}
-                    height={100}
+                    // width={100}
+                    // height={100}
                     alt={food.title}
                   />
                 </div>
-                <div className="flex flex-row justify-between px-4 w-full items-center">
+                <div className="flex lg:flex-row flex-col justify-between px-4 w-full items-center">
                   <div className="flex justify-between w-full p-4">
                     <div>
                       <p className="text-xl">{food.title}</p>
-                      {/* <p>{food.serving_size}</p> */}
+                      <p>{food.serving_size} G</p>
                     </div>
                     <div>
-                      <p>{food.calories} Kcal</p>
+                      <p className="text-xl">+{food.calories} Kcal</p>
                     </div>
                   </div>
-                  <div>
-                    <button className="bg-mainorange-100 px-4 py-2 text-white rounded-lg">
+                  <div className="w-full lg:w-1/6">
+                    <button className="bg-mainorange-100 px-4 w-full py-2 text-white rounded-lg">
                       Delete
                     </button>
                   </div>
