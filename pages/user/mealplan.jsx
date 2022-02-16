@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import recipe from "./dataRecipe";
+import CardRecipe from "@/components/mealPlan/CardRecipe";
 
 export default function Mealplan() {
   const [value, setValue] = useState(0);
@@ -45,65 +46,35 @@ export default function Mealplan() {
               allowScrollButtonsMobile
               aria-label="scrollable basic tabs example"
             >
-              <Tab label="Day 1" {...a11yProps(0)} />
-              <Tab label="Day 2" {...a11yProps(1)} />
-              <Tab label="Day 3" {...a11yProps(2)} />
-              <Tab label="Day 4" {...a11yProps(3)} />
-              <Tab label="Day 5" {...a11yProps(4)} />
-              <Tab label="Day 6" {...a11yProps(5)} />
-              <Tab label="Day 7" {...a11yProps(6)} />
+              {recipe.data.lunch.map((item, index) => (
+                <Tab
+                  key={index}
+                  label={`Day ${index + 1}`}
+                  value={index}
+                  aria-controls={`scrollable-auto-tabpanel-${index}`}
+                  id={`scrollable-auto-tab-${index}`}
+                />
+              ))}
             </Tabs>
           </div>
-          <TabPanel value={value} index={0}>
-            Item 1
-            <div className="max-w-xs bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="">
-                <div className="">
-                  <img
-                    className="h-48 w-full object-cover"
-                    src={recipe.data.lunch[0].recipeImageURL}
+
+          {recipe.data.breakfast.map((item, index) => (
+            <TabPanel value={value} index={index}>
+              <div className="flex justify-center">
+                <div className="grid lg:grid-cols-3 gap-10">
+                  <CardRecipe element={item} mealType="Breakfast" />
+                  <CardRecipe
+                    element={recipe.data.lunch[index]}
+                    mealType="Lunch"
+                  />
+                  <CardRecipe
+                    element={recipe.data.dinner[index]}
+                    mealType="Dinner"
                   />
                 </div>
-                <div className="p-5">
-                  <h2 className="text-mainpurple-100 font-semibold text-lg">
-                    {recipe.data.lunch[0].recipeLabel}
-                  </h2>
-                  <p className="text-xl font-medium">
-                    +{recipe.data.lunch[0].recipeCalories.toFixed(0)} Kcal
-                  </p>
-                  <hr className="my-2" />
-                  <h3 className=" font-semibold">Ingredients : </h3>
-                  <ul>
-                    {recipe.data.lunch[0].recipeIngredients.map(
-                      (item, index) => (
-                        <li key={index}>
-                          <p className="font-light"> - {item}</p>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                </div>
               </div>
-            </div>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            Item 2
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Item 3
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            Item 4
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            Item 5
-          </TabPanel>
-          <TabPanel value={value} index={5}>
-            Item 6
-          </TabPanel>
-          <TabPanel value={value} index={6}>
-            Item 7
-          </TabPanel>
+            </TabPanel>
+          ))}
         </div>
       </div>
     </Layout>

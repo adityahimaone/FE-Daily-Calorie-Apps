@@ -32,7 +32,7 @@ export default function Dashboard() {
       fat: option.fat,
       carbs: option.carbs,
       protein: option.protein,
-      serving_size: option.serving_size.toFixed(2),
+      serving_size: option.serving_size,
       img_url: option.img_url,
     }),
   });
@@ -150,7 +150,7 @@ export default function Dashboard() {
                 <div className="flex justify-between w-full p-4">
                   <div>
                     <p className="text-xl">{food.title}</p>
-                    <p>{food.serving_size} G</p>
+                    <p>{food.serving_size.toFixed(2)} G</p>
                   </div>
                   <div>
                     <p className="text-xl">+{food.calories} Kcal</p>
