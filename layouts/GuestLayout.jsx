@@ -3,7 +3,7 @@ import Head from "next/head";
 import Nav from "@/components/header/Nav";
 import Container from "@/components/Container";
 
-export default function UserLayout(props) {
+export default function GuestLayout(props) {
   const { children, pageTitle } = props;
   return (
     <>
@@ -13,7 +13,7 @@ export default function UserLayout(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Nav location="user" />
+        <Nav location="guest" />
         <div className="min-h-screen">
           <Container>{children}</Container>
         </div>

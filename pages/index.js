@@ -1,21 +1,23 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import UserLayout from "@/layouts/UserLayout";
+import GuestLayout from "@/layouts/GuestLayout";
 import Hero from "@/public/hero.svg";
-import AppContext, { useAppContext } from "@/context/AppContext";
+import { useDispatch } from "react-redux";
+import { setPrivilege } from "store/appSlice";
 
 export default function Home() {
-  const context = useAppContext(AppContext);
-  const [state, dispatch] = context;
+  const dispatch = useDispatch();
+
+  dispatch(setPrivilege("guest"));
 
   return (
-    <UserLayout>
+    <GuestLayout>
       {/* Hero */}
-      <div className="flex flex-col-reverse lg:flex-row max-h-fit py-10 lg:py-28 border items-center">
-        <div className="flex-1 border flex flex-col space-y-5">
+      <div className="flex flex-col-reverse lg:flex-row max-h-fit py-10 lg:py-28 items-center">
+        <div className="flex-1 flex flex-col space-y-5">
           <h1 className="text-2xl lg:text-5xl text-center lg:text-left font-medium text-mainorange-100">
-            <p>Track Your Daily Calories</p> <p>To Help Your Diet </p>{" "}
+            <p>Track Your Daily Calories</p> <p>To Help Your Diet </p>
             <p>Program</p>
           </h1>
           <p className="lg:text-lg text-center lg:text-left">
@@ -27,10 +29,10 @@ export default function Home() {
             </button>
           </div>
         </div>
-        <div className="flex-1 border flex w-full justify-center">
+        <div className="flex-1 flex w-full justify-center">
           <Image src={Hero} width={400} height={400} />
         </div>
       </div>
-    </UserLayout>
+    </GuestLayout>
   );
 }
