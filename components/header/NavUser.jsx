@@ -12,10 +12,20 @@ import {
 } from "@heroicons/react/solid";
 import profile from "@/public/dummy.png";
 import Image from "next/image";
+import AppContext, { useAppContext } from "@/context/AppContext";
 
 export default function NavUser() {
   const [offcanvas, setOffcanvas] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
+  const context = useAppContext(AppContext);
+  const [state, dispatch] = context;
+
+  console.log(state);
+
+  dispatch({
+    location: "index",
+    theme: "light",
+  });
 
   const userDropdownListLogin = [
     {
