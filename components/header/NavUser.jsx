@@ -1,12 +1,37 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Container from "@/components/Container";
-import { FireIcon, MenuAlt2Icon, XIcon } from "@heroicons/react/solid";
+import {
+  FireIcon,
+  MenuAlt2Icon,
+  XIcon,
+  ChevronDownIcon,
+  LoginIcon,
+  LogoutIcon,
+  CogIcon,
+} from "@heroicons/react/solid";
 import profile from "@/public/dummy.png";
 import Image from "next/image";
 
 export default function NavUser() {
   const [offcanvas, setOffcanvas] = useState(false);
+  const [userDropdown, setUserDropdown] = useState(false);
+
+  const userDropdownListLogin = [
+    {
+      title: "Setting",
+      link: "/setting",
+      icon: <CogIcon className="h-4 w-4" />,
+    },
+    {
+      title: "Logout",
+      link: "/logout",
+      icon: <LogoutIcon className="h-4 w-4" />,
+    },
+  ];
+
+  const userDropdownListLogout = [{ title: "Login", link: "/login" }];
+
   return (
     <nav className="bg-mainpurple-100 py-2">
       <Container>
@@ -58,14 +83,39 @@ export default function NavUser() {
             <span className="text-white hidden lg:block text-medium">
               Hello, User
             </span>
-            <button className="rounded-full inline-flex border-mainorange-100 border-2 w-8 h-8 items-center">
-              <Image
-                src={profile}
-                width={50}
-                height={50}
-                className="rounded-full object-cover"
-              />
-            </button>
+            <div className="relative flex items-center">
+              <button
+                type="button"
+                onClick={() => setUserDropdown(!userDropdown)}
+                className="rounded-full inline-flex border-mainorange-100 border-2 w-8 h-8 items-center"
+              >
+                <Image
+                  src={profile}
+                  width={50}
+                  height={50}
+                  className="rounded-full object-cover"
+                />
+              </button>
+              <ChevronDownIcon className="w-4 h-4 text-white" />
+              {userDropdown && (
+                <ul
+                  className={`absolute w-[150px] right-0 top-12 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
+                >
+                  {userDropdownListLogin.map((item, index) => (
+                    <li
+                      key={index}
+                      className="border-b border-white/60 last:border-0"
+                    >
+                      <Link href={item.link}>
+                        <span className="flex py-2 px-2 hover:bg-violet-900/50 hover:rounded items-center">
+                          {item.title} <span className="ml-2">{item.icon}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         </div>
       </Container>
