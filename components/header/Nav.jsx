@@ -49,11 +49,11 @@ export default function Nav(props) {
     <nav
       className={`${
         location === "guest"
-          ? "bg-none text-mainpurple-100"
+          ? "bg-white text-mainpurple-100"
           : location === "user"
           ? "bg-mainpurple-100 text-white"
-          : "bg-none"
-      } py-2 shadow-lg`}
+          : "bg-white"
+      } py-2 shadow-lg absolute z-50 inset-x-0 top-0`}
     >
       <Container>
         <div className="flex items-center ">

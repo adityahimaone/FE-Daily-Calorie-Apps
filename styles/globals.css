@@ -5,3 +5,15 @@
 .crop {
   object-fit: cover;
 }
+
+.btn-main {
+  @apply px-2 py-1 transition-all rounded-lg;
+}
+
+.btn-purple {
+  @apply text-white bg-mainpurple-100 focus:ring-indigo-900 hover:bg-indigo-800;
+}
+
+.btn-orange {
+  @apply text-white bg-mainorange-100 focus:ring-orange-600/70 hover:bg-orange-600/70;
+}

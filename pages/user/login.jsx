@@ -6,7 +6,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
-export default function login() {
+export default function Login() {
   const initLogin = {
     username: "",
     password: "",
