@@ -53,17 +53,17 @@ export default function Nav(props) {
           : location === "user"
           ? "bg-mainpurple-100 text-white"
           : "bg-none"
-      } py-2`}
+      } py-2 shadow-lg`}
     >
       <Container>
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <div className="w-3/12 lg:hidden">
             <button type="button" onClick={() => setOffcanvas(!offcanvas)}>
               <MenuAlt2Icon className="w-8 h-8 " />
             </button>
           </div>
           <div className="lg:w-3/12 w-6/12 flex items-center justify-center lg:justify-start">
-            <div className="w-10 h-10 bg-slate-500/70 rounded flex justify-center items-center shadow-2xl mr-4">
+            <div className="w-10 h-10 bg-slate-200/70 rounded flex justify-center items-center shadow-2xl mr-4">
               <FireIcon className="w-5 h-5 " />
             </div>
             <span className=" font-bold">Daily Calorie</span>
