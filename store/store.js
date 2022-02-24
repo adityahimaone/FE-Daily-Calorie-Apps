@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import appSlice from "./appSlice";
+import caloriesSlice from "./caloriesSlice";
 // import storage from "redux-persist/lib/storage";
 import storage from "./storage";
 import {
@@ -31,6 +32,7 @@ const createNoopStorage = () => {
 
 const reducers = combineReducers({
   app: appSlice,
+  calories: caloriesSlice,
 });
 
 const persistConfig = {

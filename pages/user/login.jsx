@@ -5,10 +5,12 @@ import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import LoginAuthUser from "../../hooks/user/LoginAuth";
 
 export default function Login() {
+  const { resultLogin, sendDataToServer, properties } = LoginAuthUser();
   const initLogin = {
-    username: "",
+    email: "",
     password: "",
     showPassword: false,
   };
@@ -39,8 +41,11 @@ export default function Login() {
   const onClick = (e) => {
     e.preventDefault();
     sendDataToServer(loginForm);
-    setloading(properties.loading);
+    // setloading(properties.loading);
   };
+
+  console.log(resultLogin?.meta?.rc, "resultLogin");
+  console.log(loginForm);
 
   return (
     <GuestLayout container={false} className="relative">
@@ -59,7 +64,7 @@ export default function Login() {
             <h1 className="text-3xl font-medium">Hello again!</h1>
             <p>Welcome Back</p>
             <div className="my-3">
-              <form onSubmit="">
+              <form onSubmit={onClick}>
                 <div className="mb-4">
                   <TextField
                     fullWidth
@@ -67,8 +72,8 @@ export default function Login() {
                     id="outlined-basic"
                     label="Username"
                     color="primary"
-                    name="username"
-                    value={loginForm.username}
+                    name="email"
+                    value={loginForm.email}
                     onChange={onChange}
                     variant="outlined"
                     size="small"

@@ -5,6 +5,7 @@ import GuestLayout from "@/layouts/GuestLayout";
 import Hero from "@/public/hero.svg";
 import { useDispatch } from "react-redux";
 import { setPrivilege } from "store/appSlice";
+import * as serviceWorker from "../firebase/serviceWorker";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,3 +37,5 @@ export default function Home() {
     </GuestLayout>
   );
 }
+
+serviceWorker.unregister();
