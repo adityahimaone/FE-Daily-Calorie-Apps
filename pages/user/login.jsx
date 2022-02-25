@@ -27,6 +27,10 @@ export default function Login() {
     });
   };
 
+  const saveToCookie = (token) => {
+    document.cookie = `token=${token}`;
+  };
+
   const handleClickShowPassword = () => {
     setLoginForm({
       ...loginForm,

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 export default function LoginAuthUser() {
+  const cookies = new Cookies();
   const api = axios.create({
     baseURL: "http://localhost:8080",
     headers: {
@@ -39,13 +41,17 @@ export default function LoginAuthUser() {
       .post("/api/v1/users/login", payload)
       .then((res) => {
         setResultLogin(res.data);
+        cookies.set("token", res.data.data.token, {
+          path: "/",
+          domain: window.location.hostname,
+        });
         setProperties({
           loading: false,
           error: false,
         });
       })
       .catch((err) => {
-        setResultLogin(err.response.data);
+        // setResultLogin(err.response?.data);
         setProperties({
           loading: false,
           error: true,
