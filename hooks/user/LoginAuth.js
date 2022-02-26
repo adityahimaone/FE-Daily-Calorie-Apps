@@ -1,22 +1,42 @@
-import { useState } from "react";
-import axios from "axios";
+import { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
+import { useDispatch } from "react-redux";
+import { setUser } from "store/userSlice";
+import jwtDecode from "jwt-decode";
+import useFetch from "@/hooks/useFetch";
+import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 
 export default function LoginAuthUser() {
   const cookies = new Cookies();
-  const api = axios.create({
-    baseURL: "http://localhost:8080",
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Accest-Control-Allow-Credentials": true,
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      "Access-Control-Allow-Headers":
-        "append,delete,entries,foreach,get,has,keys,set,values,Authorization,Content-Type",
-    },
+  const dispatch = useDispatch();
+
+  const [decoded, setDecoded] = useState({
+    id: 0,
+    role: "",
+    exp: 0,
   });
 
-  const [resultLogin, setResultLogin] = useState({
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    dispatch(
+      setUser({
+        id: decoded.id,
+        role: decoded.role,
+        exp: decoded.exp,
+      })
+    );
+  }, [decoded]);
+
+  const { response: respUser } = useFetch({
+    api: mainApiAuth,
+    method: "get",
+    url: `/api/v1/users/${decoded.id}`,
+  });
+  console.log(respUser, dataUser, "respUser");
+
+  const [response, setResultLogin] = useState({
     meta: {
       rc: null,
       message: "",
@@ -26,18 +46,13 @@ export default function LoginAuthUser() {
     },
   });
 
-  const [properties, setProperties] = useState({
-    loading: true,
-    error: false,
-  });
-
   const sendDataToServer = (payload) => {
     payload = {
       email: payload.email,
       password: payload.password,
     };
 
-    api
+    mainApiNoAuth
       .post("/api/v1/users/login", payload)
       .then((res) => {
         setResultLogin(res.data);
@@ -45,19 +60,16 @@ export default function LoginAuthUser() {
           path: "/",
           domain: window.location.hostname,
         });
-        setProperties({
-          loading: false,
-          error: false,
-        });
+        let decoded = jwtDecode(res.data.data.token);
+        setDecoded(decoded);
       })
       .catch((err) => {
-        // setResultLogin(err.response?.data);
-        setProperties({
-          loading: false,
-          error: true,
-        });
+        setError(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
-  return { resultLogin, sendDataToServer, properties };
+  return { sendDataToServer, response, error, isLoading };
 }

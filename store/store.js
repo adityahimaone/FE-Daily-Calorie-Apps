@@ -1,8 +1,10 @@
 import { combineReducers } from "redux";
 import appSlice from "./appSlice";
 import caloriesSlice from "./caloriesSlice";
+import userSlice from "./userSlice";
 // import storage from "redux-persist/lib/storage";
 import storage from "./storage";
+
 import {
   persistReducer,
   persistStore,
@@ -16,23 +18,10 @@ import {
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { configureStore } from "@reduxjs/toolkit";
 
-const createNoopStorage = () => {
-  return {
-    getItem(_key) {
-      return Promise.resolve(null);
-    },
-    setItem(_key, value) {
-      return Promise.resolve(value);
-    },
-    removeItem(_key) {
-      return Promise.resolve();
-    },
-  };
-};
-
 const reducers = combineReducers({
   app: appSlice,
   calories: caloriesSlice,
+  user: userSlice,
 });
 
 const persistConfig = {

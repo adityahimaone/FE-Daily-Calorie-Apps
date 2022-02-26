@@ -7,7 +7,9 @@
       "@/layouts/*": ["layouts/*"],
       "@/styles/*": ["styles/*"],
       "@/public/*": ["public/*"],
-      "@/context/*": ["context/*"]
+      "@/context/*": ["context/*"],
+      "@/services/*": ["services/*"],
+      "@/hooks/*": ["hooks/*"]
     }
   }
 }

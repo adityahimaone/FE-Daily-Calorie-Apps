@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GuestLayout from "@/layouts/GuestLayout";
 import IconButton from "@mui/material/IconButton";
 import { TextField } from "@mui/material";
@@ -6,9 +6,16 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import LoginAuthUser from "../../hooks/user/LoginAuth";
+import useFetch from "@/hooks/useFetch";
+import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
+import GetUserByID from "@/hooks/user/GetUserByID";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
-  const { resultLogin, sendDataToServer, properties } = LoginAuthUser();
+  const { resultLogin, sendDataToServer, properties, decoded } =
+    LoginAuthUser();
+
   const initLogin = {
     email: "",
     password: "",
@@ -27,10 +34,6 @@ export default function Login() {
     });
   };
 
-  const saveToCookie = (token) => {
-    document.cookie = `token=${token}`;
-  };
-
   const handleClickShowPassword = () => {
     setLoginForm({
       ...loginForm,
@@ -45,11 +48,7 @@ export default function Login() {
   const onClick = (e) => {
     e.preventDefault();
     sendDataToServer(loginForm);
-    // setloading(properties.loading);
   };
-
-  console.log(resultLogin?.meta?.rc, "resultLogin");
-  console.log(loginForm);
 
   return (
     <GuestLayout container={false} className="relative">
@@ -74,7 +73,7 @@ export default function Login() {
                     fullWidth
                     required
                     id="outlined-basic"
-                    label="Username"
+                    label="Email"
                     color="primary"
                     name="email"
                     value={loginForm.email}
