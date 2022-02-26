@@ -5,12 +5,8 @@ import Container from "@/components/Container";
 
 export default function GuestLayout(props) {
   const { children, pageTitle, container } = props;
-
-  console.log(container);
   const initContainer = typeof container !== "undefined" ? container : true;
   const [containerActive, setContainerActive] = useState(initContainer);
-
-  console.log(containerActive);
   return (
     <>
       <Head>

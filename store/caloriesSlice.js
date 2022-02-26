@@ -12,9 +12,9 @@ export const countCalories = createSlice({
   },
   reducers: {
     setCaloriesCount: (state, action) => {
-      const { weight, height, age, jk, activity } = action.payload;
+      const { weight, height, age, jk: gender, activity } = action.payload;
       let calorie =
-        jk === "male"
+        gender === "male"
           ? (10 * weight + 6.25 * height - 5 * age + 5) * activity
           : (10 * weight + 6.25 * height - 5 * age - 161) * activity;
       const resultCalorie = calorie.toFixed(0);

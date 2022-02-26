@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GuestLayout from "@/layouts/GuestLayout";
 import LinearProgress from "@mui/material/LinearProgress";
 import { TextField } from "@mui/material";
@@ -10,10 +10,15 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useDispatch, useSelector } from "react-redux";
+import { setCaloriesCount } from "store/caloriesSlice";
+import useFetch from "@/hooks/useFetch";
+import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
+import RegisterAPI from "@/hooks/user/Register";
 
 export default function Register() {
   const dispatch = useDispatch();
   const countCalorie = useSelector((state) => state.calories.countCalories);
+  const { response, error, isLoading, sendDataToServer } = RegisterAPI();
   const [page, setPage] = useState(1);
   const [data, setData] = useState({
     profile: {},
@@ -25,7 +30,8 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    avatar_url: "",
+    avatar_url:
+      "https://icon-library.com/images/free-avatar-icon/free-avatar-icon-11.jpg",
     gender: "",
     personal_data: {
       calorie: 0,
@@ -35,6 +41,16 @@ export default function Register() {
   };
 
   const [form, setForm] = useState(initValueForm);
+
+  const initCountForm = {
+    gender: "",
+    weight: 0,
+    height: 0,
+    age: 0,
+    activity: 0,
+  };
+
+  const [formCount, setFormCount] = useState(initCountForm);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -69,14 +85,35 @@ export default function Register() {
   };
 
   console.log(form);
+  console.log(formCount);
+
+  useEffect(() => {
+    dispatch(setCaloriesCount(formCount));
+  }, [formCount]);
+
+  useEffect(() => {
+    setForm({
+      ...form,
+      personal_data: { ...form.personal_data, calorie: countCalorie.calories },
+    });
+  }, [form.personal_data.activity]);
 
   const submit = () => {
-    fetch("/api/form", { method: "POST", body: JSON.stringify(data) });
+    sendDataToServer({
+      name: form.name,
+      email: form.email,
+      password: form.password,
+      avatar_url: form.avatar_url,
+      gender: form.gender,
+      calorie: form.personal_data.calorie,
+      weight: form.personal_data.weight,
+      height: form.personal_data.height,
+    });
   };
 
-  const normalise = (value) => ((value - 0) * 100) / (3 - 0);
+  console.log(form, "form");
 
-  console.log(page);
+  const normalise = (value) => ((value - 0) * 100) / (3 - 0);
   return (
     <GuestLayout container={false}>
       <div className="flex flex-col lg:flex-row min-h-screen">
@@ -144,9 +181,12 @@ export default function Register() {
               )}
               {page === 2 && (
                 <OnboardingTwo
+                  countCalorie={countCalorie}
                   valueForm={form}
                   setValueForm={setForm}
                   update={updateData}
+                  formCount={formCount}
+                  setFormCount={setFormCount}
                 />
               )}
               {page === 3 && (
@@ -196,11 +236,23 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
       <div className="max-w-xs w-full flex flex-col justify-center space-y-4">
         <div>
           <label>Name</label>
-          <TextField fullWidth name="name" onChange={onChange} size="small" />
+          <TextField
+            fullWidth
+            name="name"
+            onChange={onChange}
+            value={valueForm.name}
+            size="small"
+          />
         </div>
         <div>
           <label>Email</label>
-          <TextField fullWidth name="email" onChange={onChange} size="small" />
+          <TextField
+            fullWidth
+            name="email"
+            onChange={onChange}
+            value={valueForm.email}
+            size="small"
+          />
         </div>
         <div>
           <label>Password</label>
@@ -208,6 +260,7 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
             fullWidth
             name="password"
             onChange={onChange}
+            value={valueForm.password}
             type="password"
             size="small"
           />
@@ -220,6 +273,7 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="gender"
               onChange={onChange}
+              value={valueForm.gender}
             >
               <FormControlLabel
                 value="female"
@@ -236,7 +290,15 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
   );
 }
 
-function OnboardingTwo({ data, valueForm, setValueForm, update }) {
+function OnboardingTwo({
+  countCalorie,
+  data,
+  valueForm,
+  setValueForm,
+  formCount,
+  setFormCount,
+  update,
+}) {
   const initInput = {
     weight: 0,
     height: 0,
@@ -244,6 +306,34 @@ function OnboardingTwo({ data, valueForm, setValueForm, update }) {
     jk: "male",
     activity: 0,
   };
+
+  const activityValue = [
+    {
+      id: 1,
+      name: "Sedentary",
+      value: 1.2,
+    },
+    {
+      id: 2,
+      name: "Lightly Active",
+      value: 1.375,
+    },
+    {
+      id: 3,
+      name: "Moderately Active",
+      value: 1.55,
+    },
+    {
+      id: 4,
+      name: "Very Active",
+      value: 1.725,
+    },
+    {
+      id: 5,
+      name: "Extra Active",
+      value: 1.9,
+    },
+  ];
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -255,6 +345,11 @@ function OnboardingTwo({ data, valueForm, setValueForm, update }) {
         [name]: value,
       },
     });
+    setFormCount({
+      ...formCount,
+      [name]: value,
+      gender: valueForm.gender,
+    });
   };
 
   return (
@@ -262,34 +357,59 @@ function OnboardingTwo({ data, valueForm, setValueForm, update }) {
       <div className="my-3">
         <h1 className="text-lg">Fill Personal Data</h1>
       </div>
-      <div className="max-w-xs w-full flex flex-col justify-center space-y-4">
+      <div className="max-w-md w-full flex flex-col justify-center space-y-4">
+        <div className="bg-mainpurple-100 p-4 text-center rounded-md text-white">
+          <label className="font-semibold text-xl">
+            {countCalorie.calories}
+          </label>
+        </div>
         <div>
           <label>Weight</label>
-          <TextField fullWidth name="weight" onChange={onChange} size="small" />
+          <TextField
+            fullWidth
+            name="weight"
+            onChange={onChange}
+            value={formCount.weight}
+            type="number"
+            size="small"
+          />
         </div>
         <div>
           <label>Height</label>
-          <TextField fullWidth name="height" onChange={onChange} size="small" />
+          <TextField
+            fullWidth
+            name="height"
+            type="number"
+            onChange={onChange}
+            value={formCount.height}
+            size="small"
+          />
         </div>
         <div>
           <label>Age</label>
-          <TextField fullWidth name="age" size="small" />
+          <TextField
+            fullWidth
+            name="age"
+            type="number"
+            onChange={onChange}
+            value={formCount.age}
+            size="small"
+          />
         </div>
         <div>
           <label>Activity Type</label>
           <FormControl fullWidth>
             <Select
-              // labelId="demo-simple-select-label"
               id="demo-simple-select"
-              name="activityType"
-              // value={age}
-              // onChange={handleChange}
+              name="activity"
+              onChange={onChange}
+              value={formCount.activity}
             >
-              <MenuItem value={10}>Ten</MenuItem>
-              <MenuItem value={20}>Twenty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
-              <MenuItem value={30}>Thirty</MenuItem>
+              {activityValue.map((item) => (
+                <MenuItem key={item.id} value={item.value}>
+                  {item.name}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
         </div>
@@ -306,7 +426,6 @@ function OnboardingThree({
   onChangeAvatar,
   update,
 }) {
-  console.log(data, onChangeAvatar);
   return (
     <div>
       <div className="my-3">

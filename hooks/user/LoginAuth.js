@@ -5,6 +5,7 @@ import { setUser } from "store/userSlice";
 import jwtDecode from "jwt-decode";
 import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
+import Router from "next/router";
 
 export default function LoginAuthUser() {
   const cookies = new Cookies();
@@ -34,9 +35,8 @@ export default function LoginAuthUser() {
     method: "get",
     url: `/api/v1/users/${decoded.id}`,
   });
-  console.log(respUser, dataUser, "respUser");
 
-  const [response, setResultLogin] = useState({
+  const [response, setResponse] = useState({
     meta: {
       rc: null,
       message: "",
@@ -55,7 +55,7 @@ export default function LoginAuthUser() {
     mainApiNoAuth
       .post("/api/v1/users/login", payload)
       .then((res) => {
-        setResultLogin(res.data);
+        setResponse(res.data);
         cookies.set("token", res.data.data.token, {
           path: "/",
           domain: window.location.hostname,
@@ -68,6 +68,7 @@ export default function LoginAuthUser() {
       })
       .finally(() => {
         setIsLoading(false);
+        Router.push("/user/dashboard");
       });
   };
 
