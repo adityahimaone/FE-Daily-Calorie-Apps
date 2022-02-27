@@ -19,6 +19,9 @@ export const mainApiNoAuth = axios.create({
 });
 
 const token = cookies.get("token");
+// const hashToken = Base64.encode(token);
+console.log(token, "token");
+// console.log(hashToken, "hashToken");
 
 export const mainApiAuth = axios.create({
   baseURL: mainApiURL,

@@ -12,11 +12,17 @@ import {
 } from "@heroicons/react/solid";
 import profile from "@/public/dummy.png";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import Cookies from "universal-cookie";
+import { clearUser } from "store/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function Nav(props) {
   const { location } = props;
   const [offcanvas, setOffcanvas] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
+  const infoUser = useSelector((state) => state.user);
 
   const userNavList = [
     { title: "Dashboard", link: "/user/dashboard" },
@@ -38,12 +44,12 @@ export default function Nav(props) {
     },
     {
       title: "Logout",
-      link: "/logout",
+      link: "/user/logout",
       icon: <LogoutIcon className="w-4 h-4" />,
     },
   ];
 
-  const userDropdownListLogout = [{ title: "Login", link: "/login" }];
+  const userDropdownListLogout = [{ title: "Login", link: "/user/login" }];
 
   return (
     <nav
@@ -114,8 +120,8 @@ export default function Nav(props) {
                 className="flex items-center"
               >
                 <div className="w-8 h-8 border-2 rounded-full border-mainorange-100">
-                  <Image
-                    src={profile}
+                  <img
+                    src={infoUser.id !== 0 ? infoUser.avatar_url : profile.src}
                     width={30}
                     height={30}
                     className="object-cover w-8 h-8 rounded-full "
@@ -135,18 +141,33 @@ export default function Nav(props) {
                 <ul
                   className={`absolute w-[150px] right-0 top-12 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
                 >
-                  {userDropdownListLogin.map((item, index) => (
-                    <li
-                      key={index}
-                      className="border-b border-white/60 last:border-0"
-                    >
-                      <Link href={item.link}>
-                        <span className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
-                          {item.title} <span className="ml-2">{item.icon}</span>
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
+                  {infoUser.id !== 0
+                    ? userDropdownListLogin.map((item, index) => (
+                        <li
+                          key={index}
+                          className="border-b border-white/60 last:border-0"
+                        >
+                          <Link href={item.link}>
+                            <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                              {item.title}{" "}
+                              <span className="ml-2">{item.icon}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      ))
+                    : userDropdownListLogout.map((item, index) => (
+                        <li
+                          key={index}
+                          className="border-b border-white/60 last:border-0"
+                        >
+                          <Link href={item.link}>
+                            <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                              {item.title}{" "}
+                              <span className="ml-2">{item.icon}</span>
+                            </a>
+                          </Link>
+                        </li>
+                      ))}
                 </ul>
               )}
             </div>

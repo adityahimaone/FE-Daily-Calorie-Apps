@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import profile from "@/public/dummy.png";
 
 export const userSlice = createSlice({
   name: "user",
@@ -8,7 +9,7 @@ export const userSlice = createSlice({
     exp: 0,
     name: "User",
     email: "",
-    avatar_url: "",
+    avatar_url: profile.src,
     gender: "",
   },
   reducers: {
@@ -24,8 +25,17 @@ export const userSlice = createSlice({
       state.height = action.payload.height;
       state.weight = action.payload.weight;
     },
+    clearUser: (state) => {
+      state.id = 0;
+      state.role = "guest";
+      state.exp = 0;
+      state.name = "User";
+      state.email = "";
+      state.avatar_url = profile.src;
+      state.gender = "";
+    },
   },
 });
 
-export const { setUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export default userSlice.reducer;

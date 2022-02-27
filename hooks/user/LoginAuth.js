@@ -7,6 +7,7 @@ import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 import Router from "next/router";
 import GetUserByID from "./GetUserByID";
+import profile from "@/public/dummy.png";
 
 export default function LoginAuthUser() {
   const cookies = new Cookies();
@@ -22,7 +23,7 @@ export default function LoginAuthUser() {
     id: 0,
     name: "",
     email: "",
-    avatar_url: "",
+    avatar_url: profile.src,
     gender: "",
     calories: "",
     height: "",
@@ -76,7 +77,6 @@ export default function LoginAuthUser() {
         let decoded = jwtDecode(res.data.data.token);
         mainApiAuth.get(`/api/v1/users/${decoded.id}`).then((res) => {
           setInfoUser(res.data.data);
-          console.log(res, "login resp");
         });
         setDecoded(decoded);
         Router.push("/user/dashboard");
