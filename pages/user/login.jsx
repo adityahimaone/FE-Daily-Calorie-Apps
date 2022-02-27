@@ -52,18 +52,18 @@ export default function Login() {
 
   return (
     <GuestLayout container={false} className="relative">
-      <div className="flex flex-col lg:flex-row w-full min-h-screen absolute">
-        <div className="flex-1 hidden lg:flex justify-center items-center flex-col bg-gradient-to-t to-indigo-900 from-mainpurple-100">
-          <div className="text-white space-y-4">
+      <div className="absolute flex flex-col w-full min-h-screen lg:flex-row">
+        <div className="flex-col items-center justify-center flex-1 hidden lg:flex bg-gradient-to-t to-indigo-900 from-mainpurple-100">
+          <div className="space-y-4 text-white">
             <h1 className="text-4xl font-semibold">Daily Calories</h1>
             <p className="font-light">Track Your Calories Everyday</p>
-            <button className=" w-fit bg-mainorange-100 rounded-lg px-2 py-1">
+            <button className="px-2 py-1 rounded-lg w-fit bg-mainorange-100">
               Start For Free
             </button>
           </div>
         </div>
-        <div className="flex-1 flex flex-col justify-center items-center">
-          <div className="space-y-3 p-5 rounded-lg bg-slate-50/50 shadow-xl lg:shadow-none lg:bg-transparent">
+        <div className="flex flex-col items-center justify-center flex-1">
+          <div className="p-5 space-y-3 rounded-lg shadow-xl bg-slate-50/50 lg:shadow-none lg:bg-transparent">
             <h1 className="text-3xl font-medium">Hello again!</h1>
             <p>Welcome Back</p>
             <div className="my-3">
@@ -105,9 +105,9 @@ export default function Login() {
                             edge="end"
                           >
                             {loginForm.showPassword ? (
-                              <EyeOffIcon className="h-5 w-5" />
+                              <EyeOffIcon className="w-5 h-5" />
                             ) : (
-                              <EyeIcon className="h-5 w-5" />
+                              <EyeIcon className="w-5 h-5" />
                             )}
                           </IconButton>
                         </InputAdornment>
@@ -118,12 +118,12 @@ export default function Login() {
                 <div>
                   <button
                     onSubmit={onClick}
-                    className="bg-mainpurple-100 text-white w-full px-2 py-2 rounded-md "
+                    className="w-full px-2 py-2 text-white rounded-md bg-mainpurple-100 "
                   >
                     <span>Login </span>
                   </button>
                 </div>
-                <div className="flex space-x-2 my-2">
+                <div className="flex my-2 space-x-2">
                   <p className="text-sm">Don't have an account?</p>
                   <a className="text-sm text-mainpurple-100">
                     <Link href="/user/register">Register Here</Link>

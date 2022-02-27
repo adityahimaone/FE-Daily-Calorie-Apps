@@ -116,12 +116,12 @@ export default function Register() {
   const normalise = (value) => ((value - 0) * 100) / (3 - 0);
   return (
     <GuestLayout container={false}>
-      <div className="flex flex-col lg:flex-row min-h-screen">
-        <div className="lg:w-1/3 w-full bg-gradient-to-t to-indigo-900 from-mainpurple-100 text-white flex justify-center items-center">
+      <div className="flex flex-col min-h-screen lg:flex-row">
+        <div className="flex items-center justify-center w-full text-white lg:w-1/3 bg-gradient-to-t to-indigo-900 from-mainpurple-100">
           <div>
-            <h1 className="text-2xl font-bold">Register With Us</h1>
+            <h1 className="text-2xl font-bold ">Register With Us</h1>
             <p>Ready to track your calories?</p>
-            <ul className="flex flex-row text-xs lg:text-base lg:flex-col space-x-2 lg:space-x-0 lg:space-y-2 my-4">
+            <ul className="flex flex-row my-4 space-x-2 text-xs lg:text-base lg:flex-col lg:space-x-0 lg:space-y-2">
               <li
                 className={`flex items-center ${
                   page !== 1
@@ -129,7 +129,7 @@ export default function Register() {
                     : page === 1 && "lg:text-lg text-sm"
                 }`}
               >
-                <div className="rounded-full bg-white p-1 font-bold w-4 h-4 mr-2 text-mainpurple-100 flex justify-center items-center">
+                <div className="flex items-center justify-center w-4 h-4 p-1 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>1</p>
                 </div>
                 Fill personal info
@@ -141,7 +141,7 @@ export default function Register() {
                     : page === 2 && "lg:text-lg text-sm"
                 }`}
               >
-                <div className="rounded-full bg-white font-bold w-4 h-4 mr-2 text-mainpurple-100 flex justify-center items-center">
+                <div className="flex items-center justify-center w-4 h-4 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>2</p>
                 </div>
                 Fill personal info
@@ -151,7 +151,7 @@ export default function Register() {
                   page === 3 && "lg:text-lg text-sm"
                 }`}
               >
-                <div className="rounded-full bg-white font-bold w-4 h-4 mr-2 text-mainpurple-100 flex justify-center items-center">
+                <div className="flex items-center justify-center w-4 h-4 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>3</p>
                 </div>
                 Fill personal info
@@ -159,10 +159,10 @@ export default function Register() {
             </ul>
           </div>
         </div>
-        <div className="lg:w-2/3 w-full mt-14 flex justify-center items-center">
-          <div className=" max-w-lg w-full  p-5">
+        <div className="flex items-center justify-center w-full lg:w-2/3 mt-14">
+          <div className="w-full max-w-lg p-5 ">
             <div>
-              <h1 className=" text-2xl text-mainpurple-100 font-bold my-5">
+              <h1 className="my-5 text-2xl font-bold text-mainpurple-100">
                 Form Register
               </h1>
               <LinearProgress
@@ -233,7 +233,7 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
       <div className="my-3">
         <h1 className="text-lg">Fill Information Data</h1>
       </div>
-      <div className="max-w-xs w-full flex flex-col justify-center space-y-4">
+      <div className="flex flex-col justify-center w-full max-w-xs space-y-4">
         <div>
           <label>Name</label>
           <TextField
@@ -357,9 +357,9 @@ function OnboardingTwo({
       <div className="my-3">
         <h1 className="text-lg">Fill Personal Data</h1>
       </div>
-      <div className="max-w-md w-full flex flex-col justify-center space-y-4">
-        <div className="bg-mainpurple-100 p-4 text-center rounded-md text-white">
-          <label className="font-semibold text-xl">
+      <div className="flex flex-col justify-center w-full max-w-md space-y-4">
+        <div className="p-4 text-center text-white rounded-md bg-mainpurple-100">
+          <label className="text-xl font-semibold">
             {countCalorie.calories}
           </label>
         </div>

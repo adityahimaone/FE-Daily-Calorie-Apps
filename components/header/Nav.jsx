@@ -34,12 +34,12 @@ export default function Nav(props) {
     {
       title: "Setting",
       link: "/setting",
-      icon: <CogIcon className="h-4 w-4" />,
+      icon: <CogIcon className="w-4 h-4" />,
     },
     {
       title: "Logout",
       link: "/logout",
-      icon: <LogoutIcon className="h-4 w-4" />,
+      icon: <LogoutIcon className="w-4 h-4" />,
     },
   ];
 
@@ -55,22 +55,22 @@ export default function Nav(props) {
           : "bg-white"
       } py-2 shadow-lg absolute z-50 inset-x-0 top-0`}
     >
-      <Container>
-        <div className="flex items-center ">
+      <div className="container px-10 mx-auto">
+        <div className="flex items-center">
           <div className="w-3/12 lg:hidden">
             <button type="button" onClick={() => setOffcanvas(!offcanvas)}>
               <MenuAlt2Icon className="w-8 h-8 " />
             </button>
           </div>
-          <div className="lg:w-3/12 w-6/12 flex items-center justify-center lg:justify-start">
-            <div className="w-10 h-10 bg-slate-200/70 rounded flex justify-center items-center shadow-2xl mr-4">
+          <div className="flex items-center justify-center w-6/12 lg:w-3/12 lg:justify-start">
+            <div className="flex items-center justify-center w-10 h-10 mr-4 rounded shadow-2xl bg-slate-200/70">
               <FireIcon className="w-5 h-5 " />
             </div>
-            <span className=" font-bold">Daily Calorie</span>
+            <span className="font-bold ">Daily Calorie</span>
           </div>
-          <div className="w-3/12 lg:hidden text-right">
+          <div className="w-3/12 text-right lg:hidden">
             <button type="button">
-              {/* <div className="w-8 h-8 bg-slate-800 rounded-full"></div> */}
+              {/* <div className="w-8 h-8 rounded-full bg-slate-800"></div> */}
             </button>
           </div>
           <div
@@ -85,7 +85,7 @@ export default function Nav(props) {
             >
               <XIcon className="w-8 h-8 " />
             </button>
-            <ul className="lg:space-x-14 flex lg:items-center flex-col lg:flex-row mt-4 lg:mt-0 space-y-5 lg:space-y-0">
+            <ul className="flex flex-col mt-4 space-y-5 lg:space-x-14 lg:items-center lg:flex-row lg:mt-0 lg:space-y-0">
               {location === "guest"
                 ? guestNavList.map((item, index) => (
                     <li
@@ -105,7 +105,7 @@ export default function Nav(props) {
                   ))}
             </ul>
           </div>
-          <div className="w-2/12 flex items-center justify-end space-x-2">
+          <div className="flex items-center justify-end w-2/12 space-x-2">
             <span className="hidden lg:block text-medium">Hello, User</span>
             <div className="relative">
               <button
@@ -113,12 +113,12 @@ export default function Nav(props) {
                 onClick={() => setUserDropdown(!userDropdown)}
                 className="flex items-center"
               >
-                <div className="border-2 border-mainorange-100 rounded-full w-8 h-8">
+                <div className="w-8 h-8 border-2 rounded-full border-mainorange-100">
                   <Image
                     src={profile}
                     width={30}
                     height={30}
-                    className="rounded-full object-cover w-8 h-8 "
+                    className="object-cover w-8 h-8 rounded-full "
                   />
                 </div>
                 <ChevronDownIcon
@@ -141,7 +141,7 @@ export default function Nav(props) {
                       className="border-b border-white/60 last:border-0"
                     >
                       <Link href={item.link}>
-                        <span className="flex py-2 px-2 hover:bg-violet-900/50 hover:rounded items-center">
+                        <span className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                           {item.title} <span className="ml-2">{item.icon}</span>
                         </span>
                       </Link>
@@ -152,7 +152,7 @@ export default function Nav(props) {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </nav>
   );
 }

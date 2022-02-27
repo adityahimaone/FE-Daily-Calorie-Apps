@@ -14,7 +14,7 @@ export default function GuestLayout(props) {
         <meta name="description" content="Daily Calorie Apps" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen ">
+      <div className="min-h-screen">
         <Nav location="guest" />
         <div className="">
           {containerActive === true ? (
