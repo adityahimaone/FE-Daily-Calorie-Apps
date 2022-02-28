@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/layouts/UserLayout";
 import ProgessCircular from "@/components/dashboardUser/ProgessCircular";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -14,6 +14,8 @@ import waterNofill from "@/public/water-nofill.png";
 import Rating from "@mui/material/Rating";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
+import GetFood from "@/hooks/GetFood";
+import debounce from "lodash.debounce";
 
 export default function Dashboard() {
   const {
@@ -38,17 +40,47 @@ export default function Dashboard() {
     }),
   });
 
+  const { sendDataToServer, response } = GetFood();
   const [waterConsume, setWaterConsume] = useState(0);
   const [offcanvas, setOffcanvas] = useState(false);
   const infoUser = useSelector((state) => state.user);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  console.log(searchQuery);
+  console.log(response, "response");
+  console.log(searchResult, "searchResult");
+
+  const fetchData = async (searchQuery, cb) => {
+    console.warn("fetching" + searchQuery);
+    const res = await sendDataToServer(searchQuery);
+    cb(res);
+  };
+
+  const debounceSearch = debounce((searchQuery, cb) => {
+    fetchData(searchQuery, cb);
+  }, 500);
+
+  useEffect(() => {
+    debounceSearch(searchQuery, (res) => {
+      setSearchResult(res);
+    });
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setSearchResult(response.data);
+  }, [response]);
 
   return (
     <Layout pageTitle="Dashboard">
       {/* Profile Info */}
       <div className="w-full p-4 my-5 rounded-lg shadow-xl bg-bluewhite">
         <div className="flex items-center">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-400">
-            P
+          <div class="avatar">
+            <div class="w-10 rounded-full ring ring-mainorange-100 ring-offset-1">
+              <img
+                src={infoUser.id !== 0 ? infoUser?.avatar_url : profile.src}
+              />
+            </div>
           </div>
           <div className="flex flex-col mx-5">
             <p className="font-semibold">Hello, {infoUser.name}</p>
@@ -82,29 +114,56 @@ export default function Dashboard() {
         </div>
       </div>
       {/* Search  */}
-      <div className="flex flex-row items-center my-5 space-x-2">
-        <div className="w-8/12 lg:w-11/12">
+      <div className="flex flex-col items-center my-5 space-x-2">
+        <div class="bg-white w-full h-16 rounded-xl mb-3 shadow-lg p-2">
           <input
             type="text"
-            className="w-full p-4 text-black rounded-lg shadow-md bg-bluewhite"
-            placeholder="Search for a Food"
-            {...getInputProps()}
+            placeholder="Search"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            class="w-full h-full text-2xl rounded-lg focus:outline-none focus:ring focus:border-blue-300"
           />
-          {groupedOptions.length > 0 ? (
-            <div className="bg-white" {...getListboxProps()}>
-              {groupedOptions.map((option, index) => (
-                <div {...getOptionProps({ option, index })}>{option.title}</div>
-              ))}
-            </div>
-          ) : null}
         </div>
-        <div className="flex justify-center w-4/12 lg:w-1/12">
-          <button
-            type="button"
-            className="w-full p-4 text-white rounded-lg bg-mainpurple-100"
-          >
-            Search
-          </button>
+        <div class="bg-white w-full rounded-xl shadow-xl overflow-hidden p-1">
+          {searchResult ? (
+            searchResult?.slice(0, 5).map((item) => (
+              <div
+                key={item.id}
+                class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer"
+              >
+                <div class="mr-4">
+                  <div class="h-10 w-10 rounded-sm flex items-center justify-center text-3xl">
+                    {item.img_url ? (
+                      <img src={item.img_url} alt="food" />
+                    ) : (
+                      <img
+                        src="https://assets.materialup.com/uploads/98622f57-ac59-4b44-8db2-3355bb43efed/preview.jpg"
+                        alt="food"
+                      />
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <div class="font-bold text-lg">{item.title}</div>
+                  <div class="text-xs text-gray-500">
+                    <span class="mr-2">
+                      Calories: {item.calories.toFixed(2)} Kcal
+                    </span>
+                    <span class="mr-2">
+                      Carbs: {item.carbs.toFixed(2)} Kcal
+                    </span>
+                    <span class="mr-2">
+                      Protein: {item.protein.toFixed(2)} Kcal
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer">
+              <h1>No Food</h1>
+            </div>
+          )}
         </div>
       </div>
       {/* Water */}

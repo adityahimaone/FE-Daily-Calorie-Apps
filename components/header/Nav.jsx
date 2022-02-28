@@ -51,7 +51,6 @@ export default function Nav(props) {
   ];
 
   const spliceName = infoUser.name.split(" ");
-  console.log(spliceName);
 
   return (
     <nav
@@ -123,16 +122,17 @@ export default function Nav(props) {
                 onClick={() => setUserDropdown(!userDropdown)}
                 className="flex items-center"
               >
-                <div className="w-8 h-8 border-2 rounded-full border-mainorange-100">
-                  <img
-                    src={infoUser.id !== 0 ? infoUser?.avatar_url : profile.src}
-                    width={30}
-                    height={30}
-                    className="object-cover w-8 h-8 rounded-full "
-                  />
+                <div class="avatar">
+                  <div class="w-8 rounded-full ring ring-mainorange-100 ring-offset-1">
+                    <img
+                      src={
+                        infoUser.id !== 0 ? infoUser?.avatar_url : profile.src
+                      }
+                    />
+                  </div>
                 </div>
                 <ChevronDownIcon
-                  className={`w-4 h-4 ${
+                  className={`ml-1 w-4 h-4 ${
                     location === "guest"
                       ? " text-mainpurple-100"
                       : location === "user"
