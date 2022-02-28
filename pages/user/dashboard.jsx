@@ -25,7 +25,7 @@ export default function Dashboard() {
   const { sendDataToServer: addHitory, response: respHistory } = AddHistories();
   const [refresh, setRefresh] = useState(true);
   const { sendDataToServer, response } = GetFood();
-  const { getHistories, response: respGetHistories } = GetHistories(refresh);
+  const { mutate, error, data: respGetHistories } = GetHistories(refresh);
   const [waterConsume, setWaterConsume] = useState(0);
   const [offcanvas, setOffcanvas] = useState(false);
   const infoUser = useSelector((state) => state.user);
@@ -38,9 +38,17 @@ export default function Dashboard() {
   const [dataUserHistories, setdataUserHistories] = useState({});
   useEffect(() => {
     setdataUserHistories(respGetHistories?.data);
-  }, [respGetHistories]);
+    setRefresh(!refresh);
+  }, [respGetHistories, infoUser]);
 
   console.log(dataUserHistories, "dataUserHistories");
+  console.log(infoUser.name, "infoUser");
+
+  useEffect(() => {
+    if (infoUser.id !== 0) {
+      setRefresh(!refresh);
+    }
+  }, [dataUserHistories, infoUser.id]);
 
   const fetchData = async (searchQuery, cb) => {
     console.warn("fetching" + searchQuery);

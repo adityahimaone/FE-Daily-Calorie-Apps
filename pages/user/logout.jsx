@@ -9,6 +9,7 @@ export default function logout() {
 
   const onLogout = () => {
     Router.push("/login");
+    // Router.reload(window.location.pathname);
     dispatch(clearUser());
     cookies.remove("token", { path: "/", domain: window.location.hostname });
   };

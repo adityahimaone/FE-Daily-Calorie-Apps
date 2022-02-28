@@ -11,10 +11,12 @@ import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 import GetUserByID from "@/hooks/user/GetUserByID";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import useLogin from "@/hooks/user/useLogin";
 
 export default function Login() {
   const { resultLogin, sendDataToServer, properties, decoded } =
     LoginAuthUser();
+  // const { user } = useLogin();
 
   const initLogin = {
     email: "",
