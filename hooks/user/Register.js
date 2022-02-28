@@ -21,8 +21,6 @@ export default function Register() {
       },
     };
 
-    console.log(payload, "payload");
-
     mainApiNoAuth
       .post("/api/v1/users/register", payload)
       .then((res) => {

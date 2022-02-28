@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import { SearchIcon } from "@heroicons/react/solid";
+import { SearchIcon, PlusIcon } from "@heroicons/react/solid";
 import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
 import food from "./dataFood";
 import Image from "next/image";
@@ -16,31 +16,16 @@ import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import GetFood from "@/hooks/GetFood";
 import debounce from "lodash.debounce";
+import AddHistories from "@/hooks/user/AddHistories";
+import GetHistories from "@/hooks/user/GetHistories";
+import useFetch from "@/hooks/useFetch";
+import { mainApiAuth } from "@/services/Api";
 
 export default function Dashboard() {
-  const {
-    getRootProps,
-    getInputLabelProps,
-    getInputProps,
-    getListboxProps,
-    getOptionProps,
-    groupedOptions,
-  } = useAutocomplete({
-    id: "use-autocomplete-demo",
-    options: food.data,
-    getOptionLabelProps: (option) => ({
-      id: option.id,
-      title: option.title,
-      calories: option.calories,
-      fat: option.fat,
-      carbs: option.carbs,
-      protein: option.protein,
-      serving_size: option.serving_size,
-      img_url: option.img_url,
-    }),
-  });
-
+  const { sendDataToServer: addHitory, response: respHistory } = AddHistories();
+  const [refresh, setRefresh] = useState(true);
   const { sendDataToServer, response } = GetFood();
+  const { getHistories, response: respGetHistories } = GetHistories(refresh);
   const [waterConsume, setWaterConsume] = useState(0);
   const [offcanvas, setOffcanvas] = useState(false);
   const infoUser = useSelector((state) => state.user);
@@ -49,6 +34,13 @@ export default function Dashboard() {
   console.log(searchQuery);
   console.log(response, "response");
   console.log(searchResult, "searchResult");
+  console.log(respGetHistories, "respGetHistories");
+  const [dataUserHistories, setdataUserHistories] = useState({});
+  useEffect(() => {
+    setdataUserHistories(respGetHistories?.data);
+  }, [respGetHistories]);
+
+  console.log(dataUserHistories, "dataUserHistories");
 
   const fetchData = async (searchQuery, cb) => {
     console.warn("fetching" + searchQuery);
@@ -69,6 +61,12 @@ export default function Dashboard() {
   useEffect(() => {
     setSearchResult(response.data);
   }, [response]);
+
+  const onClickFood = (item) => {
+    console.log(item, "item");
+    addHitory(item);
+    setRefresh(!refresh);
+  };
 
   return (
     <Layout pageTitle="Dashboard">
@@ -104,8 +102,10 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center justify-center h-full p-4">
             <div>
-              <h1 className="text-4xl font-bold">1234</h1>
-              <h1 className="text-2xl">/ {infoUser.calories} </h1>
+              <h1 className="text-4xl font-bold">
+                {dataUserHistories?.total_calories}
+              </h1>
+              <h1 className="text-2xl">/ {infoUser?.calories} </h1>
             </div>
             <div>
               <h1 className="text-4xl font-light">Kcal</h1>
@@ -129,33 +129,41 @@ export default function Dashboard() {
             searchResult?.slice(0, 5).map((item) => (
               <div
                 key={item.id}
-                class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer"
+                class="w-full flex p-3 pl-4 items-center justify-between space-x-2 hover:bg-gray-300 rounded-lg cursor-pointer"
               >
-                <div class="mr-4">
-                  <div class="h-10 w-10 rounded-sm flex items-center justify-center text-3xl">
-                    {item.img_url ? (
-                      <img src={item.img_url} alt="food" />
-                    ) : (
-                      <img
-                        src="https://assets.materialup.com/uploads/98622f57-ac59-4b44-8db2-3355bb43efed/preview.jpg"
-                        alt="food"
-                      />
-                    )}
+                <div className="flex items-center">
+                  <div class="mr-4">
+                    <div class="h-12 w-12 rounded-md flex items-center justify-center text-3xl">
+                      {item.img_url ? (
+                        <img src={item.img_url} alt="food" />
+                      ) : (
+                        <img
+                          src="https://assets.materialup.com/uploads/98622f57-ac59-4b44-8db2-3355bb43efed/preview.jpg"
+                          alt="food"
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <div class="font-bold text-lg">{item.title}</div>
+                    <div class="text-xs text-gray-500">
+                      <span class="mr-2">
+                        Calories: {item.calories.toFixed(2)} Kcal
+                      </span>
+                      <span class="mr-2">
+                        Carbs: {item.carbs.toFixed(2)} Kcal
+                      </span>
+                      <span class="mr-2">
+                        Protein: {item.protein.toFixed(2)} Kcal
+                      </span>
+                      <span class="mr-2">Fat: {item.fat.toFixed(2)} Kcal</span>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <div class="font-bold text-lg">{item.title}</div>
-                  <div class="text-xs text-gray-500">
-                    <span class="mr-2">
-                      Calories: {item.calories.toFixed(2)} Kcal
-                    </span>
-                    <span class="mr-2">
-                      Carbs: {item.carbs.toFixed(2)} Kcal
-                    </span>
-                    <span class="mr-2">
-                      Protein: {item.protein.toFixed(2)} Kcal
-                    </span>
-                  </div>
+                <div className="">
+                  <button onClick={() => onClickFood(item)}>
+                    <PlusIcon className="w-6 h-6 p-1 text-white rounded-sm bg-mainorange-100"></PlusIcon>
+                  </button>
                 </div>
               </div>
             ))
@@ -196,25 +204,31 @@ export default function Dashboard() {
           <h2 className="text-xl font-semibold">Recent Food</h2>
         </div>
         <div>
-          {food.data.map((food) => (
+          {dataUserHistories?.histories_details?.map((food) => (
             <div className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4">
               <div className="w-full lg:w-1/6 lg:h-1/5">
                 <img
                   className="object-cover w-full h-48 rounded-t-lg lg:rounded-lg"
-                  src={food.img_url}
+                  src={
+                    food?.food?.imgURL
+                      ? food?.food?.imgURL
+                      : "https://assets.materialup.com/uploads/98622f57-ac59-4b44-8db2-3355bb43efed/preview.jpg"
+                  }
                   // width={100}
                   // height={100}
-                  alt={food.title}
+                  alt={food?.food?.title}
                 />
               </div>
               <div className="flex flex-col items-center justify-between w-full px-4 lg:flex-row">
                 <div className="flex justify-between w-full p-4">
                   <div>
-                    <p className="text-xl">{food.title}</p>
-                    <p>{food.serving_size.toFixed(2)} G</p>
+                    <p className="text-xl">{food?.food?.title}</p>
+                    <p>{food?.food?.serving_size} G</p>
                   </div>
                   <div>
-                    <p className="text-xl">+{food.calories} Kcal</p>
+                    <p className="text-xl">
+                      +{food?.food?.calories.toFixed(0)} Kcal
+                    </p>
                   </div>
                 </div>
                 <div className="w-full lg:w-1/6">
