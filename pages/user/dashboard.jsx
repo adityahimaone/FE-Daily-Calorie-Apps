@@ -41,7 +41,6 @@ export default function Dashboard() {
   const [waterConsume, setWaterConsume] = useState(0);
   const [offcanvas, setOffcanvas] = useState(false);
   const infoUser = useSelector((state) => state.user);
-  console.log(infoUser, "infoUser");
 
   return (
     <Layout pageTitle="Dashboard">
@@ -52,7 +51,7 @@ export default function Dashboard() {
             P
           </div>
           <div className="flex flex-col mx-5">
-            <p className="font-semibold">Hello, {infoUser?.name}</p>
+            <p className="font-semibold">Hello, {infoUser.name}</p>
             <p>Ready to track your daily calories</p>
           </div>
         </div>
@@ -74,7 +73,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-center h-full p-4">
             <div>
               <h1 className="text-4xl font-bold">1234</h1>
-              <h1 className="text-2xl">/ {infoUser?.calories}</h1>
+              <h1 className="text-2xl">/ {infoUser.calories} </h1>
             </div>
             <div>
               <h1 className="text-4xl font-light">Kcal</h1>

@@ -13,10 +13,6 @@ import {
 import profile from "@/public/dummy.png";
 import Image from "next/image";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import Cookies from "universal-cookie";
-import { clearUser } from "store/userSlice";
-import { useDispatch } from "react-redux";
 
 export default function Nav(props) {
   const { location } = props;
@@ -49,7 +45,13 @@ export default function Nav(props) {
     },
   ];
 
-  const userDropdownListLogout = [{ title: "Login", link: "/user/login" }];
+  const userDropdownListLogout = [
+    { title: "Login", link: "/login" },
+    { title: "Register", link: "/register" },
+  ];
+
+  const spliceName = infoUser.name.split(" ");
+  console.log(spliceName);
 
   return (
     <nav
@@ -112,7 +114,9 @@ export default function Nav(props) {
             </ul>
           </div>
           <div className="flex items-center justify-end w-2/12 space-x-2">
-            <span className="hidden lg:block text-medium">Hello, User</span>
+            <span className="hidden lg:block text-medium">
+              Hello, {spliceName[0]}
+            </span>
             <div className="relative">
               <button
                 type="button"
@@ -121,7 +125,7 @@ export default function Nav(props) {
               >
                 <div className="w-8 h-8 border-2 rounded-full border-mainorange-100">
                   <img
-                    src={infoUser.id !== 0 ? infoUser.avatar_url : profile.src}
+                    src={infoUser.id !== 0 ? infoUser?.avatar_url : profile.src}
                     width={30}
                     height={30}
                     className="object-cover w-8 h-8 rounded-full "
@@ -149,7 +153,7 @@ export default function Nav(props) {
                         >
                           <Link href={item.link}>
                             <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
-                              {item.title}{" "}
+                              {item.title}
                               <span className="ml-2">{item.icon}</span>
                             </a>
                           </Link>
@@ -162,7 +166,7 @@ export default function Nav(props) {
                         >
                           <Link href={item.link}>
                             <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
-                              {item.title}{" "}
+                              {item.title}
                               <span className="ml-2">{item.icon}</span>
                             </a>
                           </Link>

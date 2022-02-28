@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 
-const useFetch = ({ api, method, url, data = null, config = null }) => {
-  const [response, setResponse] = useState(null);
+export default function useFetch({
+  api,
+  method,
+  url,
+  data = null,
+  config = null,
+}) {
+  const [response, setResponse] = useState({});
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,6 +29,4 @@ const useFetch = ({ api, method, url, data = null, config = null }) => {
   }, [api, method, url, data, config]);
 
   return { response, error, isLoading };
-};
-
-export default useFetch;
+}

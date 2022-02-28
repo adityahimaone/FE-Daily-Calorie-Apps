@@ -8,9 +8,9 @@ export default function logout() {
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    Router.push("/user/login");
-    cookies.remove("token", { path: "/", domain: window.location.hostname });
+    Router.push("/login");
     dispatch(clearUser());
+    cookies.remove("token", { path: "/", domain: window.location.hostname });
   };
 
   return <>{onLogout()}</>;

@@ -5,7 +5,7 @@ import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import LoginAuthUser from "../../hooks/user/LoginAuth";
+import LoginAuthUser from "../hooks/user/LoginAuth";
 import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 import GetUserByID from "@/hooks/user/GetUserByID";
@@ -72,7 +72,6 @@ export default function Login() {
                   <TextField
                     fullWidth
                     required
-                    id="outlined-basic"
                     label="Email"
                     color="primary"
                     name="email"
@@ -86,7 +85,6 @@ export default function Login() {
                   <TextField
                     fullWidth
                     required
-                    id="outlined-basic"
                     label="Password"
                     name="password"
                     type={loginForm.showPassword ? "text" : "password"}

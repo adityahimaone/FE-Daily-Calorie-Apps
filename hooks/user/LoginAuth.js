@@ -8,6 +8,7 @@ import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 import Router from "next/router";
 import GetUserByID from "./GetUserByID";
 import profile from "@/public/dummy.png";
+import axios from "axios";
 
 export default function LoginAuthUser() {
   const cookies = new Cookies();
@@ -48,7 +49,7 @@ export default function LoginAuthUser() {
         weight: infoUser.weight,
       })
     );
-  }, [infoUser]);
+  }, [decoded, infoUser]);
 
   const [response, setResponse] = useState({
     meta: {
@@ -60,32 +61,55 @@ export default function LoginAuthUser() {
     },
   });
 
-  const sendDataToServer = (payload) => {
+  const sendDataToServer = async (payload) => {
     payload = {
       email: payload.email,
       password: payload.password,
     };
 
-    mainApiNoAuth
+    await mainApiNoAuth
       .post("/api/v1/users/login", payload)
       .then((res) => {
-        setResponse(res.data);
+        let token = res.data.data.token;
         cookies.set("token", res.data.data.token, {
           path: "/",
           domain: window.location.hostname,
         });
-        let decoded = jwtDecode(res.data.data.token);
-        mainApiAuth.get(`/api/v1/users/${decoded.id}`).then((res) => {
-          setInfoUser(res.data.data);
-        });
-        setDecoded(decoded);
-        Router.push("/user/dashboard");
+        setResponse(res.data);
+        let decodedJWT = jwtDecode(res.data.data.token);
+        saveUser(decodedJWT.id, token);
+        setDecoded(decodedJWT);
       })
       .catch((err) => {
         setError(err);
       })
       .finally(() => {
         setIsLoading(false);
+      });
+  };
+
+  const saveUser = async (id, token) => {
+    const mainApiURL = "http://localhost:8080";
+    const mainApiAuth = axios.create({
+      baseURL: mainApiURL,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Accest-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        "Access-Control-Allow-Headers":
+          "append,delete,entries,foreach,get,has,keys,set,values,Authorization,Content-Type",
+      },
+    });
+    await mainApiAuth
+      .get(`/api/v1/users/${id}`)
+      .then((res) => {
+        setInfoUser(res.data.data);
+        Router.push("/user/dashboard");
+      })
+      .catch((err) => {
+        setError(err);
       });
   };
 
