@@ -20,61 +20,80 @@ import AddHistories from "@/hooks/user/AddHistories";
 import GetHistories from "@/hooks/user/GetHistories";
 import useFetch from "@/hooks/useFetch";
 import { mainApiAuth } from "@/services/Api";
+import useGetUser from "@/hooks/user/useGetUser";
+import useAddHistories from "@/hooks/user/useAddHistories";
+import useGetFood from "@/hooks/useGetFood";
+import useDeleteHistory from "@/hooks/user/useDeleteHistory";
 
 export default function Dashboard() {
-  const { sendDataToServer: addHitory, response: respHistory } = AddHistories();
-  const [refresh, setRefresh] = useState(true);
-  const { sendDataToServer, response } = GetFood();
-  const { mutate, error, data: respGetHistories } = GetHistories(refresh);
-  const [waterConsume, setWaterConsume] = useState(0);
-  const [offcanvas, setOffcanvas] = useState(false);
   const infoUser = useSelector((state) => state.user);
+
+  // UseState
+  const [waterConsume, setWaterConsume] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
-  console.log(searchQuery);
-  console.log(response, "response");
-  console.log(searchResult, "searchResult");
-  console.log(respGetHistories, "respGetHistories");
   const [dataUserHistories, setdataUserHistories] = useState({});
+  const [itemID, setItemID] = useState(0);
+
+  // Custom Hook
+  const { sendDataToServer: addHistory, response: respHistory } =
+    AddHistories();
+  const {
+    mutate: mutateGetHistories,
+    error,
+    data: respGetHistories,
+  } = GetHistories();
+  const [offcanvas, setOffcanvas] = useState(false);
+  const {
+    data: dataUser,
+    mutate: mutateGetUser,
+    error: errGetUser,
+    isLoading,
+  } = useGetUser(infoUser.id);
+  const {
+    data: respDeleteHitory,
+    mutate: mutateDeleteHistory,
+    error: errDeleteHistory,
+  } = useDeleteHistory(itemID);
+
+  const { response, mutate: mutateGetFood } = useGetFood(searchQuery);
+
   useEffect(() => {
+    mutateGetUser();
+    mutateGetHistories();
     setdataUserHistories(respGetHistories?.data);
-    setRefresh(!refresh);
   }, [respGetHistories, infoUser]);
 
-  console.log(dataUserHistories, "dataUserHistories");
-  console.log(infoUser.name, "infoUser");
-
-  useEffect(() => {
-    if (infoUser.id !== 0) {
-      setRefresh(!refresh);
-    }
-  }, [dataUserHistories, infoUser.id]);
-
   const fetchData = async (searchQuery, cb) => {
-    console.warn("fetching" + searchQuery);
-    const res = await sendDataToServer(searchQuery);
+    // console.warn("fetching" + searchQuery);
+    const res = await mutateGetFood(searchQuery);
     cb(res);
   };
 
   const debounceSearch = debounce((searchQuery, cb) => {
     fetchData(searchQuery, cb);
-  }, 500);
+  }, 2000);
 
   useEffect(() => {
     debounceSearch(searchQuery, (res) => {
       setSearchResult(res);
+      mutateGetHistories();
     });
   }, [searchQuery]);
 
-  useEffect(() => {
-    setSearchResult(response.data);
-  }, [response]);
-
-  const onClickFood = (item) => {
+  const onClickFood = async (item) => {
     console.log(item, "item");
-    addHitory(item);
-    setRefresh(!refresh);
+    addHistory(item);
+    mutateGetHistories();
   };
+
+  const onClickDeleteHistory = (id) => {
+    // console.log(id, "item id");
+    setItemID(id);
+    // mutateDeleteHistory();
+  };
+
+  console.log(dataUserHistories?.histories_details, "dataUserHistories");
 
   return (
     <Layout pageTitle="Dashboard">
@@ -133,8 +152,8 @@ export default function Dashboard() {
           />
         </div>
         <div class="bg-white w-full rounded-xl shadow-xl overflow-hidden p-1">
-          {searchResult ? (
-            searchResult?.slice(0, 5).map((item) => (
+          {searchResult !== null ? (
+            searchResult?.data?.slice(0, 5).map((item) => (
               <div
                 key={item.id}
                 class="w-full flex p-3 pl-4 items-center justify-between space-x-2 hover:bg-gray-300 rounded-lg cursor-pointer"
@@ -213,7 +232,11 @@ export default function Dashboard() {
         </div>
         <div>
           {dataUserHistories?.histories_details?.map((food) => (
-            <div className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4">
+            <div
+              key={food?.food?.id}
+              className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4"
+            >
+              <p>{food?.food?.id}</p>
               <div className="w-full lg:w-1/6 lg:h-1/5">
                 <img
                   className="object-cover w-full h-48 rounded-t-lg lg:rounded-lg"
@@ -235,12 +258,22 @@ export default function Dashboard() {
                   </div>
                   <div>
                     <p className="text-xl">
-                      +{food?.food?.calories.toFixed(0)} Kcal
+                      +
+                      {food?.food?.calories !== 0
+                        ? food?.food?.calories?.toFixed(0)
+                        : 0}
+                      Kcal
                     </p>
                   </div>
                 </div>
                 <div className="w-full lg:w-1/6">
-                  <button className="w-full px-4 py-2 text-white rounded-lg bg-mainorange-100">
+                  <button
+                    onClick={() => {
+                      setItemID(food.ID);
+                      mutateGetHistories();
+                    }}
+                    className="w-full px-4 py-2 text-white rounded-lg bg-mainorange-100 hover:bg-orange-700/80"
+                  >
                     Delete
                   </button>
                 </div>

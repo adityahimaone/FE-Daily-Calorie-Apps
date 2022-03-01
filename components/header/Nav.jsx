@@ -34,6 +34,11 @@ export default function Nav(props) {
 
   const userDropdownListLogin = [
     {
+      title: "Dashboard",
+      link: "/user/dashboard",
+      icon: <CogIcon className="w-4 h-4" />,
+    },
+    {
       title: "Setting",
       link: "/setting",
       icon: <CogIcon className="w-4 h-4" />,
@@ -50,7 +55,7 @@ export default function Nav(props) {
     { title: "Register", link: "/register" },
   ];
 
-  const spliceName = infoUser.name.split(" ");
+  const spliceName = infoUser?.name?.split(" ");
 
   return (
     <nav
@@ -114,7 +119,7 @@ export default function Nav(props) {
           </div>
           <div className="flex items-center justify-end w-2/12 space-x-2">
             <span className="hidden lg:block text-medium">
-              Hello, {spliceName[0]}
+              Hello, {spliceName ? spliceName[0] : "Guest"}
             </span>
             <div className="relative">
               <button
@@ -152,10 +157,10 @@ export default function Nav(props) {
                           className="border-b border-white/60 last:border-0"
                         >
                           <Link href={item.link}>
-                            <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            <button className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                               {item.title}
                               <span className="ml-2">{item.icon}</span>
-                            </a>
+                            </button>
                           </Link>
                         </li>
                       ))
@@ -165,10 +170,10 @@ export default function Nav(props) {
                           className="border-b border-white/60 last:border-0"
                         >
                           <Link href={item.link}>
-                            <a className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            <button className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                               {item.title}
                               <span className="ml-2">{item.icon}</span>
-                            </a>
+                            </button>
                           </Link>
                         </li>
                       ))}

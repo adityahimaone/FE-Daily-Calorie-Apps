@@ -12,19 +12,29 @@ import GetUserByID from "@/hooks/user/GetUserByID";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
+import useGetUser from "@/hooks/user/useGetUser";
+import Router from "next/router";
 
 export default function Login() {
-  const { resultLogin, sendDataToServer, properties, decoded } =
-    LoginAuthUser();
-  // const { user } = useLogin();
-
   const initLogin = {
     email: "",
     password: "",
     showPassword: false,
   };
 
+  const [idUser, setIdUser] = useState(0);
+
   const [loginForm, setLoginForm] = useState(initLogin);
+  const { user, mutate, loading } = useLogin(loginForm);
+
+  const infoUser = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (infoUser.id !== 0) {
+      setIdUser(infoUser.id);
+      // mutateGetUser();
+    }
+  }, [infoUser, user]);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -49,7 +59,8 @@ export default function Login() {
 
   const onClick = (e) => {
     e.preventDefault();
-    sendDataToServer(loginForm);
+    // sendDataToServer(loginForm);
+    mutate();
   };
 
   return (
