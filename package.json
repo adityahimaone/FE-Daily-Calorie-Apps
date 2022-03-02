@@ -16,7 +16,6 @@
     "axios": "^0.26.0",
     "daisyui": "^2.2.2",
     "firebase": "^7.24.0",
-    "js-base64": "^3.7.2",
     "jwt-decode": "^3.1.2",
     "lodash.debounce": "^4.0.8",
     "next": "12.0.10",

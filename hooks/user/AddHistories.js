@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { mainApiAuth } from "@/services/Api";
+import { AxiosCustom } from "utils/api";
+import { axiosConfig } from "utils/helper";
 
 export default function AddHistories() {
   const [response, setResponse] = useState({});
@@ -17,8 +19,7 @@ export default function AddHistories() {
       serving_size: payload.serving_size,
     };
 
-    mainApiAuth
-      .post("/api/v1/histories/automatic", payload)
+    AxiosCustom.post("/api/v1/histories/automatic", payload, axiosConfig())
       .then((res) => {
         setResponse(res.data);
       })

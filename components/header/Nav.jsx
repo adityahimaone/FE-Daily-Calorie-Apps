@@ -157,7 +157,7 @@ export default function Nav(props) {
                           className="border-b border-white/60 last:border-0"
                         >
                           <Link href={item.link}>
-                            <button className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                               {item.title}
                               <span className="ml-2">{item.icon}</span>
                             </button>
@@ -170,7 +170,7 @@ export default function Nav(props) {
                           className="border-b border-white/60 last:border-0"
                         >
                           <Link href={item.link}>
-                            <button className="flex items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                               {item.title}
                               <span className="ml-2">{item.icon}</span>
                             </button>

@@ -13,19 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCaloriesCount } from "store/caloriesSlice";
 import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
-import RegisterAPI from "@/hooks/user/Register";
+// import RegisterAPI from "@/hooks/user/Register";
+import useRegister from "@/hooks/user/useRegister";
 
 export default function Register() {
   const dispatch = useDispatch();
   const countCalorie = useSelector((state) => state.calories.countCalories);
-  const { response, error, isLoading, sendDataToServer } = RegisterAPI();
+  // const { response, error, isLoading, sendDataToServer } = RegisterAPI();
   const [page, setPage] = useState(1);
-  const [data, setData] = useState({
-    profile: {},
-    personalinfo: {},
-    avatar: {},
-  });
-
   const initValueForm = {
     name: "",
     email: "",
@@ -40,8 +35,6 @@ export default function Register() {
     },
   };
 
-  const [form, setForm] = useState(initValueForm);
-
   const initCountForm = {
     gender: "",
     weight: 0,
@@ -49,8 +42,17 @@ export default function Register() {
     age: 0,
     activity: 0,
   };
-
+  const [form, setForm] = useState(initValueForm);
   const [formCount, setFormCount] = useState(initCountForm);
+
+  const { user, mutate, loading, error } = useRegister(form);
+
+  useEffect(() => {
+    if (user) {
+      setPage(1);
+      setForm(initValueForm);
+    }
+  }, [user]);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -96,19 +98,20 @@ export default function Register() {
       ...form,
       personal_data: { ...form.personal_data, calorie: countCalorie.calories },
     });
-  }, [form.personal_data.activity]);
+  }, [countCalorie.calories]);
 
   const submit = () => {
-    sendDataToServer({
-      name: form.name,
-      email: form.email,
-      password: form.password,
-      avatar_url: form.avatar_url,
-      gender: form.gender,
-      calorie: form.personal_data.calorie,
-      weight: form.personal_data.weight,
-      height: form.personal_data.height,
-    });
+    // sendDataToServer({
+    //   name: form.name,
+    //   email: form.email,
+    //   password: form.password,
+    //   avatar_url: form.avatar_url,
+    //   gender: form.gender,
+    //   calorie: form.personal_data.calorie,
+    //   weight: form.personal_data.weight,
+    //   height: form.personal_data.height,
+    // });
+    mutate(form);
   };
 
   console.log(form, "form");

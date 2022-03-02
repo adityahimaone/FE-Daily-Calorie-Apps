@@ -270,7 +270,7 @@ export default function Dashboard() {
                   <button
                     onClick={() => {
                       setItemID(food.ID);
-                      mutateGetHistories();
+                      mutateGetHistories(null, false);
                     }}
                     className="w-full px-4 py-2 text-white rounded-lg bg-mainorange-100 hover:bg-orange-700/80"
                   >
