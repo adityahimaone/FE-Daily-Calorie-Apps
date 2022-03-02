@@ -24,33 +24,41 @@ import useGetUser from "@/hooks/user/useGetUser";
 import useAddHistories from "@/hooks/user/useAddHistories";
 import useGetFood from "@/hooks/useGetFood";
 import useDeleteHistory from "@/hooks/user/useDeleteHistory";
+import useAddWater from "@/hooks/user/useAddWater";
 
 export default function Dashboard() {
   const infoUser = useSelector((state) => state.user);
 
   // UseState
-  const [waterConsume, setWaterConsume] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [dataUserHistories, setdataUserHistories] = useState({});
+  const [waterConsume, setWaterConsume] = useState(
+    respGetHistories?.data?.water
+  );
   const [itemID, setItemID] = useState(0);
   const [caloriePercent, setCaloriePercent] = useState(0);
+  const [offcanvas, setOffcanvas] = useState(false);
 
   // Custom Hook
   const { sendDataToServer: addHistory, response: respHistory } =
     AddHistories();
+
   const {
     mutate: mutateGetHistories,
     error,
     data: respGetHistories,
   } = GetHistories();
-  const [offcanvas, setOffcanvas] = useState(false);
+
+  console.log(respGetHistories?.data?.water, "respGetHistories");
+
   const {
     data: dataUser,
     mutate: mutateGetUser,
     error: errGetUser,
     isLoading,
   } = useGetUser(infoUser.id);
+
   const {
     data: respDeleteHitory,
     mutate: mutateDeleteHistory,
@@ -58,6 +66,10 @@ export default function Dashboard() {
   } = useDeleteHistory(itemID);
 
   const { response, mutate: mutateGetFood } = useGetFood(searchQuery);
+
+  const { data: dataWater, mutate: mutateAddWater } = useAddWater(waterConsume);
+
+  // uef
 
   useEffect(() => {
     mutateGetUser();
@@ -83,7 +95,7 @@ export default function Dashboard() {
   }, [searchQuery]);
 
   const onClickFood = async (item) => {
-    console.log(item, "item");
+    // console.log(item, "item");
     addHistory(item);
     mutateGetHistories();
   };
@@ -212,16 +224,24 @@ export default function Dashboard() {
       <div className="p-4 rounded-lg shadow-md bg-bluewhite">
         <div className="flex flex-row justify-between">
           <h2 className="text-xl font-medium">Water</h2>
-          <h2 className="text-xl font-medium">{waterConsume} L</h2>
+          <h2 className="text-xl font-medium">
+            {respGetHistories?.data?.water
+              ? respGetHistories?.data?.water * 0.25
+              : 0}{" "}
+            L
+          </h2>
         </div>
         <hr className="my-4 border-t-2 rounded border-mainpurple-100" />
         <div className="flex items-center justify-center">
           <Rating
             name="customized-color"
-            defaultValue={0}
+            defaultValue={
+              respGetHistories?.data?.water ? respGetHistories?.data?.water : 0
+            }
             getLabelText={(value) => `${value} Water${value !== 1 ? "s" : ""}`}
             onChange={(event, newValue) => {
-              setWaterConsume(newValue * 0.25);
+              setWaterConsume(newValue);
+              mutateAddWater();
             }}
             max={8}
             precision={1}
