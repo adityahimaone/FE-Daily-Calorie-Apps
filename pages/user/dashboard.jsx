@@ -34,6 +34,7 @@ export default function Dashboard() {
   const [searchResult, setSearchResult] = useState([]);
   const [dataUserHistories, setdataUserHistories] = useState({});
   const [itemID, setItemID] = useState(0);
+  const [caloriePercent, setCaloriePercent] = useState(0);
 
   // Custom Hook
   const { sendDataToServer: addHistory, response: respHistory } =
@@ -87,6 +88,12 @@ export default function Dashboard() {
     mutateGetHistories();
   };
 
+  useEffect(() => {
+    let percentage =
+      (dataUserHistories?.total_calories / infoUser?.calories) * 100;
+    setCaloriePercent(percentage.toFixed(0));
+  }, [dataUserHistories?.total_calories]);
+
   const onClickDeleteHistory = (id) => {
     // console.log(id, "item id");
     setItemID(id);
@@ -120,7 +127,7 @@ export default function Dashboard() {
             <h2 className="relative text-white">Calorie Percent</h2>
           </div>
           <div className="flex items-center justify-center h-full p-4">
-            <ProgessCircular progress="30" />
+            <ProgessCircular progress={caloriePercent} />
           </div>
         </div>
         <div className="w-full p-4 text-white rounded-lg shadow-md bg-mainpurple-100">
