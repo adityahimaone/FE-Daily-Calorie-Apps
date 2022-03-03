@@ -10,12 +10,16 @@ export default function useGetMealPlan(payload) {
     rangeCalories: payload?.rangeCalories,
   };
   const fetcher = (url) =>
-    AxiosCustom.get(url, payload, axiosConfig()).then((res) => res.data);
+    AxiosCustom.post(url, payload, axiosConfig()).then((res) => res.data);
 
-  const { data, mutate, error } = useSWR("/api/v1/meal-plan/api/", fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnMount: false,
-    revalidateOnReconnect: false,
-  });
+  const { data, mutate, error } = useSWR(
+    "/api/v1/open-api/meal-plan",
+    fetcher,
+    {
+      revalidateOnFocus: false,
+      revalidateOnMount: false,
+      revalidateOnReconnect: false,
+    }
+  );
   return { data, mutate, error };
 }

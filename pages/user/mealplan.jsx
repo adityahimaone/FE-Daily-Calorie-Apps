@@ -13,6 +13,7 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
+import useGetMealPlan from "@/hooks/user/useGetMealPlan";
 
 export default function Mealplan() {
   const initMealPlan = {
@@ -27,6 +28,12 @@ export default function Mealplan() {
   const [page, setPage] = useState(1);
 
   console.log(mealPlan, "mealPlan");
+
+  const {
+    data: respGetMealPlan,
+    mutate: mutateGetMealPlan,
+    error,
+  } = useGetMealPlan(mealPlan);
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -45,7 +52,9 @@ export default function Mealplan() {
     setPage((page) => page - 1);
   };
 
-  const submit = () => {};
+  const submit = () => {
+    mutateGetMealPlan();
+  };
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -133,7 +142,7 @@ export default function Mealplan() {
               allowScrollButtonsMobile
               aria-label="scrollable basic tabs example"
             >
-              {recipe.data.lunch.map((item, index) => (
+              {respGetMealPlan?.data.lunch.map((item, index) => (
                 <Tab
                   key={index}
                   label={`Day ${index + 1}`}
@@ -145,7 +154,7 @@ export default function Mealplan() {
             </Tabs>
           </div>
 
-          {recipe.data.breakfast.map((item, index) => (
+          {respGetMealPlan?.data.breakfast.map((item, index) => (
             <TabPanel value={value} index={index}>
               <div className="flex justify-center">
                 <div className="grid lg:grid-cols-3 gap-10 items-stretch max-h-fit border grid-flow-row auto-cols-max auto-rows-max">
@@ -292,7 +301,7 @@ function PageTwo({ mealPlan, onChange }) {
 }
 
 function PageThree({ mealPlan, onChange, setMealPlan }) {
-  const [rangeValue, setRangeValue] = useState([20, 37]);
+  const [rangeValue, setRangeValue] = useState([400, 600]);
   const [caloriesType, setCaloriesType] = useState(false);
 
   const caloriesTypeSelect = [
@@ -313,7 +322,6 @@ function PageThree({ mealPlan, onChange, setMealPlan }) {
   };
 
   const handleChange = (event, newValue) => {
-    console.log(newValue[0], newValue[1], "value");
     setRangeValue(newValue);
     setMealPlan({
       ...mealPlan,
@@ -321,12 +329,9 @@ function PageThree({ mealPlan, onChange, setMealPlan }) {
     });
   };
   const valueText = (value) => {
-    return `${value}`;
+    return `${value} Kcal`;
   };
 
-  console.log(valueText());
-
-  console.log(rangeValue);
   return (
     <div>
       <div>
@@ -354,6 +359,7 @@ function PageThree({ mealPlan, onChange, setMealPlan }) {
               getAriaLabel={() => "Temperature range"}
               value={rangeValue}
               onChange={handleChange}
+              marks
               step={100}
               min={0}
               max={2000}
