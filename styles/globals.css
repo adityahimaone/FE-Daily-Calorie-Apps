@@ -17,3 +17,30 @@
 .btn-orange {
   @apply text-white bg-mainorange-100 focus:ring-orange-600/70 hover:bg-orange-600/70;
 }
+
+.modal-main {
+  position: fixed;
+  visibility: visible;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 999;
+  padding-bottom: 25px;
+  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.4;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, opacity;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 640px) {
+  .modal-main {
+    align-items: center;
+  }
+}
