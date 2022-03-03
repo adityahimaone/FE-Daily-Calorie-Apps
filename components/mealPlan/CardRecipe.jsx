@@ -3,10 +3,10 @@ import React from "react";
 export default function CardRecipe(props) {
   const { element, mealType } = props;
   return (
-    <div className="">
+    <div>
       <h1 className="text-center my-4 font-bold text-xl">{mealType}</h1>
       <a href={element?.recipeURL}>
-        <div className="flex flex-col max-w-xs bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105">
+        <div className="flex h-full max-w-xs bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105">
           <div>
             <div>
               <img
@@ -14,7 +14,7 @@ export default function CardRecipe(props) {
                 src={element?.recipeImageURL}
               />
             </div>
-            <div className="p-5">
+            <div className="p-5 ">
               <h2 className="text-mainpurple-100 font-semibold text-lg">
                 {element?.recipeLabel}
               </h2>
@@ -23,7 +23,7 @@ export default function CardRecipe(props) {
               </p>
               <hr className="my-2" />
               <h3 className=" font-semibold">Ingredients : </h3>
-              <ul >
+              <ul className="">
                 {element?.recipeIngredients.map((item, index) => (
                   <li key={index}>
                     <p className="font-light"> - {item}</p>

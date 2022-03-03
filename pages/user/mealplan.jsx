@@ -131,7 +131,7 @@ export default function Mealplan() {
         </div>
       </Modal>
       {/* Switch Food */}
-      <div className="flex justify-center bg-bluewhite rounded-lg">
+      <div className="flex justify-center min-h-full  bg-bluewhite rounded-lg">
         <div className="w-full">
           <div className="flex border-b-2 justify-center">
             <Tabs
@@ -156,8 +156,8 @@ export default function Mealplan() {
 
           {respGetMealPlan?.data.breakfast.map((item, index) => (
             <TabPanel value={value} index={index}>
-              <div className="flex justify-center">
-                <div className="grid lg:grid-cols-3 gap-10 items-stretch max-h-fit border grid-flow-row auto-cols-max auto-rows-max">
+              <div className="flex justify-center h-full pb-24">
+                <div className="grid lg:grid-cols-3 space-y-5 lg:space-y-0 gap-10 items-stretch">
                   <CardRecipe element={item} mealType="Breakfast" />
                   <CardRecipe
                     element={recipe.data.lunch[index]}
