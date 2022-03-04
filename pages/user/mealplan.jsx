@@ -49,9 +49,14 @@ export default function Mealplan() {
         ...mealPlan,
         mealPlan: JSON.stringify(respGetMealPlan?.data),
       });
-      mutateInsertMealPlan();
     }
   }, [respGetMealPlan?.data]);
+
+  useEffect(() => {
+    if (mealPlan.mealPlan !== "") {
+      mutateInsertMealPlan();
+    }
+  }, [mealPlan.mealPlan]);
 
   useEffect(() => {
     if (respLastMeal?.meal_plans) {
@@ -171,7 +176,7 @@ export default function Mealplan() {
               allowScrollButtonsMobile
               aria-label="scrollable basic tabs example"
             >
-              {dataMealPlan?.breakfast.map((item, index) => (
+              {dataMealPlan?.breakfast?.map((item, index) => (
                 <Tab
                   key={index}
                   label={`Day ${index + 1}`}
@@ -183,7 +188,7 @@ export default function Mealplan() {
             </Tabs>
           </div>
 
-          {dataMealPlan?.breakfast.map((item, index) => (
+          {dataMealPlan?.breakfast?.map((item, index) => (
             <TabPanel value={value} index={index}>
               <div className="flex justify-center h-full pb-24">
                 <div className="grid lg:grid-cols-3 space-y-5 lg:space-y-0 gap-10 items-stretch">

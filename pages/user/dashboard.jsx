@@ -17,7 +17,6 @@ import { useSelector } from "react-redux";
 import GetFood from "@/hooks/GetFood";
 import debounce from "lodash.debounce";
 import AddHistories from "@/hooks/user/AddHistories";
-import GetHistories from "@/hooks/user/GetHistories";
 import useFetch from "@/hooks/useFetch";
 import { mainApiAuth } from "@/services/Api";
 import useGetUser from "@/hooks/user/useGetUser";
@@ -25,6 +24,7 @@ import useAddHistories from "@/hooks/user/useAddHistories";
 import useGetFood from "@/hooks/useGetFood";
 import useDeleteHistory from "@/hooks/user/useDeleteHistory";
 import useAddWater from "@/hooks/user/useAddWater";
+import useGetLastHistories from "@/hooks/user/useGetLastHistories";
 
 export default function Dashboard() {
   const infoUser = useSelector((state) => state.user);
@@ -48,7 +48,7 @@ export default function Dashboard() {
     mutate: mutateGetHistories,
     error,
     data: respGetHistories,
-  } = GetHistories();
+  } = useGetLastHistories();
 
   console.log(respGetHistories?.data?.water, "respGetHistories");
 
