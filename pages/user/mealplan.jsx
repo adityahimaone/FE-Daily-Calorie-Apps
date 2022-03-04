@@ -189,11 +189,11 @@ export default function Mealplan() {
                 <div className="grid lg:grid-cols-3 space-y-5 lg:space-y-0 gap-10 items-stretch">
                   <CardRecipe element={item} mealType="Breakfast" />
                   <CardRecipe
-                    element={recipe.data.lunch[index]}
+                    element={dataMealPlan?.lunch[index]}
                     mealType="Lunch"
                   />
                   <CardRecipe
-                    element={recipe.data.dinner[index]}
+                    element={dataMealPlan?.dinner[index]}
                     mealType="Dinner"
                   />
                 </div>
