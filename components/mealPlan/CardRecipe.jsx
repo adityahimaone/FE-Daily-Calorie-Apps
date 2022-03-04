@@ -6,7 +6,7 @@ export default function CardRecipe(props) {
     <div>
       <h1 className="text-center my-4 font-bold text-xl">{mealType}</h1>
       <a href={element?.recipeURL}>
-        <div className="flex h-full max-w-xs bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105">
+        <div className="flex flex-col h-full max-w-xs bg-white rounded-xl shadow-lg overflow-hidden transition-all hover:scale-105">
           <div>
             <div>
               <img

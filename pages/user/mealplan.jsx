@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "@/layouts/UserLayout";
 import Image from "next/image";
 import Meal from "@/public/meal.png";
@@ -14,18 +14,22 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import useGetMealPlan from "@/hooks/user/useGetMealPlan";
+import useInsertMealPlan from "@/hooks/user/useInsertMealPlan";
+import useGetLastMealPlans from "@/hooks/user/useGetLastMealPlans";
 
 export default function Mealplan() {
   const initMealPlan = {
     dietaryPreferences: "balanced",
     planType: "7",
     rangeCalories: "400-600",
+    mealPlan: "",
   };
 
   const [value, setValue] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [mealPlan, setMealPlan] = useState(initMealPlan);
   const [page, setPage] = useState(1);
+  const [dataMealPlan, setdataMealPlan] = useState({});
 
   console.log(mealPlan, "mealPlan");
 
@@ -34,6 +38,31 @@ export default function Mealplan() {
     mutate: mutateGetMealPlan,
     error,
   } = useGetMealPlan(mealPlan);
+
+  const { mutate: mutateInsertMealPlan } = useInsertMealPlan(mealPlan);
+
+  const { data: respLastMeal } = useGetLastMealPlans();
+
+  useEffect(() => {
+    if (respGetMealPlan?.data !== "") {
+      setMealPlan({
+        ...mealPlan,
+        mealPlan: JSON.stringify(respGetMealPlan?.data),
+      });
+      mutateInsertMealPlan();
+    }
+  }, [respGetMealPlan?.data]);
+
+  useEffect(() => {
+    if (respLastMeal?.meal_plans) {
+      let getMealPlan = respLastMeal.meal_plans;
+      let parseJson = JSON.parse(getMealPlan);
+      setdataMealPlan(parseJson);
+    }
+  }, [respLastMeal?.meal_plans]);
+
+  console.log(dataMealPlan, "dataMealPlan");
+  console.log(dataMealPlan.breakfast, "dataMealPlan breakfast");
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -142,7 +171,7 @@ export default function Mealplan() {
               allowScrollButtonsMobile
               aria-label="scrollable basic tabs example"
             >
-              {respGetMealPlan?.data.lunch.map((item, index) => (
+              {dataMealPlan?.breakfast.map((item, index) => (
                 <Tab
                   key={index}
                   label={`Day ${index + 1}`}
@@ -154,7 +183,7 @@ export default function Mealplan() {
             </Tabs>
           </div>
 
-          {respGetMealPlan?.data.breakfast.map((item, index) => (
+          {dataMealPlan?.breakfast.map((item, index) => (
             <TabPanel value={value} index={index}>
               <div className="flex justify-center h-full pb-24">
                 <div className="grid lg:grid-cols-3 space-y-5 lg:space-y-0 gap-10 items-stretch">
