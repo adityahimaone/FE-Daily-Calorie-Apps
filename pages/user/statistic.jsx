@@ -3,9 +3,11 @@ import Layout from "@/layouts/UserLayout";
 import useGetAllHistories from "@/hooks/user/useGetAllHistories";
 import CaloriesStat from "@/components/chart/CaloriesStat";
 import { VariableIcon } from "@heroicons/react/solid";
+import { useSelector } from "react-redux";
 
 export default function statistic() {
   const { data, error } = useGetAllHistories();
+  const infoUser = useSelector((state) => state.user);
 
   console.log(data, "data all hitoriess");
 
@@ -44,22 +46,22 @@ export default function statistic() {
       dataCard?.total_food.length;
   }
 
-  console.log(dataCard, "dataset");
+  console.log(infoUser, "dataset");
   return (
     <Layout>
       <div>
         <div>
           <h1 className="text-2xl font-bold">Statistic</h1>
         </div>
-        <div className="flex flex-col lg:flex-row gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           <div className="flex-1">
-            <div className="bg-slate-50 rounded-lg shadow-lg p-4">
+            <div className="bg-slate-50 rounded-lg shadow-lg p-4 h-full">
               <CaloriesStat dataset={dataset} />
             </div>
           </div>
           <div className="flex-1">
-            <div className="flex flex-wrap gap-5">
-              <div className="bg-slate-50 py-5 px-12 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
+            <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-5">
+              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
                 <div className=" bg-mainpurple-100 p-4 rounded-lg">
                   <VariableIcon className="text-white h-5 w-5" />
                 </div>
@@ -72,7 +74,7 @@ export default function statistic() {
                   </h1>
                 </div>
               </div>
-              <div className="bg-slate-50 py-5 px-12 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
+              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
                 <div className=" bg-mainpurple-100 p-4 rounded-lg">
                   <VariableIcon className="text-white h-5 w-5" />
                 </div>
@@ -83,6 +85,49 @@ export default function statistic() {
                   <h1 className="text-xl font-bold">
                     {averageTotalFood.toFixed(0)}
                   </h1>
+                </div>
+              </div>
+              <div className="col-span-2 bg-slate-50 w-full py-5 px-12 rounded-lg flex flex-col  gap-x-5 shadow-lg">
+                <div>
+                  <h1 className="font-semibold">Info User</h1>
+                </div>
+                <div className="flex flex-col justify-center items-center my-4">
+                  <div class="avatar">
+                    <div class="w-20 rounded-full ring ring-mainorange-100  ring-offset-0">
+                      <img
+                        src={
+                          infoUser.id !== 0 ? infoUser?.avatar_url : profile.src
+                        }
+                      />
+                    </div>
+                  </div>
+                  <h2 className="my-2 text-lg font-semibold">
+                    {infoUser.name}
+                  </h2>
+                </div>
+                <div>
+                  <div className="flex flex-row bg-slate-200 justify-around rounded-lg py-5">
+                    <div className="flex flex-col">
+                      <p className="text-lg text-center font-bold">
+                        {infoUser.calories} Kcal
+                      </p>
+                      <p className="text-center text-slate-500">
+                        Calories Need
+                      </p>
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="text-lg text-center font-bold">
+                        {infoUser.height} CM
+                      </p>
+                      <p className="text-center text-slate-500">Height</p>
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="text-lg text-center font-bold">
+                        {infoUser.weight} KG
+                      </p>
+                      <p className="text-center text-slate-500">Weight</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
