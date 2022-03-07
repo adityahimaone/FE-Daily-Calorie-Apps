@@ -5,7 +5,7 @@ import useGetAllHistories from "@/hooks/user/useGetAllHistories";
 import Button from "@/components/Button";
 
 export default function histories() {
-  const { data, mutate, error } = useGetAllHistories();
+  const { data, error } = useGetAllHistories();
 
   const columns = [
     {
@@ -114,7 +114,7 @@ export default function histories() {
                     <p>AD</p>
                   </div>
                   <div>
-                    <p>{item.data}</p>
+                    <p>{item.date}</p>
                   </div>
                   <div>
                     <p>{item.total_calories}</p>
