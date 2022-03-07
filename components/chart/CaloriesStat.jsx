@@ -33,57 +33,43 @@ const initData = {
   ],
 };
 
-// export const options = {
-//   responsive: true,
-//   plugins: {
-//     legend: {
-//       position: "top",
-//     },
-//     title: {
-//       display: true,
-//       //   text: "Chart.js Line Chart",
-//     },
-//   },
-//   // reverse scale
-//   scales: {
-//     xAxes: [
-//       {
-//         ticks: {
-//           reverse: true,
-//         },
-//       },
-//     ],
-//     yAxes: [
-//       {
-//         ticks: {
-//           reverse: true,
-//         },
-//       },
-//     ],
-//   },
-// };
-
 // make options chart js with reverse x / category scale
 const options = {
   responsive: true,
   plugins: {
     legend: {
       position: "top",
-      reverse: true,
     },
     title: {
       display: true,
       //   text: "Chart.js Line Chart",
     },
   },
+  layout: {
+    padding: {
+      right: 35,
+    },
+  },
+
   // reverse scale
   scales: {
-    myScale: {
-      yAxes: [
-        {
-          reverse: true,
-        },
-      ],
+    x: {
+      type: "category",
+      reverse: true,
+      title: {
+        display: true,
+        text: "Date",
+        align: "center",
+      },
+      grid: {
+        color: "#F2F4F8",
+      },
+    },
+    y: {
+      type: "linear",
+      grid: {
+        color: "#F2F4F8",
+      },
     },
   },
 };
@@ -97,7 +83,7 @@ export default function CaloriesStat(props) {
   }, [dataset]);
 
   return (
-    <div className=" max-w-screen-md">
+    <div className="relative w-full">
       <Line options={options} data={data} />
     </div>
   );

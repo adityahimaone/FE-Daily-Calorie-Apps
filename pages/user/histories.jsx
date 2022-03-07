@@ -100,7 +100,7 @@ export default function histories() {
     <Layout>
       <div>
         <div>
-          <h1 className="text-2xl">Histories</h1>
+          <h1 className="text-2xl font-bold">Histories</h1>
         </div>
         <div className="mt-4">
           <div className=" space-y-4">
