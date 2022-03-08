@@ -94,10 +94,10 @@ export default function Dashboard() {
     });
   }, [searchQuery]);
 
-  const onClickFood = async (item) => {
+  const onClickFood = (item) => {
     // console.log(item, "item");
     addHistory(item);
-    mutateGetHistories();
+    mutateGetHistories(null, true);
   };
 
   useEffect(() => {

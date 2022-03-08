@@ -54,7 +54,7 @@ export default function Mealplan() {
 
   // useEffect(() => {
   //   if (mealPlan?.mealPlan !== "") {
-  //     mutateInsertMealPlan();
+  //     mutateInsertMealPlan(null,true);
   //   }
   // }, [mealPlan.mealPlan]);
 
@@ -86,10 +86,10 @@ export default function Mealplan() {
     setPage((page) => page - 1);
   };
 
-  const submit = () => {
-    mutateGetMealPlan();
+  const submit = async () => {
+    await mutateGetMealPlan(null, true);
     if (mealPlan?.mealPlan !== "") {
-      mutateInsertMealPlan();
+      await mutateInsertMealPlan(null, true);
     }
   };
 
