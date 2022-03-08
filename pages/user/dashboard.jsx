@@ -25,9 +25,11 @@ import useGetFood from "@/hooks/useGetFood";
 import useDeleteHistory from "@/hooks/user/useDeleteHistory";
 import useAddWater from "@/hooks/user/useAddWater";
 import useGetLastHistories from "@/hooks/user/useGetLastHistories";
+import { useRouter } from "next/router";
 
 export default function Dashboard() {
   const infoUser = useSelector((state) => state.user);
+  const router = useRouter();
 
   // UseState
   const [searchQuery, setSearchQuery] = useState("");
@@ -263,7 +265,7 @@ export default function Dashboard() {
               key={food?.food?.id}
               className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4"
             >
-              <p>{food?.food?.id}</p>
+              <h1>{food?.food?.id}</h1>
               <div className="w-full lg:w-1/6 lg:h-1/5">
                 <img
                   className="object-cover w-full h-48 rounded-t-lg lg:rounded-lg"
@@ -293,7 +295,17 @@ export default function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <div className="w-full lg:w-1/6">
+                <div className="w-full lg:w-1/6 space-y-2">
+                  <button
+                    onClick={() => {
+                      let foodID = food.food.ID;
+                      console.log(foodID);
+                      router.push(`/food/${foodID}`);
+                    }}
+                    className="w-full px-4 py-2 text-white rounded-lg bg-mainpurple-100 hover:bg-orange-700/80"
+                  >
+                    Detail
+                  </button>
                   <button
                     onClick={() => {
                       setItemID(food.ID);
