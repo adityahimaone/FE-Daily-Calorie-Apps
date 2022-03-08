@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import Layout from "@/layouts/UserLayout";
 import useGetAllHistories from "@/hooks/user/useGetAllHistories";
 import CaloriesStat from "@/components/chart/CaloriesStat";
-import { VariableIcon } from "@heroicons/react/solid";
+import {
+  VariableIcon,
+  ChartSquareBarIcon,
+  UserCircleIcon,
+} from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
 
 export default function statistic() {
@@ -39,11 +43,11 @@ export default function statistic() {
   // mean dataset.data
   if (data?.data !== undefined) {
     averageCalories =
-      dataCard?.total_calories.reduce((a, b) => a + b, 0) /
-      dataCard?.total_calories.length;
+      dataCard?.total_calories?.reduce((a, b) => a + b, 0) /
+      dataCard?.total_calories?.length;
     averageTotalFood =
-      dataCard?.total_food.reduce((a, b) => a + b, 0) /
-      dataCard?.total_food.length;
+      dataCard?.total_food?.reduce((a, b) => a + b, 0) /
+      dataCard?.total_food?.length;
   }
 
   console.log(infoUser, "dataset");
@@ -53,42 +57,23 @@ export default function statistic() {
         <div>
           <h1 className="text-2xl font-bold">Statistic</h1>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div className="flex-1">
-            <div className="bg-slate-50 rounded-lg shadow-lg p-4 h-full">
-              <CaloriesStat dataset={dataset} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 justify-items-stretch content-center">
+          <div className="">
+            <div className="bg-slate-50 rounded-lg shadow-lg p-4 h-full ">
+              <div className="flex justify-start items-center space-x-1">
+                <ChartSquareBarIcon className="h-5 w-5 " />
+                <h1 className="font-semibold">Graph</h1>
+              </div>
+              <div className="flex items-center">
+                <CaloriesStat dataset={dataset} />
+              </div>
             </div>
           </div>
-          <div className="flex-1">
+          <div>
             <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-5">
-              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
-                <div className=" bg-mainpurple-100 p-4 rounded-lg">
-                  <VariableIcon className="text-white h-5 w-5" />
-                </div>
-                <div>
-                  <h1 className="text-sm font-medium text-slate-400">
-                    Average Calories Per Day
-                  </h1>
-                  <h1 className="text-xl font-bold">
-                    {averageCalories.toFixed(0)} Kcal
-                  </h1>
-                </div>
-              </div>
-              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
-                <div className=" bg-mainpurple-100 p-4 rounded-lg">
-                  <VariableIcon className="text-white h-5 w-5" />
-                </div>
-                <div>
-                  <h1 className="text-sm font-medium text-slate-400">
-                    Average Food Per Day
-                  </h1>
-                  <h1 className="text-xl font-bold">
-                    {averageTotalFood.toFixed(0)}
-                  </h1>
-                </div>
-              </div>
               <div className="col-span-2 bg-slate-50 w-full py-5 px-12 rounded-lg flex flex-col  gap-x-5 shadow-lg">
-                <div>
+                <div className="flex justify-start items-center space-x-1">
+                  <UserCircleIcon className="h-5 w-5" />
                   <h1 className="font-semibold">Info User</h1>
                 </div>
                 <div className="flex flex-col justify-center items-center my-4">
@@ -128,6 +113,32 @@ export default function statistic() {
                       <p className="text-center text-slate-500">Weight</p>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
+                <div className=" bg-mainpurple-100 p-4 rounded-lg">
+                  <VariableIcon className="text-white h-5 w-5" />
+                </div>
+                <div>
+                  <h1 className="text-sm font-medium text-slate-400">
+                    Average Calories Per Day
+                  </h1>
+                  <h1 className="text-xl font-bold">
+                    {averageCalories.toFixed(0)} Kcal
+                  </h1>
+                </div>
+              </div>
+              <div className="bg-slate-50 col-span-2 lg:col-span-1 py-5 px-10 rounded-lg flex justify-center items-center gap-x-5 shadow-lg">
+                <div className=" bg-mainpurple-100 p-4 rounded-lg">
+                  <VariableIcon className="text-white h-5 w-5" />
+                </div>
+                <div>
+                  <h1 className="text-sm font-medium text-slate-400">
+                    Average Food Per Day
+                  </h1>
+                  <h1 className="text-xl font-bold">
+                    {averageTotalFood.toFixed(0)}
+                  </h1>
                 </div>
               </div>
             </div>

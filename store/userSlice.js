@@ -7,7 +7,7 @@ export const userSlice = createSlice({
     id: 0,
     role: "guest",
     exp: 0,
-    name: "User",
+    name: "Guest",
     email: "",
     avatar_url: profile.src,
     gender: "",
@@ -29,7 +29,7 @@ export const userSlice = createSlice({
       state.id = 0;
       state.role = "guest";
       state.exp = 0;
-      state.name = "User";
+      state.name = "Guest";
       state.email = "";
       state.avatar_url = profile.src;
       state.gender = "";

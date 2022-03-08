@@ -13,12 +13,14 @@ import {
 import profile from "@/public/dummy.png";
 import Image from "next/image";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 export default function Nav(props) {
   const { location } = props;
   const [offcanvas, setOffcanvas] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
   const infoUser = useSelector((state) => state.user);
+  const router = useRouter();
 
   const userNavList = [
     { title: "Dashboard", link: "/user/dashboard" },
@@ -110,7 +112,9 @@ export default function Nav(props) {
                 : userNavList.map((item, index) => (
                     <li
                       key={index}
-                      className="font-regular hover:text-mainorange-100"
+                      className={`font-regular hover:text-mainorange-100 ${
+                        router.asPath == item.link ? "text-mainorange-100 " : ""
+                      }`}
                     >
                       <Link href={item.link}>{item.title}</Link>
                     </li>

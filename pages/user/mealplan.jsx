@@ -52,11 +52,11 @@ export default function Mealplan() {
     }
   }, [respGetMealPlan?.data]);
 
-  useEffect(() => {
-    if (mealPlan.mealPlan !== "") {
-      mutateInsertMealPlan();
-    }
-  }, [mealPlan.mealPlan]);
+  // useEffect(() => {
+  //   if (mealPlan?.mealPlan !== "") {
+  //     mutateInsertMealPlan();
+  //   }
+  // }, [mealPlan.mealPlan]);
 
   useEffect(() => {
     if (respLastMeal?.meal_plans) {
@@ -88,6 +88,9 @@ export default function Mealplan() {
 
   const submit = () => {
     mutateGetMealPlan();
+    if (mealPlan?.mealPlan !== "") {
+      mutateInsertMealPlan();
+    }
   };
 
   const onChange = (e) => {
@@ -236,13 +239,6 @@ TabPanel.propTypes = {
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired,
 };
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
 
 function PageOne({ mealPlan, onChange }) {
   const planTypeSelect = [
