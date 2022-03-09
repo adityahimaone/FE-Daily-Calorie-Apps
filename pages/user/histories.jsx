@@ -3,8 +3,11 @@ import Layout from "@/layouts/UserLayout";
 import MUIDataTable from "mui-datatables";
 import useGetAllHistories from "@/hooks/user/useGetAllHistories";
 import Button from "@/components/Button";
+import { useRouter } from "next/router";
 
 export default function histories() {
+  const router = useRouter();
+
   const { data, error } = useGetAllHistories();
 
   const columns = [
@@ -119,10 +122,10 @@ export default function histories() {
                     <p>{item.date}</p>
                   </div>
                   <div>
-                    <p>{item.total_calories}</p>
+                    <p>{item.total_calories} Kcal</p>
                   </div>
                   <div>
-                    <p>{item.water} L</p>
+                    <p>{item.water * 0.25} L</p>
                   </div>
                   <div>
                     <p>{item.total_food} Food Total</p>
@@ -131,7 +134,7 @@ export default function histories() {
                     <Button
                       className="btn-orange px-4"
                       onClick={() => {
-                        console.log(value);
+                        router.push(`/user/histories/${item.id}`);
                       }}
                     >
                       Detail

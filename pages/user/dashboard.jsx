@@ -53,6 +53,11 @@ export default function Dashboard() {
   } = useGetLastHistories();
 
   console.log(respGetHistories?.data?.water, "respGetHistories");
+  console.log(waterConsume, "waterConsume");
+
+  useEffect(() => {
+    setWaterConsume(respGetHistories?.data?.water);
+  }, [respGetHistories?.data?.water]);
 
   const {
     data: dataUser,
@@ -229,7 +234,7 @@ export default function Dashboard() {
           <h2 className="text-xl font-medium">
             {respGetHistories?.data?.water
               ? respGetHistories?.data?.water * 0.25
-              : 0}{" "}
+              : 0}
             L
           </h2>
         </div>
@@ -237,13 +242,12 @@ export default function Dashboard() {
         <div className="flex items-center justify-center">
           <Rating
             name="customized-color"
-            defaultValue={
-              respGetHistories?.data?.water ? respGetHistories?.data?.water : 0
-            }
-            getLabelText={(value) => `${value} Water${value !== 1 ? "s" : ""}`}
-            onChange={(event, newValue) => {
-              setWaterConsume(newValue);
-              mutateAddWater();
+            defaultValue={waterConsume}
+            value={waterConsume}
+            // getLabelText={(value) => `${value} Water${value !== 1 ? "s" : ""}`}
+            onChange={async (event, newValue) => {
+              await setWaterConsume(newValue);
+              mutateAddWater(newValue, true);
             }}
             max={8}
             precision={1}
@@ -299,7 +303,6 @@ export default function Dashboard() {
                   <button
                     onClick={() => {
                       let foodID = food.food.ID;
-                      console.log(foodID);
                       router.push(`/food/${foodID}`);
                     }}
                     className="w-full px-4 py-2 text-white rounded-lg bg-mainpurple-100 hover:bg-orange-700/80"

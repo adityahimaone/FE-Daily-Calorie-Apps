@@ -16,7 +16,7 @@ export default function Home() {
       {/* Hero */}
       <div className="flex flex-col-reverse lg:flex-row max-h-fit py-10 lg:py-28 items-center">
         <div className="flex-1 flex flex-col space-y-5">
-          <h1 className="text-2xl lg:text-5xl text-center lg:text-left font-medium text-mainorange-100">
+          <h1 className="text-2xl lg:text-5xl text-center lg:text-left font-semibold text-mainorange-100">
             <p>Track Your Daily Calories</p> <p>To Help Your Diet </p>
             <p>Program</p>
           </h1>

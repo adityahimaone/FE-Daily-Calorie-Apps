@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
 import useGetUser from "@/hooks/user/useGetUser";
 import Router from "next/router";
+import pattren from "@/styles/pattren.module.css";
 
 export default function Login() {
   const initLogin = {
@@ -66,7 +67,9 @@ export default function Login() {
   return (
     <GuestLayout container={false} className="relative">
       <div className="absolute flex flex-col w-full min-h-screen lg:flex-row">
-        <div className="flex-col items-center justify-center flex-1 hidden lg:flex bg-gradient-to-t to-indigo-900 from-mainpurple-100">
+        <div
+          className={`flex-col items-center justify-center flex-1 hidden lg:flex bg-gradient-to-t to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
+        >
           <div className="space-y-4 text-white">
             <h1 className="text-4xl font-semibold">Daily Calories</h1>
             <p className="font-light">Track Your Calories Everyday</p>

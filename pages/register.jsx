@@ -15,6 +15,7 @@ import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 // import RegisterAPI from "@/hooks/user/Register";
 import useRegister from "@/hooks/user/useRegister";
+import pattren from "@/styles/pattren.module.css";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -120,7 +121,9 @@ export default function Register() {
   return (
     <GuestLayout container={false}>
       <div className="flex flex-col min-h-screen lg:flex-row">
-        <div className="flex items-center justify-center w-full text-white lg:w-1/3 bg-gradient-to-t to-indigo-900 from-mainpurple-100">
+        <div
+          className={`flex items-center justify-center w-full text-white lg:w-1/3 bg-gradient-to-t to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
+        >
           <div>
             <h1 className="text-2xl font-bold ">Register With Us</h1>
             <p>Ready to track your calories?</p>
