@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/layouts/UserLayout";
 import { useRouter } from "next/router";
 import useGetHistoriesDetail from "@/hooks/user/useGetHistoriesDetail";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 
 export default function HistoriesDetail() {
   const router = useRouter();
@@ -12,7 +13,10 @@ export default function HistoriesDetail() {
   return (
     <Layout>
       <div>
-        <div className="mb-4">
+        <div className="mb-4 flex items-center">
+          <button onClick={() => router.back()}>
+            <ChevronLeftIcon className="w-6 h-6" />
+          </button>
           <h1 className="text-2xl font-bold">Histories Detail</h1>
         </div>
         <div className="flex flex-col space-y-4">
