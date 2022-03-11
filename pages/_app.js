@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "../store/store";
 import * as serviceWorker from "../firebase/serviceWorker";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+const drawerWidth = 240;
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -21,6 +22,18 @@ function MyApp({ Component, pageProps }) {
       },
       secondary: {
         main: "#F96E41",
+      },
+    },
+    components: {
+      MuiDrawer: {
+        styleOverrides: {
+          paper: {
+            backgroundColor: "#50429B",
+            color: "#FFFFFF",
+            boxSizing: "border-box",
+            width: drawerWidth,
+          },
+        },
       },
     },
   });

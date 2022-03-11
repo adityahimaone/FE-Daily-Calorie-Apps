@@ -7,6 +7,7 @@ export default function DesktopDrawer(props) {
   return (
     <Drawer
       variant="permanent"
+      classes={{ paper: " bg-red" }}
       sx={{
         display: { xs: "none", sm: "block" },
         "& .MuiDrawer-paper": {
