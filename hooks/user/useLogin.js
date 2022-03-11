@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import useSWR from "swr";
 import { AxiosCustom } from "utils/api";
 import Cookies from "universal-cookie";
-import profile from "@/public/dummy.png";
 import { useDispatch } from "react-redux";
 import { setUser } from "store/userSlice";
-import useGetUser from "./useGetUser";
 import jwtDecode from "jwt-decode";
 import Router from "next/router";
 

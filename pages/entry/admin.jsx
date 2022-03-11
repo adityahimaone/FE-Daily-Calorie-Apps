@@ -5,14 +5,18 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
+import useLogin from "@/hooks/admin/useLogin";
 
 export default function admin() {
   const initLogin = {
-    email: "",
+    username: "",
     password: "",
     showPassword: false,
   };
+
   const [loginForm, setLoginForm] = useState(initLogin);
+  const { data, mutate, loading } = useLogin(loginForm);
+
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -36,6 +40,7 @@ export default function admin() {
 
   const onClick = (e) => {
     e.preventDefault();
+    mutate(null, true);
   };
   return (
     <GuestLayout container={false}>
@@ -48,10 +53,10 @@ export default function admin() {
                 <TextField
                   fullWidth
                   required
-                  label="Email"
+                  label="Username"
                   color="primary"
-                  name="email"
-                  value={loginForm.email}
+                  name="username"
+                  value={loginForm.username}
                   onChange={onChange}
                   variant="outlined"
                   size="small"

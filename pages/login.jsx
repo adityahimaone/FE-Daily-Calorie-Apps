@@ -5,15 +5,8 @@ import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import LoginAuthUser from "../hooks/user/LoginAuth";
-import useFetch from "@/hooks/useFetch";
-import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
-import GetUserByID from "@/hooks/user/GetUserByID";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
-import useGetUser from "@/hooks/user/useGetUser";
-import Router from "next/router";
 import pattren from "@/styles/pattren.module.css";
 
 export default function Login() {
@@ -23,19 +16,10 @@ export default function Login() {
     showPassword: false,
   };
 
-  const [idUser, setIdUser] = useState(0);
-
   const [loginForm, setLoginForm] = useState(initLogin);
   const { user, mutate, loading } = useLogin(loginForm);
 
   const infoUser = useSelector((state) => state.user);
-
-  useEffect(() => {
-    if (infoUser.id !== 0) {
-      setIdUser(infoUser.id);
-      // mutateGetUser();
-    }
-  }, [infoUser, user]);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -60,7 +44,6 @@ export default function Login() {
 
   const onClick = (e) => {
     e.preventDefault();
-    // sendDataToServer(loginForm);
     mutate();
   };
 

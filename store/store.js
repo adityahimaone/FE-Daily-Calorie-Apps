@@ -2,6 +2,7 @@ import { combineReducers } from "redux";
 import appSlice from "./appSlice";
 import caloriesSlice from "./caloriesSlice";
 import userSlice from "./userSlice";
+import adminSlice from "./adminSlice";
 // import storage from "redux-persist/lib/storage";
 import storage from "./storage";
 
@@ -22,6 +23,7 @@ const reducers = combineReducers({
   app: appSlice,
   calories: caloriesSlice,
   user: userSlice,
+  admin: adminSlice,
 });
 
 const persistConfig = {

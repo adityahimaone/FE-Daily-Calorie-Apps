@@ -11,3 +11,15 @@ export function axiosConfig() {
   };
   return config;
 }
+
+export function axiosConfigAdmin() {
+  const cookies = new Cookies();
+  const token = cookies.get("token admin");
+
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return config;
+}

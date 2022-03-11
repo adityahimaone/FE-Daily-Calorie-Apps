@@ -4,9 +4,9 @@ import Adminlayout from "@/layouts/AdminLayout";
 export default function ManagementUser() {
   return (
     <Adminlayout>
-      <div className="bg-red-500">
+      <div>
         <div>
-          <h1>Management User</h1>
+          <h1 className="text-3xl font-bold">Management User</h1>
         </div>
         <div>Content</div>
       </div>

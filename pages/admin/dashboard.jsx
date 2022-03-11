@@ -4,9 +4,9 @@ import Adminlayout from "@/layouts/AdminLayout";
 export default function Dashboard() {
   return (
     <Adminlayout>
-      <div className="bg-blue-500">
+      <div>
         <div>
-          <h1>Dahboard</h1>
+          <h1 className="text-3xl font-bold">Dahboard</h1>
         </div>
         <div>Content</div>
       </div>
