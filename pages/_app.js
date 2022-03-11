@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "../store/store";
 import * as serviceWorker from "../firebase/serviceWorker";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -13,11 +14,24 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#50429B",
+      },
+      secondary: {
+        main: "#F96E41",
+      },
+    },
+  });
+
   return (
     <>
       <Provider store={store}>
         <PersistGate Loading={null} persistor={persistor}>
-          <Component {...pageProps} />
+          <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     </>
