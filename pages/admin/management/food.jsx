@@ -1,18 +1,18 @@
 import React from "react";
+import useGetAllFood from "@/hooks/admin/useGetAllFood";
 import Adminlayout from "@/layouts/AdminLayout";
-import useGetAllUser from "@/hooks/admin/useGetAllUser";
 import MUIDataTable from "mui-datatables";
 import profile from "@/public/dummy.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 
-export default function ManagementUser() {
-  const { data, error, loading } = useGetAllUser();
+export default function food() {
+  const { data, error, loading } = useGetAllFood();
 
   const columns = [
     { name: "id", label: "ID", options: { sort: true } },
     {
-      name: "name",
+      name: "title",
       label: "Name",
       options: {
         filter: true,
@@ -20,60 +20,60 @@ export default function ManagementUser() {
       },
     },
     {
-      name: "email",
-      label: "Email",
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
-      name: "gender",
-      label: "Gender",
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
-      name: "calories",
-      label: "Calories",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "height",
-      label: "Height",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "weight",
-      label: "Weight",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "avatar",
-      label: "Avatar",
+      name: "img_url",
+      label: "Image",
       options: {
         filter: false,
         sort: false,
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <div class="avatar">
-              <div class="w-8 rounded-full">
+              <div class="w-8">
                 <img src={value ? value : profile.src} />
               </div>
             </div>
           );
         },
+      },
+    },
+    {
+      name: "calories",
+      label: "Calories (Kcal)",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "protein",
+      label: "Protein (g)",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "carbs",
+      label: "Carbs (g)",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "fat",
+      label: "Fat (g)",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "serving_size",
+      label: "Serving Size (g)",
+      options: {
+        filter: false,
+        sort: false,
       },
     },
     {
@@ -129,7 +129,7 @@ export default function ManagementUser() {
           <button className="btn-main btn-purple" onClick={() => {}}>
             <div className="flex items-center">
               <PlusIcon className="mr-1 w-4 h-4" />
-              Add User
+              Add Food
             </div>
           </button>
         </>
@@ -141,27 +141,26 @@ export default function ManagementUser() {
   newData = data?.data?.map((item) => {
     return {
       id: item.id,
-      name: item.name,
-      email: item.email,
-      gender: item.gender,
-      calories: item.calories,
-      height: item.height,
-      weight: item.weight,
-      avatar: item.avatar_url,
+      title: item.title,
+      img_url: item.img_url,
+      calories: item.calories.toFixed(0),
+      protein: item.protein.toFixed(0),
+      carbs: item.carbs.toFixed(0),
+      fat: item.fat.toFixed(0),
+      serving_size: item.serving_size.toFixed(0),
     };
   });
 
-  console.log(data, "data");
   return (
     <Adminlayout>
       <div>
         <div>
-          <h1 className="text-3xl font-bold">Management User</h1>
+          <h1 className="text-3xl font-bold">Management Food</h1>
         </div>
         <div className="mt-5">
           <MUIDataTable
             className="rounded-xl"
-            title={"User List"}
+            title={"Food List"}
             data={newData}
             columns={columns}
             options={options}

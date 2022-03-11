@@ -1,4 +1,4 @@
-import { HomeIcon, UsersIcon } from "@heroicons/react/outline";
+import { HomeIcon, UsersIcon, CakeIcon } from "@heroicons/react/outline";
 
 const menuItems = [
   {
@@ -10,6 +10,11 @@ const menuItems = [
     text: "Management User",
     icon: <UsersIcon className="h-5 w-5 mr-2" />,
     path: "/admin/management/user",
+  },
+  {
+    text: "Management Food",
+    icon: <CakeIcon className="h-5 w-5 mr-2" />,
+    path: "/admin/management/food",
   },
 ];
 
