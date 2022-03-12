@@ -76,8 +76,6 @@ export default function Dashboard() {
 
   const { data: dataWater, mutate: mutateAddWater } = useAddWater(waterConsume);
 
-  // uef
-
   useEffect(() => {
     mutateGetUser();
     mutateGetHistories();

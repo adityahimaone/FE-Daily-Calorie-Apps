@@ -9,10 +9,13 @@ import ModalDelete from "@/components/managementUser/ModalDelete";
 
 export default function ManagementUser() {
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState(false);
   const [rowData, setRowData] = useState([]);
 
   const handleOpenModalDelete = () => setModalDelete(true);
   const handleCloseModalDelete = () => setModalDelete(false);
+  const handleOpenModalUpdate = () => setModalUpdate(true);
+  const handleCloseModalUpdate = () => setModalUpdate(false);
 
   const { data, mutate: mutateGetUser, error, loading } = useGetAllUser();
 
@@ -94,7 +97,13 @@ export default function ManagementUser() {
           return (
             <>
               <div className="flex gap-1">
-                <button className="btn-main  btn-blue" onClick={() => {}}>
+                <button
+                  className="btn-main  btn-blue"
+                  onClick={() => {
+                    // setRowData(tableMeta.rowData);
+                    // handleOpenModalUpdate();
+                  }}
+                >
                   <div className="flex items-center">
                     <PencilAltIcon className="mr-1 w-4 h-4" />
                     Edit
@@ -186,6 +195,12 @@ export default function ManagementUser() {
           rowData={rowData}
           mutateGetUser={mutateGetUser}
         />
+        {/* <ModalUpdate
+          open={modalUpdate}
+          handleClose={handleCloseModalUpdate}
+          rowData={rowData}
+          mutateGetUser={mutateGetUser}
+        /> */}
       </div>
     </Adminlayout>
   );

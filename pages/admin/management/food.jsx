@@ -6,13 +6,17 @@ import profile from "@/public/dummy.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import ModalDelete from "@/components/managementFood/ModalDelete";
+import ModalUpdate from "@/components/managementFood/ModalUpdate";
 
 export default function food() {
   const [modalDelete, setModalDelete] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState(false);
   const [rowData, setRowData] = useState([]);
 
   const handleOpenModalDelete = () => setModalDelete(true);
   const handleCloseModalDelete = () => setModalDelete(false);
+  const handleOpenModalUpdate = () => setModalUpdate(true);
+  const handleCloseModalUpdate = () => setModalUpdate(false);
 
   const { data, mutate: mutateGetFood, error, loading } = useGetAllFood();
 
@@ -94,7 +98,13 @@ export default function food() {
           return (
             <>
               <div className="flex gap-1">
-                <button className="btn-main btn-blue" onClick={() => {}}>
+                <button
+                  className="btn-main btn-blue"
+                  onClick={() => {
+                    handleOpenModalUpdate();
+                    setRowData(tableMeta.rowData);
+                  }}
+                >
                   <div className="flex items-center">
                     <PencilAltIcon className="mr-1 w-4 h-4" />
                     Edit
@@ -103,8 +113,8 @@ export default function food() {
                 <button
                   className="btn-main btn-red"
                   onClick={() => {
-                    setRowData(tableMeta.rowData);
                     handleOpenModalDelete();
+                    setRowData(tableMeta.rowData);
                   }}
                 >
                   <div className="flex items-center">
@@ -182,6 +192,12 @@ export default function food() {
         <ModalDelete
           open={modalDelete}
           handleClose={handleCloseModalDelete}
+          rowData={rowData}
+          mutateGetFood={mutateGetFood}
+        />
+        <ModalUpdate
+          open={modalUpdate}
+          handleClose={handleCloseModalUpdate}
           rowData={rowData}
           mutateGetFood={mutateGetFood}
         />
