@@ -2,38 +2,37 @@ import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Button from "../Button";
 import { TextField } from "@mui/material";
-import useUpdateFood from "@/hooks/admin/useUpdateFood";
+import useUpdateUser from "@/hooks/admin/useUpdateUser";
 
 export default function ModalUpdate(props) {
-  const { open, handleClose, rowData, mutateGetFood } = props;
+  const { open, handleClose, rowData, mutateGetUser } = props;
 
-  const idFood = rowData[0];
+  let idUser = rowData[0];
 
   const initValueForm = {
-    title: rowData[1],
-    img_url: rowData[2],
-    calories: rowData[3],
-    carbs: rowData[4],
-    fat: rowData[5],
-    protein: rowData[6],
-    serving_size: rowData[7],
+    name: rowData[1],
+    email: rowData[2],
+    password: "",
+    avatar_url: rowData[7],
+    gender: rowData[3],
+    calorie: rowData[4],
+    weight: rowData[6],
+    height: rowData[5],
   };
 
-  const [foodID, setFoodID] = useState();
+  const [userID, setUserID] = useState();
   const [form, setForm] = useState(initValueForm);
 
-  const { data, mutate, error } = useUpdateFood(foodID, form);
+  const { data, mutate, error } = useUpdateUser(userID, form);
+
+  console.log(form, "form");
 
   useEffect(() => {
+    idUser = rowData[0];
     setForm(initValueForm);
   }, [rowData]);
-  
-  useEffect(() => {
-    if (data?.meta?.code === 200) {
-      handleClose();
-      mutateGetFood(null, true);
-    }
-  }, [data?.meta?.code]);
+
+  console.log(rowData);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -49,76 +48,86 @@ export default function ModalUpdate(props) {
       <div className="absolute modal-main">
         <div class="modal-box h-fit">
           <div className="bg-mainpurple-100 absolute py-4 top-0 left-0 w-full">
-            <h3 class="font-bold text-xl text-center  text-white">Edit Food</h3>
+            <h3 class="font-bold text-xl text-center  text-white">Edit User</h3>
           </div>
-          <div className="mt-12 space-y-2">
+          <div className="mt-14 space-y-4">
             <div>
-              <label>Name Food</label>
               <TextField
                 fullWidth
-                name="title"
+                label="Fullname"
+                name="name"
                 onChange={onChange}
-                value={form.title}
+                value={form.name}
                 size="small"
               />
             </div>
             <div>
-              <label>Food IMG</label>
               <TextField
                 fullWidth
-                name="img_url"
+                name="email"
+                label="Email"
                 onChange={onChange}
-                value={form.img_url}
+                value={form.email}
                 size="small"
               />
             </div>
             <div>
-              <label>Calories</label>
               <TextField
                 fullWidth
-                name="calories"
+                name="password"
+                label="Password"
                 onChange={onChange}
-                value={form.calories}
+                value={form.password}
                 size="small"
               />
             </div>
             <div>
-              <label>Carbs</label>
               <TextField
                 fullWidth
-                name="carbs"
+                name="avatar_url"
+                label="Avatar"
                 onChange={onChange}
-                value={form.carbs}
+                value={form.avatar_url}
                 size="small"
               />
             </div>
             <div>
-              <label>Fat</label>
               <TextField
                 fullWidth
-                name="fat"
+                name="gender"
+                label="Gender"
                 onChange={onChange}
-                value={form.fat}
+                value={form.gender}
                 size="small"
               />
             </div>
             <div>
-              <label>Protein</label>
               <TextField
                 fullWidth
-                name="protein"
+                name="calorie"
+                label="Calorie"
                 onChange={onChange}
-                value={form.protein}
+                value={form.calorie}
                 size="small"
               />
             </div>
             <div>
-              <label>Serving Size</label>
               <TextField
                 fullWidth
-                name="serving_size"
+                name="weight"
+                label="Weight"
                 onChange={onChange}
-                value={form.serving_size}
+                value={form.weight}
+                size="small"
+              />
+            </div>
+            <div>
+              <TextField
+                fullWidth
+                name="height"
+                label="Height"
+                onChange={onChange}
+                value={form.height}
                 size="small"
               />
             </div>
@@ -126,7 +135,7 @@ export default function ModalUpdate(props) {
           <div class="modal-action">
             <Button
               onClick={() => {
-                setFoodID(idFood);
+                setUserID(idUser);
                 mutate(null, false);
               }}
             >

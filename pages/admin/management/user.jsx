@@ -6,6 +6,7 @@ import profile from "@/public/dummy.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import ModalDelete from "@/components/managementUser/ModalDelete";
+import ModalUpdate from "@/components/managementUser/ModalUpdate";
 
 export default function ManagementUser() {
   const [modalDelete, setModalDelete] = useState(false);
@@ -100,8 +101,8 @@ export default function ManagementUser() {
                 <button
                   className="btn-main  btn-blue"
                   onClick={() => {
-                    // setRowData(tableMeta.rowData);
-                    // handleOpenModalUpdate();
+                    setRowData(tableMeta.rowData);
+                    handleOpenModalUpdate();
                   }}
                 >
                   <div className="flex items-center">
@@ -195,12 +196,12 @@ export default function ManagementUser() {
           rowData={rowData}
           mutateGetUser={mutateGetUser}
         />
-        {/* <ModalUpdate
+        <ModalUpdate
           open={modalUpdate}
           handleClose={handleCloseModalUpdate}
           rowData={rowData}
           mutateGetUser={mutateGetUser}
-        /> */}
+        />
       </div>
     </Adminlayout>
   );
