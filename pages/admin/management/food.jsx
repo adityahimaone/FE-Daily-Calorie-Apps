@@ -11,10 +11,10 @@ export default function food() {
   const [modalDelete, setModalDelete] = useState(false);
   const [rowData, setRowData] = useState([]);
 
-  const { data, mutate: mutateGetFood, error, loading } = useGetAllFood();
-
   const handleOpenModalDelete = () => setModalDelete(true);
   const handleCloseModalDelete = () => setModalDelete(false);
+
+  const { data, mutate: mutateGetFood, error, loading } = useGetAllFood();
 
   const columns = [
     { name: "id", label: "ID", options: { sort: true } },
@@ -103,8 +103,8 @@ export default function food() {
                 <button
                   className="btn-main btn-red"
                   onClick={() => {
-                    handleOpenModalDelete();
                     setRowData(tableMeta.rowData);
+                    handleOpenModalDelete();
                   }}
                 >
                   <div className="flex items-center">

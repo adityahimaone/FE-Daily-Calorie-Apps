@@ -9,5 +9,6 @@ export default function useGetAllFood() {
   const { data, mutate, error } = useSWR(`${mainAPI}/api/v1/foods`, fetcher);
 
   const loading = !data && !error;
+
   return { data, mutate, error, loading };
 }
