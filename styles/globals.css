@@ -7,7 +7,19 @@
 }
 
 .btn-main {
-  @apply px-2 py-1 transition-all rounded-lg;
+  @apply px-2 py-1 transition-all rounded-md;
+}
+
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+
+.btn-cancel {
+  @apply bg-slate-300 font-semibold text-black;
+}
+
+.btn-red {
+  @apply bg-red-500 text-white;
 }
 
 .btn-purple {

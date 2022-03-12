@@ -5,7 +5,6 @@ import Meal from "@/public/meal.png";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import recipe from "./dataRecipe";
 import CardRecipe from "@/components/mealPlan/CardRecipe";
 import Modal from "@mui/material/Modal";
 import Button from "@/components/Button";
@@ -65,9 +64,6 @@ export default function Mealplan() {
       setdataMealPlan(parseJson);
     }
   }, [respLastMeal?.meal_plans]);
-
-  console.log(dataMealPlan, "dataMealPlan");
-  console.log(dataMealPlan.breakfast, "dataMealPlan breakfast");
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);

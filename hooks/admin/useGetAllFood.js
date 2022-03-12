@@ -6,8 +6,8 @@ export default function useGetAllFood() {
   const mainAPI = process.env.REACT_APP_API_URL;
   const fetcher = (url) =>
     axios.get(url, axiosConfigAdmin()).then((res) => res.data);
-  const { data, error } = useSWR(`${mainAPI}/api/v1/foods`, fetcher);
+  const { data, mutate, error } = useSWR(`${mainAPI}/api/v1/foods`, fetcher);
 
   const loading = !data && !error;
-  return { data, error, loading };
+  return { data, mutate, error, loading };
 }

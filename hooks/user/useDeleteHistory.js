@@ -1,4 +1,3 @@
-import React from "react";
 import { AxiosCustom } from "utils/api";
 import { axiosConfig } from "utils/helper";
 import useSWR from "swr";

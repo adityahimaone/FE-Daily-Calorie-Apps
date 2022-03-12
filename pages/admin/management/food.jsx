@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import useGetAllFood from "@/hooks/admin/useGetAllFood";
 import Adminlayout from "@/layouts/AdminLayout";
 import MUIDataTable from "mui-datatables";
 import profile from "@/public/dummy.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
+import ModalDelete from "@/components/managementFood/ModalDelete";
 
 export default function food() {
-  const { data, error, loading } = useGetAllFood();
+  const [modalDelete, setModalDelete] = useState(false);
+  const [rowData, setRowData] = useState([]);
+
+  const { data, mutate: mutateGetFood, error, loading } = useGetAllFood();
+
+  const handleOpenModalDelete = () => setModalDelete(true);
+  const handleCloseModalDelete = () => setModalDelete(false);
 
   const columns = [
     { name: "id", label: "ID", options: { sort: true } },
@@ -87,13 +94,19 @@ export default function food() {
           return (
             <>
               <div className="flex gap-1">
-                <button className="btn-main btn-primary" onClick={() => {}}>
+                <button className="btn-main btn-blue" onClick={() => {}}>
                   <div className="flex items-center">
                     <PencilAltIcon className="mr-1 w-4 h-4" />
                     Edit
                   </div>
                 </button>
-                <button className="btn-main btn-secondary" onClick={() => {}}>
+                <button
+                  className="btn-main btn-red"
+                  onClick={() => {
+                    handleOpenModalDelete();
+                    setRowData(tableMeta.rowData);
+                  }}
+                >
                   <div className="flex items-center">
                     <TrashIcon className="mr-1 w-4 h-4" />
                     Delete
@@ -166,6 +179,12 @@ export default function food() {
             options={options}
           />
         </div>
+        <ModalDelete
+          open={modalDelete}
+          handleClose={handleCloseModalDelete}
+          rowData={rowData}
+          mutateGetFood={mutateGetFood}
+        />
       </div>
     </Adminlayout>
   );
