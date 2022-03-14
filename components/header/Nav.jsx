@@ -53,8 +53,8 @@ export default function Nav(props) {
   ];
 
   const userDropdownListLogout = [
-    { title: "Login", link: "/login" },
-    { title: "Register", link: "/register" },
+    { title: "Login", link: "/entry/user" },
+    { title: "Register", link: "/entry/register" },
   ];
 
   const spliceName = infoUser?.name?.split(" ");

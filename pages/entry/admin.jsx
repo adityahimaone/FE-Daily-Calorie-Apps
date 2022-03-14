@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import useLogin from "@/hooks/admin/useLogin";
 
-export default function admin() {
+export default function AdminLogin() {
   const initLogin = {
     username: "",
     password: "",

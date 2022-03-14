@@ -14,7 +14,7 @@ export default function logout() {
     dispatch(clearUser());
     mutate(null);
     cookies.remove("token", { path: "/", domain: window.location.hostname });
-    Router.push("/login");
+    Router.push("/entry/user");
   };
 
   return <>{onLogout()}</>;

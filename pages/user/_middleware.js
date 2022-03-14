@@ -11,12 +11,12 @@ export default function middleware(req) {
   // const dispatch = useDispatch();
   const { token } = req.cookies;
 
-  let decoded = jwtDecode(token);
-
   if (!token) {
     return nextRes.redirect("/");
   }
+
   if (token) {
+    const decoded = jwtDecode(token);
     if (!decoded.role !== "user" && decoded.exp * 1000 < Date.now()) {
       // dispatch(clearUser());
       cookies.remove("token", {
@@ -26,17 +26,4 @@ export default function middleware(req) {
       nextRes.redirect("/");
     }
   }
-  // useEffect(() => {}, [token]);
-
-  console.log(token, decoded);
-
-  // useEffect(() => {
-  //   let decoded = jwtDecode(token);
-  //   console.log(decoded);
-  //   if (!decoded.role !== "user" && decoded.exp * 1000 < Date.now()) {
-  //     // dispatch(clearUser());
-  //     cookies.remove("token", { path: "/", domain: window.location.hostname });
-  //     nextRes.redirect("/");
-  //   }
-  // }, [token]);
 }

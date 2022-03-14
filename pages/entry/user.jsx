@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
 import pattren from "@/styles/pattren.module.css";
 
-export default function Login() {
+export default function UserLogin() {
   const initLogin = {
     email: "",
     password: "",
@@ -123,7 +123,7 @@ export default function Login() {
                 <div className="flex my-2 space-x-2">
                   <p className="text-sm">Don't have an account?</p>
                   <a className="text-sm text-mainpurple-100">
-                    <Link href="/user/register">Register Here</Link>
+                    <Link href="/entry/register">Register Here</Link>
                   </a>
                 </div>
               </form>

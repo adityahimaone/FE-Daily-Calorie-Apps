@@ -16,10 +16,15 @@ import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 // import RegisterAPI from "@/hooks/user/Register";
 import useRegister from "@/hooks/user/useRegister";
 import pattren from "@/styles/pattren.module.css";
-import appFirebase from "../firebase/firebaseConfig.js";
+import appFirebase from "@/firebase/firebaseConfig.js";
+import successImg from "@/public/img/success.svg";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function Register() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const countCalorie = useSelector((state) => state.calories.countCalories);
   // const { response, error, isLoading, sendDataToServer } = RegisterAPI();
   const [page, setPage] = useState(1);
@@ -49,12 +54,13 @@ export default function Register() {
 
   const { user, mutate, loading, error } = useRegister(form);
 
+  console.log(user, "user");
   useEffect(() => {
-    if (user) {
-      setPage(1);
+    if (user?.meta?.code === 200) {
+      setPage(4);
       setForm(initValueForm);
     }
-  }, [user]);
+  }, [user?.meta?.code]);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -113,7 +119,7 @@ export default function Register() {
     //   weight: form.personal_data.weight,
     //   height: form.personal_data.height,
     // });
-    mutate(form);
+    mutate(form, true);
   };
 
   console.log(form, "form");
@@ -169,14 +175,18 @@ export default function Register() {
         <div className="flex items-center justify-center w-full lg:w-2/3 mt-14">
           <div className="w-full max-w-lg p-5 ">
             <div>
-              <h1 className="my-5 text-2xl font-bold text-mainpurple-100">
-                Form Register
-              </h1>
-              <LinearProgress
-                className="py-2 rounded-md"
-                variant="determinate"
-                value={normalise(page)}
-              />
+              <div className={`${page === 4 && "hidden"}`}>
+                <h1 className="my-5 text-2xl font-bold text-mainpurple-100">
+                  Form Register
+                </h1>
+              </div>
+              <div className={`${page === 4 && "hidden"}`}>
+                <LinearProgress
+                  className={`py-2 rounded-md `}
+                  variant="determinate"
+                  value={normalise(page)}
+                />
+              </div>
             </div>
             <div className="my-5">
               {page === 1 && (
@@ -204,18 +214,29 @@ export default function Register() {
                   update={updateData}
                 />
               )}
+              {page === 4 && <OnboardingFour />}
             </div>
             <div className="flex justify-between">
-              {page !== 1 && (
+              {page !== 1 && page !== 4 && (
                 <Button className="btn-orange" onClick={goPreviousPage}>
                   Go Back
                 </Button>
               )}
-              {page !== 3 && <Button onClick={goNextPage}>Go Next</Button>}
+              {page !== 3 && page !== 4 && (
+                <Button onClick={goNextPage}>Go Next</Button>
+              )}
               {page === 3 && (
                 <Button type="submit" onClick={submit}>
                   Submit
                 </Button>
+              )}
+              {page === 4 && (
+                <>
+                  <Button className="btn-orange">Back to Register</Button>
+                  <Button onClick={() => router.push("/entry/user")}>
+                    Login
+                  </Button>
+                </>
               )}
             </div>
           </div>
@@ -225,7 +246,7 @@ export default function Register() {
   );
 }
 
-function OnboardingOne({ data, valueForm, setValueForm, update }) {
+const OnboardingOne = ({ data, valueForm, setValueForm, update }) => {
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -295,9 +316,9 @@ function OnboardingOne({ data, valueForm, setValueForm, update }) {
       <button onClick={() => update("user", newData)}></button>
     </div>
   );
-}
+};
 
-function OnboardingTwo({
+const OnboardingTwo = ({
   countCalorie,
   data,
   valueForm,
@@ -305,7 +326,7 @@ function OnboardingTwo({
   formCount,
   setFormCount,
   update,
-}) {
+}) => {
   const initInput = {
     weight: 0,
     height: 0,
@@ -424,15 +445,15 @@ function OnboardingTwo({
       <button onClick={() => update("user", newData)}></button>
     </div>
   );
-}
+};
 
-function OnboardingThree({
+const OnboardingThree = ({
   data,
   valueForm,
   setValueForm,
   onChangeAvatar,
   update,
-}) {
+}) => {
   const onChangeImage = (e) => {
     const file = e.target.files[0];
     const storageRef = appFirebase.storage().ref("avatar/");
@@ -467,23 +488,46 @@ function OnboardingThree({
       </div>
       <div>
         {/* <label>Age</label> */}
-        <div class="border rounded-lg border-dashed border-gray-500 relative">
+        <div className="border rounded-lg border-dashed border-gray-500 relative">
           <input
             type="file"
             name="avatar_url"
             onChange={onChangeImage}
-            class="cursor-pointer relative block opacity-0 w-full h-full p-20 z-50"
+            className="cursor-pointer relative block opacity-0 w-full h-full p-20 z-50"
           />
-          <div class="text-center p-10 absolute top-0 right-0 left-0 m-auto">
+          <div className="text-center p-10 absolute top-0 right-0 left-0 m-auto">
             <h4>
               Drop files anywhere to upload
               <br />
               or
             </h4>
-            <p class="">Select Files</p>
+            <p className="">Select Files</p>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+const OnboardingFour = () => {
+  return (
+    <div>
+      <div className="">
+        <div className="w-full my-10">
+          <div className="w-56 mx-auto">
+            <Image
+              src={successImg}
+              layout="responsive"
+              width={200}
+              height={200}
+              className=" object-fill w-full relative"
+            />
+          </div>
+          <h1 className="text-2xl text-center font-medium">
+            Successful Registration
+          </h1>
+        </div>
+      </div>
+    </div>
+  );
+};

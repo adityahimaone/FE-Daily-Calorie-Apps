@@ -9,7 +9,8 @@
       "@/public/*": ["public/*"],
       "@/context/*": ["context/*"],
       "@/services/*": ["services/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["hooks/*"],
+      "@/firebase/*": ["firebase/*"]
     }
   }
 }
