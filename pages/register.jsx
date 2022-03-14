@@ -16,6 +16,7 @@ import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 // import RegisterAPI from "@/hooks/user/Register";
 import useRegister from "@/hooks/user/useRegister";
 import pattren from "@/styles/pattren.module.css";
+import appFirebase from "../firebase/firebaseConfig.js";
 
 export default function Register() {
   const dispatch = useDispatch();
@@ -432,20 +433,45 @@ function OnboardingThree({
   onChangeAvatar,
   update,
 }) {
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const storageRef = appFirebase.storage().ref("avatar/");
+    const fileRef = storageRef.child(file.name);
+    console.log("file = ", file);
+    console.log("storageRef = ", storageRef);
+    console.log("fileRef = ", fileRef);
+    fileRef.put(file).then((e) => {
+      console.log("Uploaded a file");
+      console.log("didalam e = ", e);
+      e.ref.getDownloadURL().then(function (downloadURL) {
+        console.log("File available at", downloadURL);
+        setValueForm({
+          ...valueForm,
+          avatar_url: downloadURL,
+        });
+      });
+    });
+  };
+
   return (
     <div>
       <div className="my-3">
         <h1 className="text-lg">Uploud avatar</h1>
       </div>
-      <div>
-        <img src={valueForm.avatar_url} width={40} height={40} alt="avatar" />
+      <div className="flex justify-center my-4">
+        <div className="avatar">
+          <div className="w-40 rounded-full ring ring-mainorange-100 ring-offset-base-100 ring-offset-2">
+            <img src={valueForm.avatar_url} className="avatar" alt="avatar" />
+          </div>
+        </div>
       </div>
       <div>
         {/* <label>Age</label> */}
         <div class="border rounded-lg border-dashed border-gray-500 relative">
           <input
             type="file"
-            onChange={onChangeAvatar}
+            name="avatar_url"
+            onChange={onChangeImage}
             class="cursor-pointer relative block opacity-0 w-full h-full p-20 z-50"
           />
           <div class="text-center p-10 absolute top-0 right-0 left-0 m-auto">

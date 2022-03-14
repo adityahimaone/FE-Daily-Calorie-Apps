@@ -15,6 +15,7 @@ import Rating from "@mui/material/Rating";
 import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import GetFood from "@/hooks/GetFood";
+import profile from "@/public/dummy.png";
 import debounce from "lodash.debounce";
 import AddHistories from "@/hooks/user/AddHistories";
 import useFetch from "@/hooks/useFetch";
