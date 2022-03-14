@@ -9,8 +9,15 @@ import {
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
+import { clearAdmin } from "store/adminSlice";
+import { useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
+import Router from "next/router";
 
 export default function Appbar(props) {
+  const dispatch = useDispatch();
+  const cookies = new Cookies();
+
   const { drawerWidth, handleDrawerToggle } = props;
 
   const [dropdown, setDropdown] = useState(false);
@@ -27,6 +34,12 @@ export default function Appbar(props) {
       icon: <LogoutIcon className="w-4 h-4" />,
     },
   ];
+
+  const onLogout = () => {
+    dispatch(clearAdmin());
+    cookies.remove("token", { path: "/", domain: window.location.hostname });
+    Router.push("/");
+  };
 
   return (
     <AppBar
@@ -59,14 +72,11 @@ export default function Appbar(props) {
                 <ul
                   className={`absolute w-[150px] right-5 top-16 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
                 >
-                  {dropdownMenu.map((item, index) => (
-                    <li
-                      key={index}
-                      className="font-regular py-3 hover:bg-mainorange-100 hover:rounded"
-                    >
-                      <Link href={item.link}>{item.title}</Link>
-                    </li>
-                  ))}
+                  <li className="font-regular py-3 hover:bg-mainorange-100 hover:rounded">
+                    <button type="button" onClick={onLogout}>
+                      Logout
+                    </button>
+                  </li>
                 </ul>
               )}
             </button>

@@ -10,7 +10,6 @@ export default function logout() {
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    // Router.reload(window.location.pathname);
     dispatch(clearUser());
     mutate(null);
     cookies.remove("token", { path: "/", domain: window.location.hostname });

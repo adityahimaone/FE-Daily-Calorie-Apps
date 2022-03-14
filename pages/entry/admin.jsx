@@ -41,6 +41,7 @@ export default function AdminLogin() {
   const onClick = (e) => {
     e.preventDefault();
     mutate(null, true);
+    setLoginForm(initLogin);
   };
   return (
     <GuestLayout container={false}>

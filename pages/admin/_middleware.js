@@ -23,6 +23,5 @@ export default function MiddlewareAdmin(req) {
     }
   }
 
-
   return null;
 }
