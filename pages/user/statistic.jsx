@@ -8,6 +8,7 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/solid";
 import { useSelector } from "react-redux";
+import profile from "@/public/dummy.png";
 
 export default function statistic() {
   const { data, error } = useGetAllHistories();

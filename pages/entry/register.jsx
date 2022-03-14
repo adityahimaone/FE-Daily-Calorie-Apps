@@ -71,6 +71,14 @@ export default function Register() {
     });
   };
 
+  const goFirstPage = () => {
+    setPage(1);
+  };
+
+  const goLoginPage = () => {
+    router.push("/entry/user");
+  };
+
   const goNextPage = () => {
     if (page === 3) return;
     setPage((page) => page + 1);
@@ -232,10 +240,10 @@ export default function Register() {
               )}
               {page === 4 && (
                 <>
-                  <Button className="btn-orange">Back to Register</Button>
-                  <Button onClick={() => router.push("/entry/user")}>
-                    Login
+                  <Button className="btn-orange" onClick={goFirstPage}>
+                    Back to Register
                   </Button>
+                  <Button onClick={goLoginPage}>Login</Button>
                 </>
               )}
             </div>
