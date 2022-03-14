@@ -12,15 +12,19 @@ export default function MiddlewareAdmin(req) {
     return nextRes.redirect("/");
   }
 
-  if (token) {
-    const decoded = jwtDecode(token);
-    if (!decoded.role !== "admin" && decoded.exp * 1000 < Date.now()) {
-      cookies.remove("token", {
-        path: "/",
-        domain: window.location.hostname,
-      });
-      nextRes.redirect("/entry/admin");
+  try {
+    if (token) {
+      const decoded = jwtDecode(token);
+      if (!decoded.role !== "admin" && decoded.exp * 1000 < Date.now()) {
+        cookies.remove("token", {
+          path: "/",
+          domain: window.location.hostname,
+        });
+        nextRes.redirect("/");
+      }
     }
+  } catch (error) {
+    console.log(error);
   }
 
   return null;

@@ -3,6 +3,10 @@ import Modal from "@mui/material/Modal";
 import Button from "../Button";
 import { TextField } from "@mui/material";
 import useUpdateUser from "@/hooks/admin/useUpdateUser";
+import appFirebase from "@/firebase/firebaseConfig.js";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function ModalUpdate(props) {
   const { open, handleClose, rowData, mutateGetUser } = props;
@@ -12,12 +16,12 @@ export default function ModalUpdate(props) {
   const initValueForm = {
     name: rowData[1],
     email: rowData[2],
-    password: "",
-    avatar_url: rowData[7],
-    gender: rowData[3],
-    calorie: rowData[4],
-    weight: rowData[6],
-    height: rowData[5],
+    password: rowData[3],
+    avatar_url: rowData[8],
+    gender: rowData[4],
+    calorie: rowData[5],
+    weight: rowData[7],
+    height: rowData[6],
   };
 
   const [userID, setUserID] = useState();
@@ -32,6 +36,13 @@ export default function ModalUpdate(props) {
     setForm(initValueForm);
   }, [rowData]);
 
+  useEffect(() => {
+    if (data?.meta?.code === 200) {
+      handleClose();
+      mutateGetUser();
+    }
+  }, [data?.meta?.code]);
+
   console.log(rowData);
 
   const onChange = (e) => {
@@ -40,6 +51,26 @@ export default function ModalUpdate(props) {
     setForm({
       ...form,
       [name]: value,
+    });
+  };
+
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const storageRef = appFirebase.storage().ref("avatar/");
+    const fileRef = storageRef.child(file.name);
+    console.log("file = ", file);
+    console.log("storageRef = ", storageRef);
+    console.log("fileRef = ", fileRef);
+    fileRef.put(file).then((e) => {
+      console.log("Uploaded a file");
+      console.log("didalam e = ", e);
+      e.ref.getDownloadURL().then(function (downloadURL) {
+        console.log("File available at", downloadURL);
+        setForm({
+          ...form,
+          avatar_url: downloadURL,
+        });
+      });
     });
   };
 
@@ -77,29 +108,43 @@ export default function ModalUpdate(props) {
                 name="password"
                 label="Password"
                 onChange={onChange}
-                value={form.password}
+                // value={form.password}
                 size="small"
               />
             </div>
             <div>
-              <TextField
-                fullWidth
+              <input
+                type="file"
                 name="avatar_url"
-                label="Avatar"
-                onChange={onChange}
-                value={form.avatar_url}
-                size="small"
+                onChange={onChangeImage}
+                // value={form.avatar_url}
+                accept="image/*"
+                className="w-full p-2 border rounded-md"
               />
             </div>
-            <div>
-              <TextField
-                fullWidth
-                name="gender"
-                label="Gender"
-                onChange={onChange}
-                value={form.gender}
-                size="small"
-              />
+            <div className="mx-2">
+              <RadioGroup
+                row
+                aria-label="gender"
+                name="row-radio-buttons-group"
+              >
+                <FormControlLabel
+                  onChange={onChange}
+                  name="gender"
+                  value="male"
+                  checked={form.gender === "male"}
+                  control={<Radio />}
+                  label="Male"
+                />
+                <FormControlLabel
+                  onChange={onChange}
+                  value="female"
+                  name="gender"
+                  checked={form.gender === "female"}
+                  control={<Radio />}
+                  label="Female"
+                />
+              </RadioGroup>
             </div>
             <div>
               <TextField

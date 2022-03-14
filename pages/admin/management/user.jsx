@@ -39,6 +39,15 @@ export default function ManagementUser() {
       },
     },
     {
+      name: "password",
+      label: "Password",
+      options: {
+        display: false,
+        filter: false,
+        sort: false,
+      },
+    },
+    {
       name: "gender",
       label: "Gender",
       options: {
@@ -166,6 +175,7 @@ export default function ManagementUser() {
       id: item.id,
       name: item.name,
       email: item.email,
+      password: item.password,
       gender: item.gender,
       calories: item.calories,
       height: item.height,

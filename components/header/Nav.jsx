@@ -9,11 +9,15 @@ import {
   LoginIcon,
   LogoutIcon,
   CogIcon,
+  AdjustmentsIcon,
 } from "@heroicons/react/solid";
 import profile from "@/public/dummy.png";
 import Image from "next/image";
+import Cookies from "universal-cookie";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { clearUser } from "@/store/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function Nav(props) {
   const { location } = props;
@@ -21,6 +25,8 @@ export default function Nav(props) {
   const [userDropdown, setUserDropdown] = useState(false);
   const infoUser = useSelector((state) => state.user);
   const router = useRouter();
+  const cookies = new Cookies();
+  const dispatch = useDispatch();
 
   const userNavList = [
     { title: "Dashboard", link: "/user/dashboard" },
@@ -58,6 +64,12 @@ export default function Nav(props) {
   ];
 
   const spliceName = infoUser?.name?.split(" ");
+
+  const onLogout = () => {
+    dispatch(clearUser());
+    cookies.remove("token", { path: "/", domain: window.location.hostname });
+    router.push("/");
+  };
 
   return (
     <nav
@@ -154,33 +166,55 @@ export default function Nav(props) {
                 <ul
                   className={`absolute w-[150px] right-0 top-12 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
                 >
-                  {infoUser.id !== 0
-                    ? userDropdownListLogin.map((item, index) => (
-                        <li
-                          key={index}
-                          className="border-b border-white/60 last:border-0"
+                  {infoUser.id !== 0 ? (
+                    <>
+                      <li className="border-b border-white/60 last:border-0">
+                        <Link href="/user/dashboard">
+                          <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            Dashboard
+                            <span className="ml-2">
+                              <AdjustmentsIcon className="w-4 h-4" />
+                            </span>
+                          </button>
+                        </Link>
+                      </li>
+                      <li className="border-b border-white/60 last:border-0">
+                        <Link href="/#">
+                          <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            Setting
+                            <span className="ml-2">
+                              <CogIcon className="w-4 h-4" />
+                            </span>
+                          </button>
+                        </Link>
+                      </li>
+                      <li className="border-b border-white/60 last:border-0">
+                        <button
+                          onClick={onLogout}
+                          className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded"
                         >
-                          <Link href={item.link}>
-                            <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
-                              {item.title}
-                              <span className="ml-2">{item.icon}</span>
-                            </button>
-                          </Link>
-                        </li>
-                      ))
-                    : userDropdownListLogout.map((item, index) => (
-                        <li
-                          key={index}
-                          className="border-b border-white/60 last:border-0"
-                        >
-                          <Link href={item.link}>
-                            <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
-                              {item.title}
-                              <span className="ml-2">{item.icon}</span>
-                            </button>
-                          </Link>
-                        </li>
-                      ))}
+                          Logout
+                          <span className="ml-2">
+                            <LogoutIcon className="w-4 h-4" />
+                          </span>
+                        </button>
+                      </li>
+                    </>
+                  ) : (
+                    userDropdownListLogout.map((item, index) => (
+                      <li
+                        key={index}
+                        className="border-b border-white/60 last:border-0"
+                      >
+                        <Link href={item.link}>
+                          <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
+                            {item.title}
+                            <span className="ml-2">{item.icon}</span>
+                          </button>
+                        </Link>
+                      </li>
+                    ))
+                  )}
                 </ul>
               )}
             </div>

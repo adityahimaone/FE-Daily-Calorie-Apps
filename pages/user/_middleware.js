@@ -13,16 +13,30 @@ export default function middleware(req) {
     return nextRes.redirect("/");
   }
 
-  if (token) {
-    const decoded = jwtDecode(token);
-    if (!decoded.role !== "user" && decoded.exp * 1000 < Date.now()) {
-      cookies.remove("token", {
-        path: "/",
-        domain: window.location.hostname,
-      });
-      nextRes.redirect("/entry/user");
+  try {
+    if (token) {
+      const decoded = jwtDecode(token);
+      if (!decoded.role !== "user" && decoded.exp * 1000 < Date.now()) {
+        cookies.remove("token", {
+          path: "/",
+          domain: window.location.hostname,
+        });
+        nextRes.redirect("/");
+      }
     }
+  } catch (error) {
+    console.log(error);
   }
+  // if (token) {
+  //   const decoded = jwtDecode(token);
+  //   if (!decoded.role !== "user" && decoded.exp * 1000 < Date.now()) {
+  //     cookies.remove("token", {
+  //       path: "/",
+  //       domain: window.location.hostname,
+  //     });
+  //     nextRes.redirect("/");
+  //   }
+  // }
 
   return null;
 }

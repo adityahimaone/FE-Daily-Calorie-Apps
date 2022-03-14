@@ -10,7 +10,8 @@
       "@/context/*": ["context/*"],
       "@/services/*": ["services/*"],
       "@/hooks/*": ["hooks/*"],
-      "@/firebase/*": ["firebase/*"]
+      "@/firebase/*": ["firebase/*"],
+      "@/store/*": ["store/*"]
     }
   }
 }
