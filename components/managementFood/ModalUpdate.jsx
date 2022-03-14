@@ -3,6 +3,7 @@ import Modal from "@mui/material/Modal";
 import Button from "../Button";
 import { TextField } from "@mui/material";
 import useUpdateFood from "@/hooks/admin/useUpdateFood";
+import appFirebase from "@/firebase/firebaseConfig.js";
 
 export default function ModalUpdate(props) {
   const { open, handleClose, rowData, mutateGetFood } = props;
@@ -27,7 +28,7 @@ export default function ModalUpdate(props) {
   useEffect(() => {
     setForm(initValueForm);
   }, [rowData]);
-  
+
   useEffect(() => {
     if (data?.meta?.code === 200) {
       handleClose();
@@ -41,6 +42,20 @@ export default function ModalUpdate(props) {
     setForm({
       ...form,
       [name]: value,
+    });
+  };
+
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const storageRef = appFirebase.storage().ref("food/");
+    const fileRef = storageRef.child(file.name);
+    fileRef.put(file).then((e) => {
+      e.ref.getDownloadURL().then(function (downloadURL) {
+        setForm({
+          ...form,
+          img_url: downloadURL,
+        });
+      });
     });
   };
 
@@ -64,12 +79,13 @@ export default function ModalUpdate(props) {
             </div>
             <div>
               <label>Food IMG</label>
-              <TextField
-                fullWidth
+              <input
+                type="file"
                 name="img_url"
-                onChange={onChange}
-                value={form.img_url}
-                size="small"
+                onChange={onChangeImage}
+                // value={form.avatar_url}
+                accept="image/*"
+                className="w-full p-2 border rounded-md"
               />
             </div>
             <div>

@@ -92,7 +92,7 @@ export default function ManagementUser() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <div class="avatar">
-              <div class="w-8 rounded-full">
+              <div class="w-8 rounded-full ring ring-slate-200">
                 <img src={value ? value : profile.src} />
               </div>
             </div>

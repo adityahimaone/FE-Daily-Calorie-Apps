@@ -39,7 +39,7 @@ export default function food() {
         customBodyRender: (value, tableMeta, updateValue) => {
           return (
             <div class="avatar">
-              <div class="w-8">
+              <div class="w-8 rounded-md ring ring-slate-200">
                 <img src={value ? value : profile.src} />
               </div>
             </div>
