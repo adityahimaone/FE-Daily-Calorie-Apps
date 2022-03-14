@@ -14,7 +14,7 @@ export function axiosConfig() {
 
 export function axiosConfigAdmin() {
   const cookies = new Cookies();
-  const token = cookies.get("token admin");
+  const token = cookies.get("token");
 
   const config = {
     headers: {

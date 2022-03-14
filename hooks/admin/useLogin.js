@@ -27,7 +27,7 @@ export default function useLogin(payload = null) {
   console.log(data?.data?.token, "data token");
 
   if (data) {
-    cookies.set("token admin", data?.data?.token, {
+    cookies.set("token", data?.data?.token, {
       path: "/",
       domain: window.location.hostname,
     });
