@@ -2,48 +2,36 @@ import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Button from "@/components/Button";
 import { TextField } from "@mui/material";
-import useUpdateUser from "@/hooks/admin/useUpdateUser";
 import appFirebase from "@/firebase/firebaseConfig.js";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import useAddUser from "@/hooks/admin/useAddUser";
 
-export default function ModalUpdate(props) {
-  const { open, handleClose, rowData, mutateGetUser } = props;
-
-  let idUser = rowData[0];
+export default function ModalAdd(props) {
+  const { open, handleClose, mutateGetUser } = props;
 
   const initValueForm = {
-    name: rowData[1],
-    email: rowData[2],
-    password: rowData[3],
-    avatar_url: rowData[8],
-    gender: rowData[4],
-    calorie: rowData[5],
-    weight: rowData[7],
-    height: rowData[6],
+    name: "",
+    email: "",
+    password: "",
+    avatar_url: "",
+    gender: "",
+    calorie: "",
+    weight: "",
+    height: "",
   };
 
-  const [userID, setUserID] = useState();
   const [form, setForm] = useState(initValueForm);
 
-  const { data, mutate, error } = useUpdateUser(userID, form);
-
-  console.log(form, "form");
+  const { user, mutate, loading, error } = useAddUser(form);
 
   useEffect(() => {
-    idUser = rowData[0];
-    setForm(initValueForm);
-  }, [rowData]);
-
-  useEffect(() => {
-    if (data?.meta?.code === 200) {
+    if (user?.meta?.code === 200) {
       handleClose();
       mutateGetUser();
     }
-  }, [data?.meta?.code]);
-
-  console.log(rowData);
+  }, [user?.meta?.code]);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -73,7 +61,7 @@ export default function ModalUpdate(props) {
       <div className="absolute modal-main">
         <div class="modal-box h-fit">
           <div className="bg-mainpurple-100 absolute py-4 top-0 left-0 w-full">
-            <h3 class="font-bold text-xl text-center  text-white">Edit User</h3>
+            <h3 class="font-bold text-xl text-center  text-white">Add User</h3>
           </div>
           <div className="mt-14 space-y-4">
             <div>
@@ -102,7 +90,7 @@ export default function ModalUpdate(props) {
                 name="password"
                 label="Password"
                 onChange={onChange}
-                // value={form.password}
+                value={form.password}
                 size="small"
               />
             </div>
@@ -174,8 +162,7 @@ export default function ModalUpdate(props) {
           <div class="modal-action">
             <Button
               onClick={() => {
-                setUserID(idUser);
-                mutate(null, false);
+                mutate(form, true);
               }}
             >
               Submit

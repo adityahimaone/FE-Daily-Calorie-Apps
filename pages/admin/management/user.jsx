@@ -7,16 +7,20 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import ModalDelete from "@/components/managementUser/ModalDelete";
 import ModalUpdate from "@/components/managementUser/ModalUpdate";
+import ModalAdd from "@/components/managementUser/ModalAdd";
 
 export default function ManagementUser() {
   const [modalDelete, setModalDelete] = useState(false);
   const [modalUpdate, setModalUpdate] = useState(false);
+  const [modalAdd, setModalAdd] = useState(false);
   const [rowData, setRowData] = useState([]);
 
   const handleOpenModalDelete = () => setModalDelete(true);
   const handleCloseModalDelete = () => setModalDelete(false);
   const handleOpenModalUpdate = () => setModalUpdate(true);
   const handleCloseModalUpdate = () => setModalUpdate(false);
+  const handleOpenModalAdd = () => setModalAdd(true);
+  const handleCloseModalAdd = () => setModalAdd(false);
 
   const { data, mutate: mutateGetUser, error, loading } = useGetAllUser();
 
@@ -158,7 +162,7 @@ export default function ManagementUser() {
     customToolbar: () => {
       return (
         <>
-          <button className="btn-main btn-purple" onClick={() => {}}>
+          <button className="btn-main btn-purple" onClick={handleOpenModalAdd}>
             <div className="flex items-center">
               <PlusIcon className="mr-1 w-4 h-4" />
               Add User
@@ -210,6 +214,11 @@ export default function ManagementUser() {
           open={modalUpdate}
           handleClose={handleCloseModalUpdate}
           rowData={rowData}
+          mutateGetUser={mutateGetUser}
+        />
+        <ModalAdd
+          open={modalAdd}
+          handleClose={handleCloseModalAdd}
           mutateGetUser={mutateGetUser}
         />
       </div>
