@@ -125,8 +125,8 @@ export default function Dashboard() {
       {/* Profile Info */}
       <div className="w-full p-4 my-5 rounded-lg shadow-xl bg-bluewhite">
         <div className="flex items-center">
-          <div class="avatar">
-            <div class="w-10 rounded-full ring ring-mainorange-100 ring-offset-1">
+          <div className="avatar">
+            <div className="w-10 rounded-full ring ring-mainorange-100 ring-offset-1">
               <img
                 src={infoUser.id !== 0 ? infoUser?.avatar_url : profile.src}
               />
@@ -167,25 +167,25 @@ export default function Dashboard() {
       </div>
       {/* Search  */}
       <div className="flex flex-col items-center my-5 space-x-2">
-        <div class="bg-white w-full h-16 rounded-xl mb-3 shadow-lg p-2">
+        <div className="bg-white w-full h-16 rounded-xl mb-3 shadow-lg p-2">
           <input
             type="text"
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            class="w-full h-full text-2xl rounded-lg focus:outline-none focus:ring focus:border-blue-300"
+            className="w-full h-full text-2xl rounded-lg focus:outline-none focus:ring focus:border-blue-300"
           />
         </div>
-        <div class="bg-white w-full rounded-xl shadow-xl overflow-hidden p-1">
+        <div className="bg-white w-full rounded-xl shadow-xl overflow-hidden p-1">
           {searchResult !== null ? (
             searchResult?.data?.slice(0, 5).map((item) => (
               <div
                 key={item.id}
-                class="w-full flex p-3 pl-4 items-center justify-between space-x-2 hover:bg-gray-300 rounded-lg cursor-pointer"
+                className="w-full flex p-3 pl-4 items-center justify-between space-x-2 hover:bg-gray-300 rounded-lg cursor-pointer"
               >
                 <div className="flex items-center">
-                  <div class="mr-4">
-                    <div class="h-12 w-12 rounded-md flex items-center justify-center text-3xl">
+                  <div className="mr-4">
+                    <div className="h-12 w-12 rounded-md flex items-center justify-center text-3xl">
                       {item.img_url ? (
                         <img src={item.img_url} alt="food" />
                       ) : (
@@ -197,18 +197,20 @@ export default function Dashboard() {
                     </div>
                   </div>
                   <div>
-                    <div class="font-bold text-lg">{item.title}</div>
-                    <div class="text-xs text-gray-500">
-                      <span class="mr-2">
+                    <div className="font-bold text-lg">{item.title}</div>
+                    <div className="text-xs text-gray-500">
+                      <span className="mr-2">
                         Calories: {item.calories.toFixed(2)} Kcal
                       </span>
-                      <span class="mr-2">
+                      <span className="mr-2">
                         Carbs: {item.carbs.toFixed(2)} Kcal
                       </span>
-                      <span class="mr-2">
+                      <span className="mr-2">
                         Protein: {item.protein.toFixed(2)} Kcal
                       </span>
-                      <span class="mr-2">Fat: {item.fat.toFixed(2)} Kcal</span>
+                      <span className="mr-2">
+                        Fat: {item.fat.toFixed(2)} Kcal
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -220,7 +222,7 @@ export default function Dashboard() {
               </div>
             ))
           ) : (
-            <div class="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer">
+            <div className="w-full flex p-3 pl-4 items-center hover:bg-gray-300 rounded-lg cursor-pointer">
               <h1>No Food</h1>
             </div>
           )}
@@ -240,8 +242,7 @@ export default function Dashboard() {
         <hr className="my-4 border-t-2 rounded border-mainpurple-100" />
         <div className="flex items-center justify-center">
           <Rating
-            name="customized-color"
-            defaultValue={waterConsume}
+            name="simple-controlled"
             value={waterConsume}
             // getLabelText={(value) => `${value} Water${value !== 1 ? "s" : ""}`}
             onChange={async (event, newValue) => {
@@ -265,10 +266,9 @@ export default function Dashboard() {
         <div>
           {dataUserHistories?.histories_details?.map((food) => (
             <div
-              key={food?.food?.id}
+              key={food?.food?.ID}
               className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4"
             >
-              <h1>{food?.food?.id}</h1>
               <div className="w-full lg:w-1/6 lg:h-1/5">
                 <img
                   className="object-cover w-full h-48 rounded-t-lg lg:rounded-lg"

@@ -8,8 +8,11 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
 import pattren from "@/styles/pattren.module.css";
+import Router from "next/router";
+import { useRouter } from "next/router";
 
 export default function UserLogin() {
+  const router = useRouter();
   const initLogin = {
     email: "",
     password: "",
@@ -45,10 +48,11 @@ export default function UserLogin() {
   const onClick = (e) => {
     e.preventDefault();
     mutate();
+    setLoginForm(initLogin);
   };
 
   return (
-    <GuestLayout container={false} className="relative">
+    <GuestLayout container={false} pageTitle="Login" className="relative">
       <div className="absolute flex flex-col w-full min-h-screen lg:flex-row">
         <div
           className={`flex-col items-center justify-center flex-1 hidden lg:flex bg-gradient-to-t to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
@@ -122,9 +126,9 @@ export default function UserLogin() {
                 </div>
                 <div className="flex my-2 space-x-2">
                   <p className="text-sm">Don't have an account?</p>
-                  <a className="text-sm text-mainpurple-100">
+                  <p className="text-sm text-mainpurple-100">
                     <Link href="/entry/register">Register Here</Link>
-                  </a>
+                  </p>
                 </div>
               </form>
             </div>

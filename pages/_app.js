@@ -7,6 +7,7 @@ import { store, persistor } from "../store/store";
 import * as serviceWorker from "../firebase/serviceWorker";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const drawerWidth = 240;
+import Router from "next/router";
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -37,6 +38,18 @@ function MyApp({ Component, pageProps }) {
       },
     },
   });
+
+  if (process.env.NODE_ENV !== "production") {
+    Router.events.on("routeChangeError", (err, url) => {
+      if (
+        err.stack.startsWith(
+          "TypeError: Cannot read property 'call' of undefined\n    at __webpack_require__"
+        )
+      ) {
+        location.href = url;
+      }
+    });
+  }
 
   return (
     <>

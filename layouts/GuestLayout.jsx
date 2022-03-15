@@ -6,7 +6,6 @@ import Container from "@/components/Container";
 export default function GuestLayout(props) {
   const { children, pageTitle, container } = props;
   const initContainer = typeof container !== "undefined" ? container : true;
-  const [containerActive, setContainerActive] = useState(initContainer);
   return (
     <>
       <Head>
@@ -17,7 +16,7 @@ export default function GuestLayout(props) {
       <div className="min-h-screen">
         <Nav location="guest" />
         <div className="">
-          {containerActive === true ? (
+          {initContainer === true ? (
             <Container>{children}</Container>
           ) : (
             <div>{children}</div>

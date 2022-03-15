@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import React, { useState } from "react";
 import Container from "@/components/Container";
 import {
   FireIcon,
@@ -12,12 +12,12 @@ import {
   AdjustmentsIcon,
 } from "@heroicons/react/solid";
 import profile from "@/public/dummy.png";
-import Image from "next/image";
 import Cookies from "universal-cookie";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { clearUser } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
+import useLogin from "@/hooks/user/useLogin";
 
 export default function Nav(props) {
   const { location } = props;
@@ -27,6 +27,14 @@ export default function Nav(props) {
   const router = useRouter();
   const cookies = new Cookies();
   const dispatch = useDispatch();
+
+  const onCanvas = () => {
+    setOffcanvas(!offcanvas);
+  };
+
+  const onDropdown = () => {
+    setUserDropdown(!userDropdown);
+  };
 
   const userNavList = [
     { title: "Dashboard", link: "/user/dashboard" },
@@ -106,7 +114,7 @@ export default function Nav(props) {
           >
             <button
               type="button"
-              onClick={() => setOffcanvas(!offcanvas)}
+              onClick={onCanvas}
               className="absolute top-10 right-10 lg:hidden"
             >
               <XIcon className="w-8 h-8 " />
@@ -140,11 +148,11 @@ export default function Nav(props) {
             <div className="relative">
               <button
                 type="button"
-                onClick={() => setUserDropdown(!userDropdown)}
+                onClick={onDropdown}
                 className="flex items-center"
               >
-                <div class="avatar">
-                  <div class="w-8 rounded-full ring ring-mainorange-100 ring-offset-1">
+                <div className="avatar">
+                  <div className="w-8 rounded-full ring ring-mainorange-100 ring-offset-1">
                     <img
                       src={
                         infoUser.id !== 0 ? infoUser?.avatar_url : profile.src

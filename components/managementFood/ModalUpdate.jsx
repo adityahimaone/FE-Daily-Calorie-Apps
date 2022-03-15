@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "@mui/material/Modal";
-import Button from "../Button";
+import Button from "@/components/Button";
 import { TextField } from "@mui/material";
 import useUpdateFood from "@/hooks/admin/useUpdateFood";
 import appFirebase from "@/firebase/firebaseConfig.js";
@@ -62,9 +62,11 @@ export default function ModalUpdate(props) {
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="absolute modal-main">
-        <div class="modal-box h-fit">
+        <div className="modal-box h-fit">
           <div className="bg-mainpurple-100 absolute py-4 top-0 left-0 w-full">
-            <h3 class="font-bold text-xl text-center  text-white">Edit Food</h3>
+            <h3 className="font-bold text-xl text-center  text-white">
+              Edit Food
+            </h3>
           </div>
           <div className="mt-12 space-y-2">
             <div>
@@ -139,7 +141,7 @@ export default function ModalUpdate(props) {
               />
             </div>
           </div>
-          <div class="modal-action">
+          <div className="modal-action">
             <Button
               onClick={() => {
                 setFoodID(idFood);

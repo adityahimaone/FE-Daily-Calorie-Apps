@@ -68,18 +68,18 @@ export default function Appbar(props) {
                 <h1>Hi, Admin</h1>
                 <ChevronDownIcon className="h-5 w-5" />
               </div>
-              {dropdown && (
-                <ul
-                  className={`absolute w-[150px] right-5 top-16 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
-                >
-                  <li className="font-regular py-3 hover:bg-mainorange-100 hover:rounded">
-                    <button type="button" onClick={onLogout}>
-                      Logout
-                    </button>
-                  </li>
-                </ul>
-              )}
             </button>
+            {dropdown && (
+              <ul
+                className={`absolute w-[150px] right-5 top-16 bg-mainpurple-100  rounded shadow-2xl z-auto  text-white transition-all`}
+              >
+                <li className="font-regular text-center py-3 hover:bg-mainorange-100 hover:rounded">
+                  <button type="button" onClick={onLogout}>
+                    Logout
+                  </button>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </Toolbar>

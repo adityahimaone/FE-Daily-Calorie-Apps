@@ -6,10 +6,12 @@ import Router from "next/router";
 import { useDispatch } from "react-redux";
 import { setAdmin } from "store/adminSlice";
 import Cookies from "universal-cookie";
+import { useRouter } from "next/router";
 
 export default function useLogin(payload = null) {
   const cookies = new Cookies();
   const dispatch = useDispatch();
+  const router = useRouter();
 
   payload = {
     username: payload?.username,
@@ -26,20 +28,23 @@ export default function useLogin(payload = null) {
 
   console.log(data?.data?.token, "data token");
 
-  if (data) {
-    cookies.set("token", data?.data?.token, {
-      path: "/",
-      domain: window.location.hostname,
-    });
-    let decodedJWT = jwtDecode(data?.data?.token);
-    dispatch(
-      setAdmin({
-        id: decodedJWT.id,
-        role: decodedJWT.role,
-        exp: decodedJWT.exp,
-      })
-    );
-    Router.push("/admin/dashboard");
+  if (data?.meta?.code === 200) {
+    try {
+      cookies.set("token", data?.data?.token, {
+        path: "/",
+        domain: window.location.hostname,
+      });
+      let decodedJWT = jwtDecode(data?.data?.token);
+      dispatch(
+        setAdmin({
+          id: decodedJWT.id,
+          role: decodedJWT.role,
+          exp: decodedJWT.exp,
+        })
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   const loading = !data && !error;

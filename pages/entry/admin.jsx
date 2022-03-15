@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GuestLayout from "@/layouts/GuestLayout";
 import { TextField } from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -6,8 +6,11 @@ import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
 import IconButton from "@mui/material/IconButton";
 import Link from "next/link";
 import useLogin from "@/hooks/admin/useLogin";
+import Router from "next/router";
+import { useRouter } from "next/router";
 
 export default function AdminLogin() {
+  const router = useRouter();
   const initLogin = {
     username: "",
     password: "",
@@ -43,6 +46,13 @@ export default function AdminLogin() {
     mutate(null, true);
     setLoginForm(initLogin);
   };
+
+  useEffect(() => {
+    if (data?.meta?.code === 200) {
+      router.replace("/admin/dashboard");
+    }
+  }, [data?.meta?.code]);
+
   return (
     <GuestLayout container={false}>
       <div className="flex justify-center items-center w-full min-h-screen">

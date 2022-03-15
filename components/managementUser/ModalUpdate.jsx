@@ -29,8 +29,6 @@ export default function ModalUpdate(props) {
 
   const { data, mutate, error } = useUpdateUser(userID, form);
 
-  console.log(form, "form");
-
   useEffect(() => {
     idUser = rowData[0];
     setForm(initValueForm);
@@ -71,9 +69,11 @@ export default function ModalUpdate(props) {
   return (
     <Modal open={open} onClose={handleClose}>
       <div className="absolute modal-main">
-        <div class="modal-box h-fit">
+        <div className="modal-box h-fit">
           <div className="bg-mainpurple-100 absolute py-4 top-0 left-0 w-full">
-            <h3 class="font-bold text-xl text-center  text-white">Edit User</h3>
+            <h3 className="font-bold text-xl text-center  text-white">
+              Edit User
+            </h3>
           </div>
           <div className="mt-14 space-y-4">
             <div>
@@ -171,7 +171,7 @@ export default function ModalUpdate(props) {
               />
             </div>
           </div>
-          <div class="modal-action">
+          <div className="modal-action">
             <Button
               onClick={() => {
                 setUserID(idUser);
