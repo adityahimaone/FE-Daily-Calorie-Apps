@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/layouts/UserLayout";
-import MUIDataTable from "mui-datatables";
 import useGetAllHistories from "@/hooks/user/useGetAllHistories";
 import Button from "@/components/Button";
 import { useRouter } from "next/router";
@@ -10,93 +9,24 @@ export default function histories() {
 
   const { data, error } = useGetAllHistories();
 
-  const columns = [
-    {
-      name: "no",
-      label: "No",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "date",
-      label: "Date",
-      options: {
-        filter: true,
-        sort: true,
-      },
-    },
-    {
-      name: "total_calories",
-      label: "Total Calories",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "total_food",
-      label: "Total Food",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "water",
-      label: "water",
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: "detail",
-      label: "Detail",
-      options: {
-        filter: true,
-        sort: false,
-        empty: true,
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return (
-            <Button
-              className="btn-orange"
-              onClick={() => {
-                console.log(value);
-              }}
-            >
-              Detail
-            </Button>
-          );
-        },
-      },
-    },
-  ];
+  const [histories, setHistories] = useState(data?.data.slice(0, 5));
+  const [start, setStart] = useState(10);
 
-  const options = {
-    filterType: "dropdown",
-    selectableRowsHideCheckboxes: true,
-    download: false,
-    print: false,
-    viewColumns: false,
-    actionsColumnIndex: -1,
+  useEffect(() => {
+    if (data?.data) {
+      setHistories(data.data.slice(0, 5));
+    }
+  }, [data?.data]);
+
+  const limitHistories = () => {
+    setHistories(data?.data.slice(0, start));
+    setStart(start + 5);
   };
 
-  let newData = [];
+  const historiesLength = histories?.length;
+  const dataLength = data?.data?.length;
 
-  if (data) {
-    newData = data?.data?.map((item, index) => {
-      return {
-        no: index + 1,
-        date: item.date,
-        total_calories: item.total_calories + " Kcal",
-        total_food: item.total_food,
-        water: item.water,
-        detail: item.id,
-      };
-    });
-  }
+  console.log(historiesLength, dataLength, "histories");
 
   console.log(data?.data, "newData");
   return (
@@ -105,9 +35,9 @@ export default function histories() {
         <div>
           <h1 className="text-2xl font-bold">Histories</h1>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 mb-8">
           <div className=" space-y-4">
-            {data?.data?.map((item, index) => {
+            {histories?.map((item, index) => {
               return (
                 <div
                   key={item.id}
@@ -143,14 +73,14 @@ export default function histories() {
                 </div>
               );
             })}
+            <div
+              className={`flex justify-center mt-4 ${
+                historiesLength === dataLength && "hidden"
+              } `}
+            >
+              <Button onClick={limitHistories}>Load More</Button>
+            </div>
           </div>
-          {/* <MUIDataTable
-            className="rounded-lg"
-            title={"Histories"}
-            data={newData}
-            columns={columns}
-            options={options}
-          /> */}
         </div>
       </div>
     </Layout>

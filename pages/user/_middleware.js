@@ -21,7 +21,7 @@ export default function middleware(req) {
           path: "/",
           domain: window.location.hostname,
         });
-        nextRes.redirect("/");
+        nextRes.rewrite(new URL("/", window.location.origin));
       }
     }
   } catch (error) {
