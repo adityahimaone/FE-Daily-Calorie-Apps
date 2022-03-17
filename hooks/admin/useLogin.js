@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import { AxiosCustom } from "utils/api";
 import jwtDecode from "jwt-decode";
@@ -46,6 +46,12 @@ export default function useLogin(payload = null) {
       console.log(e);
     }
   }
+
+  // useEffect(() => {
+  //   if (data?.meta?.code === 200) {
+  //     router.replace("/admin/dashboard");
+  //   }
+  // }, [data?.meta?.code]);
 
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;

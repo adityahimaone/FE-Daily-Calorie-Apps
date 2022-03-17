@@ -17,16 +17,20 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { clearUser } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
-import useLogin from "@/hooks/user/useLogin";
 
 export default function Nav(props) {
   const { location } = props;
+  const [loc, setLoc] = useState();
   const [offcanvas, setOffcanvas] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
   const infoUser = useSelector((state) => state.user);
   const router = useRouter();
   const cookies = new Cookies();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setLoc(location);
+  }, [location]);
 
   const onCanvas = () => {
     setOffcanvas(!offcanvas);
@@ -71,7 +75,7 @@ export default function Nav(props) {
     { title: "Register", link: "/entry/register" },
   ];
 
-  const spliceName = infoUser?.name?.split(" ");
+  const spliceName = infoUser?.name ? infoUser?.name?.split(" ") : "Null";
 
   const onLogout = () => {
     dispatch(clearUser());
@@ -82,9 +86,9 @@ export default function Nav(props) {
   return (
     <nav
       className={`${
-        location === "guest"
+        loc === "guest"
           ? "bg-white text-mainpurple-100"
-          : location === "user"
+          : loc === "user"
           ? "bg-mainpurple-100 text-white"
           : "bg-white"
       } py-2 shadow-lg absolute z-50 inset-x-0 top-0`}
@@ -120,7 +124,7 @@ export default function Nav(props) {
               <XIcon className="w-8 h-8 " />
             </button>
             <ul className="flex flex-col mt-4 space-y-5 lg:space-x-14 lg:items-center lg:flex-row lg:mt-0 lg:space-y-0">
-              {location === "guest"
+              {loc === "guest"
                 ? guestNavList.map((item, index) => (
                     <li
                       key={index}
@@ -162,9 +166,9 @@ export default function Nav(props) {
                 </div>
                 <ChevronDownIcon
                   className={`ml-1 w-4 h-4 ${
-                    location === "guest"
+                    loc === "guest"
                       ? " text-mainpurple-100"
-                      : location === "user"
+                      : loc === "user"
                       ? " text-white"
                       : "bg-none"
                   }`}

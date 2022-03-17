@@ -4,6 +4,11 @@ import DesktopDrawer from "@/components/sidebar/DesktopDrawer";
 import MobileDrawer from "@/components/sidebar/MobileDrawer";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
+import { verify } from "jsonwebtoken";
+import Cookies from "universal-cookie";
+import Router from "next/router";
+
+const secret = process.env.REACT_APP_SECRET;
 const drawerWidth = 240;
 
 export default function AdminLayout(props) {
@@ -11,6 +16,18 @@ export default function AdminLayout(props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const cookies = new Cookies();
+  let getCookies = cookies.get("token");
+  if (getCookies) {
+    try {
+      verify(getCookies, secret);
+    } catch (e) {
+      cookies.remove("token", { path: "/", domain: window.location.hostname });
+      Router.push("/");
+    }
+  } else {
+    Router.push("/");
+  }
 
   return (
     <Box sx={{ display: "flex" }}>

@@ -14,8 +14,6 @@ export default function statistic() {
   const { data, error } = useGetAllHistories();
   const infoUser = useSelector((state) => state.user);
 
-  console.log(data, "data all hitoriess");
-
   let dataset = {};
 
   let dataCard = {};

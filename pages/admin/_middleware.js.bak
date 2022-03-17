@@ -13,15 +13,15 @@ export default function MiddlewareAdmin(req) {
     return nextRes.redirect("/");
   }
 
-  if (token !== "undefined") {
-    try {
-      verify(token, secret);
-      return nextRes.next();
-    } catch (e) {
-      console.log(e);
-      return nextRes.redirect("/");
-    }
-  }
+  // if (token !== "undefined") {
+  //   try {
+  //     verify(token, secret);
+  //     return nextRes.next();
+  //   } catch (e) {
+  //     console.log(e);
+  //     return nextRes.redirect("/");
+  //   }
+  // }
 
-  return nextRes.next();
+  // return nextRes.next();
 }

@@ -15,17 +15,17 @@ export default function middleware(req) {
     return nextRes.redirect("/");
   }
 
-  console.log(token, secret);
+  // console.log(token, secret);
 
-  if (token) {
-    try {
-      verify(token, secret);
-      return nextRes.next();
-    } catch (e) {
-      console.log(e);
-      return nextRes.redirect("/");
-    }
-  }
+  // if (token) {
+  //   try {
+  //     verify(token, secret);
+  //     return nextRes.next();
+  //   } catch (e) {
+  //     console.log(e);
+  //     return nextRes.redirect("/");
+  //   }
+  // }
 
   return nextRes.next();
 }

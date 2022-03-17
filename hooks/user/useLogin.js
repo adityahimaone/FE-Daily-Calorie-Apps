@@ -5,7 +5,6 @@ import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { setUser } from "store/userSlice";
 import jwtDecode from "jwt-decode";
-import Router from "next/router";
 import { useRouter } from "next/router";
 
 export default function useLogin(payload = null) {
@@ -40,16 +39,12 @@ export default function useLogin(payload = null) {
           exp: decodedJWT.exp,
         })
       );
+      // return router.replace("/user/histories");
     } catch (error) {
       console.log(error);
+      // return router.replace("/user/login");
     }
   }
-
-  useEffect(() => {
-    if (data?.meta?.code === 200) {
-      Router.replace("/user/dashboard");
-    }
-  }, [data?.meta?.code]);
 
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;

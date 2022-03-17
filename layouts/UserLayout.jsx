@@ -1,10 +1,31 @@
 import React from "react";
 import Head from "next/head";
-import Nav from "@/components/header/Nav";
+import Nav from "@/components/header/Nav.jsx";
 import Container from "@/components/Container";
+import { useSelector } from "react-redux";
+import { verify } from "jsonwebtoken";
+import Cookies from "universal-cookie";
+import Router from "next/router";
+
+const secret = process.env.REACT_APP_SECRET;
 
 export default function UserLayout(props) {
   const { children, pageTitle } = props;
+  const cookies = new Cookies();
+  const infoUser = useSelector((state) => state.user);
+
+  let getCookies = cookies.get("token");
+  if (getCookies) {
+    try {
+      verify(getCookies, secret);
+    } catch (e) {
+      cookies.remove("token", { path: "/", domain: window.location.hostname });
+      Router.push("/");
+    }
+  } else {
+    Router.push("/");
+  }
+
   return (
     <>
       <Head>
@@ -13,7 +34,7 @@ export default function UserLayout(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <Nav location="user" />
+        {infoUser.id !== 0 ? <Nav location="user" /> : <Nav location="guest" />}
         <div className="min-h-screen">
           <Container>{children}</Container>
         </div>

@@ -1,3 +1,6 @@
+const { withModuleFederation } = require("@module-federation/nextjs-mf");
+const { dependencies } = require("./package.json");
+
 module.exports = {
   reactStrictMode: true,
   env: {

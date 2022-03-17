@@ -8,7 +8,6 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import useLogin from "@/hooks/user/useLogin";
 import pattren from "@/styles/pattren.module.css";
-import Router from "next/router";
 import { useRouter } from "next/router";
 
 export default function UserLogin() {
@@ -21,8 +20,6 @@ export default function UserLogin() {
 
   const [loginForm, setLoginForm] = useState(initLogin);
   const { user, mutate, loading } = useLogin(loginForm);
-
-  const infoUser = useSelector((state) => state.user);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -50,6 +47,13 @@ export default function UserLogin() {
     mutate();
     setLoginForm(initLogin);
   };
+
+  useEffect(() => {
+    if (user?.meta?.code === 200) {
+      return router.replace("/user/dashboard");
+      setLoginForm(initLogin);
+    }
+  }, [user?.meta?.code]);
 
   return (
     <GuestLayout container={false} pageTitle="Login" className="relative">

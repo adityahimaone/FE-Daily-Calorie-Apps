@@ -9,7 +9,7 @@ export default function histories() {
 
   const { data, error } = useGetAllHistories();
 
-  const [histories, setHistories] = useState(data?.data.slice(0, 5));
+  const [histories, setHistories] = useState(data?.data?.slice(0, 5));
   const [start, setStart] = useState(10);
 
   useEffect(() => {
