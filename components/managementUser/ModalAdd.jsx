@@ -22,7 +22,27 @@ export default function ModalAdd(props) {
     height: "",
   };
 
+  const initFormErr = {
+    name: "",
+    email: "",
+    password: "",
+    avatar_url: "",
+    gender: "",
+    calorie: "",
+    weight: "",
+    height: "",
+  };
+
   const [form, setForm] = useState(initValueForm);
+  const [formErr, setFormErr] = useState(initFormErr);
+
+  const regexName = /^[a-zA-Z]{2,}$/;
+  const regexEmail =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexPassword = /^[A-Za-z0-9]*$/;
+  const regexCalorie = /^[0-9]{1,}$/;
+  const regexWeight = /^[0-9]{1,3}$/;
+  const regexHeight = /^[0-9]{1,3}$/;
 
   const { user, mutate, loading, error } = useAddUser(form);
 
@@ -36,6 +56,55 @@ export default function ModalAdd(props) {
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
+    if (name === "name") {
+      if (regexName.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({ ...formErr, [name]: "Name is not valid" });
+      }
+    }
+
+    if (name === "email") {
+      if (regexEmail.test(value)) {
+        setFormErr({ ...formErr, email: "" });
+      } else {
+        setFormErr({ ...formErr, email: "Invalid email" });
+      }
+    }
+
+    if (name === "password") {
+      if (regexPassword.test(value)) {
+        setFormErr({ ...formErr, password: "" });
+      } else {
+        setFormErr({ ...formErr, password: "Invalid password" });
+      }
+    }
+
+    if (name === "calorie") {
+      if (regexCalorie.test(value)) {
+        setFormErr({ ...formErr, calorie: "" });
+      } else {
+        setFormErr({ ...formErr, calorie: "Invalid calorie" });
+      }
+    }
+
+    if (name === "weight") {
+      if (regexWeight.test(value)) {
+        setFormErr({ ...formErr, weight: "" });
+      } else {
+        setFormErr({ ...formErr, weight: "Invalid weight" });
+      }
+    }
+
+    if (name === "height") {
+      if (regexHeight.test(value)) {
+        setFormErr({ ...formErr, height: "" });
+      } else {
+        setFormErr({ ...formErr, height: "Invalid height" });
+      }
+    }
+
     setForm({
       ...form,
       [name]: value,
@@ -68,32 +137,38 @@ export default function ModalAdd(props) {
           <div className="mt-14 space-y-4">
             <div>
               <TextField
+                {...(formErr.name && { error: true })}
                 fullWidth
                 label="Fullname"
                 name="name"
                 onChange={onChange}
                 value={form.name}
                 size="small"
+                helperText={formErr.name !== "" ? formErr.name : null}
               />
             </div>
             <div>
               <TextField
+                {...(formErr.email && { error: true })}
                 fullWidth
                 name="email"
                 label="Email"
                 onChange={onChange}
                 value={form.email}
                 size="small"
+                helperText={formErr.email !== "" ? formErr.email : null}
               />
             </div>
             <div>
               <TextField
+                {...(formErr.password && { error: true })}
                 fullWidth
                 name="password"
                 label="Password"
                 onChange={onChange}
                 value={form.password}
                 size="small"
+                helperText={formErr.password !== "" ? formErr.password : null}
               />
             </div>
             <div>
@@ -132,39 +207,60 @@ export default function ModalAdd(props) {
             </div>
             <div>
               <TextField
+                {...(formErr.calorie && { error: true })}
                 fullWidth
                 name="calorie"
                 label="Calorie"
                 onChange={onChange}
                 value={form.calorie}
                 size="small"
+                helperText={formErr.calorie !== "" ? formErr.calorie : null}
               />
             </div>
             <div>
               <TextField
+                {...(formErr.weight && { error: true })}
                 fullWidth
                 name="weight"
                 label="Weight"
                 onChange={onChange}
                 value={form.weight}
                 size="small"
+                helperText={formErr.weight !== "" ? formErr.weight : null}
               />
             </div>
             <div>
               <TextField
+                {...(formErr.height && { error: true })}
                 fullWidth
                 name="height"
                 label="Height"
                 onChange={onChange}
                 value={form.height}
                 size="small"
+                helperText={formErr.height !== "" ? formErr.height : null}
               />
             </div>
           </div>
           <div className="modal-action">
             <Button
               onClick={() => {
-                mutate(form, true);
+                if (
+                  formErr.name === "" &&
+                  formErr.email === "" &&
+                  formErr.password === "" &&
+                  formErr.calorie === "" &&
+                  formErr.weight === "" &&
+                  formErr.height === "" &&
+                  form.name !== "" &&
+                  form.email !== "" &&
+                  form.password !== "" &&
+                  form.calorie !== "" &&
+                  form.weight !== "" &&
+                  form.height !== ""
+                ) {
+                  mutate(form, true);
+                }
               }}
             >
               Submit

@@ -35,11 +35,9 @@ export default function Register() {
     avatar_url:
       "https://icon-library.com/images/free-avatar-icon/free-avatar-icon-11.jpg",
     gender: "",
-    personal_data: {
-      calorie: 0,
-      weight: 0,
-      height: 0,
-    },
+    calorie: 0,
+    weight: 0,
+    height: 0,
   };
 
   const initCountForm = {
@@ -49,12 +47,24 @@ export default function Register() {
     age: 0,
     activity: 0,
   };
+
+  const initFormErr = {
+    name: "",
+    email: "",
+    password: "",
+    avatar_url: "",
+    gender: "",
+    calorie: 0,
+    weight: 0,
+    height: 0,
+  };
+
   const [form, setForm] = useState(initValueForm);
+  const [formErr, setFormErr] = useState(initFormErr);
   const [formCount, setFormCount] = useState(initCountForm);
 
   const { user, mutate, loading, error } = useRegister(form);
 
-  console.log(user, "user");
   useEffect(() => {
     if (user?.meta?.code === 200) {
       setPage(4);
@@ -62,9 +72,66 @@ export default function Register() {
     }
   }, [user?.meta?.code]);
 
+  const regexName = /^[a-zA-Z]{2,}$/;
+  const regexEmail =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexPassword = /^[A-Za-z0-9]*$/;
+  const regexWeight = /^[0-9]{1,3}$/;
+  const regexHeight = /^[0-9]{1,3}$/;
+  const regexAge = /^[0-9]{1,3}$/;
+
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
+    if (name === "name") {
+      if (regexName.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({ ...formErr, [name]: "Name is not valid" });
+      }
+    }
+
+    if (name === "email") {
+      if (regexEmail.test(value)) {
+        setFormErr({ ...formErr, email: "" });
+      } else {
+        setFormErr({ ...formErr, email: "Invalid email" });
+      }
+    }
+
+    if (name === "password") {
+      if (regexPassword.test(value)) {
+        setFormErr({ ...formErr, password: "" });
+      } else {
+        setFormErr({ ...formErr, password: "Invalid password" });
+      }
+    }
+
+    if (name === "weight") {
+      if (regexWeight.test(value)) {
+        setFormErr({ ...formErr, weight: "" });
+      } else {
+        setFormErr({ ...formErr, weight: "Invalid weight" });
+      }
+    }
+
+    if (name === "height") {
+      if (regexHeight.test(value)) {
+        setFormErr({ ...formErr, height: "" });
+      } else {
+        setFormErr({ ...formErr, height: "Invalid height" });
+      }
+    }
+
+    if (name === "age") {
+      if (regexAge.test(value)) {
+        setFormErr({ ...formErr, age: "" });
+      } else {
+        setFormErr({ ...formErr, age: "Invalid age" });
+      }
+    }
+
     setForm({
       ...form,
       [name]: value,
@@ -112,27 +179,34 @@ export default function Register() {
   useEffect(() => {
     setForm({
       ...form,
-      personal_data: { ...form.personal_data, calorie: countCalorie.calories },
+      calorie: countCalorie.calories,
     });
   }, [countCalorie.calories]);
 
-  const submit = () => {
-    // sendDataToServer({
-    //   name: form.name,
-    //   email: form.email,
-    //   password: form.password,
-    //   avatar_url: form.avatar_url,
-    //   gender: form.gender,
-    //   calorie: form.personal_data.calorie,
-    //   weight: form.personal_data.weight,
-    //   height: form.personal_data.height,
-    // });
-    mutate(form, true);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (
+      form.name !== "" &&
+      form.email !== "" &&
+      form.password !== "" &&
+      form.avatar_url !== "" &&
+      form.weight !== "" &&
+      form.height !== "" &&
+      form.age !== "" &&
+      formErr.name === "" &&
+      formErr.email === "" &&
+      formErr.password === "" &&
+      formErr.weight === "" &&
+      formErr.height === "" &&
+      formErr.age === ""
+    ) {
+      mutate(form, false);
+      setForm(initValueForm);
+    }
   };
 
-  console.log(form, "form");
-
   const normalise = (value) => ((value - 0) * 100) / (3 - 0);
+
   return (
     <GuestLayout container={false}>
       <div className="flex flex-col min-h-screen lg:flex-row">
@@ -200,26 +274,28 @@ export default function Register() {
               {page === 1 && (
                 <OnboardingOne
                   valueForm={form}
+                  formErr={formErr}
                   setValueForm={setForm}
-                  update={updateData}
+                  onChange={onChange}
                 />
               )}
               {page === 2 && (
                 <OnboardingTwo
                   countCalorie={countCalorie}
                   valueForm={form}
+                  formErr={formErr}
                   setValueForm={setForm}
-                  update={updateData}
                   formCount={formCount}
                   setFormCount={setFormCount}
+                  onChange={onChange}
                 />
               )}
               {page === 3 && (
                 <OnboardingThree
                   valueForm={form}
+                  formErr={formErr}
                   setValueForm={setForm}
                   onChangeAvatar={onChangeAvatar}
-                  update={updateData}
                 />
               )}
               {page === 4 && <OnboardingFour />}
@@ -234,7 +310,7 @@ export default function Register() {
                 <Button onClick={goNextPage}>Go Next</Button>
               )}
               {page === 3 && (
-                <Button type="submit" onClick={submit}>
+                <Button type="submit" onClick={onSubmit}>
                   Submit
                 </Button>
               )}
@@ -254,16 +330,7 @@ export default function Register() {
   );
 }
 
-const OnboardingOne = ({ data, valueForm, setValueForm, update }) => {
-  const onChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setValueForm({
-      ...valueForm,
-      [name]: value,
-    });
-  };
-
+const OnboardingOne = ({ valueForm, formErr, onChange, update }) => {
   return (
     <div>
       <div className="my-3">
@@ -273,32 +340,38 @@ const OnboardingOne = ({ data, valueForm, setValueForm, update }) => {
         <div>
           <label>Name</label>
           <TextField
+            {...(formErr.name && { error: true })}
             fullWidth
             name="name"
             onChange={onChange}
             value={valueForm.name}
             size="small"
+            helperText={formErr.name !== "" ? formErr.name : null}
           />
         </div>
         <div>
           <label>Email</label>
           <TextField
+            {...(formErr.email && { error: true })}
             fullWidth
             name="email"
             onChange={onChange}
             value={valueForm.email}
             size="small"
+            helperText={formErr.email !== "" ? formErr.email : null}
           />
         </div>
         <div>
           <label>Password</label>
           <TextField
+            {...(formErr.password && { error: true })}
             fullWidth
             name="password"
             onChange={onChange}
             value={valueForm.password}
             type="password"
             size="small"
+            helperText={formErr.password !== "" ? formErr.password : null}
           />
         </div>
         <div>
@@ -328,12 +401,11 @@ const OnboardingOne = ({ data, valueForm, setValueForm, update }) => {
 
 const OnboardingTwo = ({
   countCalorie,
-  data,
   valueForm,
   setValueForm,
   formCount,
+  formErr,
   setFormCount,
-  update,
 }) => {
   const initInput = {
     weight: 0,
@@ -402,34 +474,40 @@ const OnboardingTwo = ({
         <div>
           <label>Weight</label>
           <TextField
+            {...(formErr.weight && { error: true })}
             fullWidth
             name="weight"
             onChange={onChange}
             value={formCount.weight}
             type="number"
             size="small"
+            helperText={formErr.weight !== "" ? formErr.weight : null}
           />
         </div>
         <div>
           <label>Height</label>
           <TextField
+            {...(formErr.height && { error: true })}
             fullWidth
             name="height"
             type="number"
             onChange={onChange}
             value={formCount.height}
             size="small"
+            helperText={formErr.height !== "" ? formErr.height : null}
           />
         </div>
         <div>
           <label>Age</label>
           <TextField
+            {...(formErr.age && { error: true })}
             fullWidth
             name="age"
             type="number"
             onChange={onChange}
             value={formCount.age}
             size="small"
+            helperText={formErr.age !== "" ? formErr.age : null}
           />
         </div>
         <div>
@@ -455,25 +533,13 @@ const OnboardingTwo = ({
   );
 };
 
-const OnboardingThree = ({
-  data,
-  valueForm,
-  setValueForm,
-  onChangeAvatar,
-  update,
-}) => {
+const OnboardingThree = ({ valueForm, setValueForm }) => {
   const onChangeImage = (e) => {
     const file = e.target.files[0];
     const storageRef = appFirebase.storage().ref("avatar/");
     const fileRef = storageRef.child(file.name);
-    console.log("file = ", file);
-    console.log("storageRef = ", storageRef);
-    console.log("fileRef = ", fileRef);
     fileRef.put(file).then((e) => {
-      console.log("Uploaded a file");
-      console.log("didalam e = ", e);
       e.ref.getDownloadURL().then(function (downloadURL) {
-        console.log("File available at", downloadURL);
         setValueForm({
           ...valueForm,
           avatar_url: downloadURL,

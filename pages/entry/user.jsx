@@ -18,12 +18,38 @@ export default function UserLogin() {
     showPassword: false,
   };
 
+  const initFormErr = {
+    email: "",
+    password: "",
+  };
+
   const [loginForm, setLoginForm] = useState(initLogin);
+  const [formErr, setFormErr] = useState(initFormErr);
   const { user, mutate, loading } = useLogin(loginForm);
+
+  const regexEmail =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const regexPassword = /^[A-Za-z0-9]*$/;
 
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
+    if (name === "email") {
+      if (regexEmail.test(value)) {
+        setFormErr({ ...formErr, email: "" });
+      } else {
+        setFormErr({ ...formErr, email: "Invalid email" });
+      }
+    }
+
+    if (name === "password") {
+      if (regexPassword.test(value)) {
+        setFormErr({ ...formErr, password: "" });
+      } else {
+        setFormErr({ ...formErr, password: "Invalid password" });
+      }
+    }
 
     setLoginForm({
       ...loginForm,
@@ -44,16 +70,23 @@ export default function UserLogin() {
 
   const onClick = (e) => {
     e.preventDefault();
-    mutate();
-    setLoginForm(initLogin);
-  };
-
-  useEffect(() => {
-    if (user?.meta?.code === 200) {
-      return router.replace("/user/dashboard");
+    if (
+      loginForm.email !== "" &&
+      loginForm.password !== "" &&
+      formErr.email === "" &&
+      formErr.password === ""
+    ) {
+      mutate();
       setLoginForm(initLogin);
     }
-  }, [user?.meta?.code]);
+  };
+
+  // useEffect(() => {
+  //   if (user?.meta?.code === 200) {
+  //     return router.replace("/user/dashboard");
+  //     setLoginForm(initLogin);
+  //   }
+  // }, [user?.meta?.code]);
 
   return (
     <GuestLayout container={false} pageTitle="Login" className="relative">
@@ -77,6 +110,7 @@ export default function UserLogin() {
               <form onSubmit={onClick}>
                 <div className="mb-4">
                   <TextField
+                    {...(formErr.email && { error: true })}
                     fullWidth
                     required
                     label="Email"
@@ -86,10 +120,12 @@ export default function UserLogin() {
                     onChange={onChange}
                     variant="outlined"
                     size="small"
+                    helperText={formErr.email !== "" ? formErr.email : null}
                   />
                 </div>
                 <div className="mb-4">
                   <TextField
+                    {...(formErr.password && { error: true })}
                     fullWidth
                     required
                     label="Password"
@@ -100,6 +136,9 @@ export default function UserLogin() {
                     color="primary"
                     variant="outlined"
                     size="small"
+                    helperText={
+                      formErr.password !== "" ? formErr.password : null
+                    }
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position="end">

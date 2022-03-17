@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { AxiosCustom } from "utils/api";
 
-export default function useRegister(payload) {
+export default function useRegister(payload = null) {
   payload = {
     name: payload?.name,
     email: payload?.email,
@@ -9,9 +9,9 @@ export default function useRegister(payload) {
     avatar_url: payload?.avatar_url,
     gender: payload?.gender,
     personal_data: {
-      calorie: parseFloat(payload?.personal_data.calorie),
-      weight: parseFloat(payload?.personal_data.weight),
-      height: parseFloat(payload?.personal_data.height),
+      calorie: parseFloat(payload?.calorie),
+      weight: parseFloat(payload?.weight),
+      height: parseFloat(payload?.height),
     },
   };
 

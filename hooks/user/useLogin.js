@@ -39,10 +39,10 @@ export default function useLogin(payload = null) {
           exp: decodedJWT.exp,
         })
       );
-      // return router.replace("/user/histories");
+      return router.push("/user/dashboard");
     } catch (error) {
       console.log(error);
-      // return router.replace("/user/login");
+      return router.push("/user/login");
     }
   }
 
