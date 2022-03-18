@@ -146,18 +146,6 @@ export default function food() {
         ),
       },
     },
-    customToolbar: () => {
-      return (
-        <>
-          <button className="btn-main btn-purple" onClick={() => {}}>
-            <div className="flex items-center">
-              <PlusIcon className="mr-1 w-4 h-4" />
-              Add Food
-            </div>
-          </button>
-        </>
-      );
-    },
   };
 
   let newData = [];

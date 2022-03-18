@@ -7,6 +7,8 @@ import Toolbar from "@mui/material/Toolbar";
 import { verify } from "jsonwebtoken";
 import Cookies from "universal-cookie";
 import Router from "next/router";
+import { clearAdmin } from "@/store/adminSlice";
+import {  useDispatch } from "react-redux";
 
 const secret = process.env.REACT_APP_SECRET;
 const drawerWidth = 240;
@@ -17,11 +19,14 @@ export default function AdminLayout(props) {
     setMobileOpen(!mobileOpen);
   };
   const cookies = new Cookies();
+  const dispatch = useDispatch();
+
   let getCookies = cookies.get("token");
   if (getCookies) {
     try {
       verify(getCookies, secret);
     } catch (e) {
+      dispatch(clearAdmin());
       cookies.remove("token", { path: "/", domain: window.location.hostname });
       Router.push("/");
     }

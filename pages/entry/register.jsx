@@ -54,9 +54,9 @@ export default function Register() {
     password: "",
     avatar_url: "",
     gender: "",
-    calorie: 0,
-    weight: 0,
-    height: 0,
+    calorie: "",
+    weight: "",
+    height: "",
   };
 
   const [form, setForm] = useState(initValueForm);

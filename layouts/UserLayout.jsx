@@ -2,10 +2,11 @@ import React from "react";
 import Head from "next/head";
 import Nav from "@/components/header/Nav.jsx";
 import Container from "@/components/Container";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { verify } from "jsonwebtoken";
 import Cookies from "universal-cookie";
 import Router from "next/router";
+import { clearUser } from "@/store/userSlice";
 
 const secret = process.env.REACT_APP_SECRET;
 
@@ -13,12 +14,14 @@ export default function UserLayout(props) {
   const { children, pageTitle } = props;
   const cookies = new Cookies();
   const infoUser = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   let getCookies = cookies.get("token");
   if (getCookies) {
     try {
       verify(getCookies, secret);
     } catch (e) {
+      dispatch(clearUser());
       cookies.remove("token", { path: "/", domain: window.location.hostname });
       Router.push("/");
     }

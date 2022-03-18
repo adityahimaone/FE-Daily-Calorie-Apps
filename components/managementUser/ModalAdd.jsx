@@ -36,7 +36,7 @@ export default function ModalAdd(props) {
   const [form, setForm] = useState(initValueForm);
   const [formErr, setFormErr] = useState(initFormErr);
 
-  const regexName = /^[a-zA-Z]{2,}$/;
+  const regexName = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
   const regexEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const regexPassword = /^[A-Za-z0-9]*$/;

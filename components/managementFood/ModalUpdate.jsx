@@ -20,8 +20,19 @@ export default function ModalUpdate(props) {
     serving_size: rowData[7],
   };
 
+  const initFormErr = {
+    title: "",
+    img_url: "",
+    calories: "",
+    carbs: "",
+    fat: "",
+    protein: "",
+    serving_size: "",
+  };
+
   const [foodID, setFoodID] = useState();
   const [form, setForm] = useState(initValueForm);
+  const [formErr, setFormErr] = useState(initFormErr);
 
   const { data, mutate, error } = useUpdateFood(foodID, form);
 
@@ -36,9 +47,84 @@ export default function ModalUpdate(props) {
     }
   }, [data?.meta?.code]);
 
+  // rgex at least have 2 words and spaces
+  const regexNumber = /^[0-9]{1,4}$/;
+  const regexTitle = /^[a-zA-Z0-9-,]+(?:\s[a-zA-Z0-9-,]+)+$/;
+
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
+
+    if (name === "title") {
+      if (regexTitle.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]: "Title must be alphanumeric",
+        });
+      }
+    }
+
+    if (name === "calories") {
+      if (regexNumber.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]:
+            "Calories must be at least 1 characters & less than 5 characters",
+        });
+      }
+    }
+
+    if (name === "carbs") {
+      if (regexNumber.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]:
+            "Carbs must be at least 1 characters & less than 5 characters",
+        });
+      }
+    }
+
+    if (name === "fat") {
+      if (regexNumber.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]: "Fat must be at least 1 characters & less than 5 characters",
+        });
+      }
+    }
+
+    if (name === "protein") {
+      if (regexNumber.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]:
+            "Protein must be at least 1 characters & less than 5 characters",
+        });
+      }
+    }
+
+    if (name === "serving_size") {
+      if (regexNumber.test(value)) {
+        setFormErr({ ...formErr, [name]: "" });
+      } else {
+        setFormErr({
+          ...formErr,
+          [name]:
+            "Serving Size must be at least 1 characters & less than 5 characters",
+        });
+      }
+    }
+
     setForm({
       ...form,
       [name]: value,
@@ -72,11 +158,13 @@ export default function ModalUpdate(props) {
             <div>
               <label>Name Food</label>
               <TextField
+                {...(formErr.title && { error: true })}
                 fullWidth
                 name="title"
                 onChange={onChange}
                 value={form.title}
                 size="small"
+                helperText={formErr.title !== "" ? formErr.title : null}
               />
             </div>
             <div>
@@ -93,51 +181,68 @@ export default function ModalUpdate(props) {
             <div>
               <label>Calories</label>
               <TextField
+                {...(formErr.calories && { error: true })}
                 fullWidth
                 name="calories"
                 onChange={onChange}
                 value={form.calories}
                 size="small"
+                type="number"
+                helperText={formErr.calories !== "" ? formErr.calories : null}
               />
             </div>
             <div>
               <label>Carbs</label>
               <TextField
+                {...(formErr.carbs && { error: true })}
                 fullWidth
                 name="carbs"
                 onChange={onChange}
                 value={form.carbs}
                 size="small"
+                type="number"
+                helperText={formErr.carbs !== "" ? formErr.carbs : null}
               />
             </div>
             <div>
               <label>Fat</label>
               <TextField
+                {...(formErr.fat && { error: true })}
                 fullWidth
                 name="fat"
                 onChange={onChange}
                 value={form.fat}
                 size="small"
+                type="number"
+                helperText={formErr.fat !== "" ? formErr.fat : null}
               />
             </div>
             <div>
               <label>Protein</label>
               <TextField
+                {...(formErr.protein && { error: true })}
                 fullWidth
                 name="protein"
                 onChange={onChange}
                 value={form.protein}
                 size="small"
+                type="number"
+                helperText={formErr.protein !== "" ? formErr.protein : null}
               />
             </div>
             <div>
               <label>Serving Size</label>
               <TextField
+                {...(formErr.serving_size && { error: true })}
                 fullWidth
                 name="serving_size"
                 onChange={onChange}
                 value={form.serving_size}
                 size="small"
+                type="number"
+                helperText={
+                  formErr.serving_size !== "" ? formErr.serving_size : null
+                }
               />
             </div>
           </div>
