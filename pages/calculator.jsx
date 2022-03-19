@@ -9,10 +9,11 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Button from "@/components/Button";
+import UseCountCalories from "@/hooks/useCountCalories";
 
 export default function Calculator() {
   const initValueForm = {
-    gender: "",
+    gender: "male",
     weight: 0,
     height: 0,
     age: 0,
@@ -58,8 +59,10 @@ export default function Calculator() {
   const [form, setForm] = useState(initValueForm);
   const [formErr, setFormErr] = useState(initFormErr);
 
+  const { data, mutate, error, loading } = UseCountCalories(form);
+
   const regexWeight = /^[0-9]{1,3}$/;
-  const regexHeight = /^[0-9]{1,3}$/;
+  const regexHeight = /^[0-9]{2,3}$/;
   const regexAge = /^[0-9]{1,3}$/;
 
   const onChange = (e) => {
@@ -98,6 +101,20 @@ export default function Calculator() {
     });
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (
+      form.weight !== 0 &&
+      form.height !== 0 &&
+      form.age !== 0 &&
+      formErr.age === "" &&
+      formErr.weight === "" &&
+      formErr.height === ""
+    ) {
+      mutate();
+    }
+  };
+
   return (
     <GuestLayout container={false} pageTitle="Calculator" className="relative">
       <div className="flex flex-col md:flex-row w-full min-h-screen">
@@ -111,9 +128,11 @@ export default function Calculator() {
             </h1>
           </div>
           <div className=" bg-mainpurple-100 text-center rounded-lg w-full max-w-md text-white py-5 my-4">
-            <h2 className="text-xl font-bold">2782 Kcal</h2>
+            <h2 className="text-xl font-bold">
+              {data?.data?.calories ? data?.data?.calories : 0} Kcal
+            </h2>
           </div>
-          <form className="space-y-4 w-full max-w-md">
+          <form className="space-y-4 w-full max-w-md" onSubmit={onSubmit}>
             <div className="flex items-center">
               <div className="flex-initial w-5/12">
                 <label>Weight</label>
@@ -221,7 +240,9 @@ export default function Calculator() {
               </div>
             </div>
             <div>
-              <Button className="btn-purple w-full">Count</Button>
+              <Button className="btn-purple w-full" onClick={onSubmit}>
+                Count
+              </Button>
             </div>
           </form>
         </div>

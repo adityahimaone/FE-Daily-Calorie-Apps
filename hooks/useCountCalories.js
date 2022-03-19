@@ -4,8 +4,8 @@ import { AxiosCustom } from "utils/api";
 export default function UseCountCalories(payload = null) {
   payload = {
     gender: payload?.gender,
-    age: payload?.age,
-    activity_type: payload?.activity_type,
+    age: parseInt(payload?.age),
+    activity_type: payload?.activity,
     personal_data: {
       weight: parseFloat(payload?.weight),
       height: parseFloat(payload?.height),
