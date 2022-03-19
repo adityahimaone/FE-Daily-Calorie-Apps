@@ -171,13 +171,6 @@ export default function Register() {
     });
   };
 
-  console.log(form);
-  console.log(formCount);
-
-  useEffect(() => {
-    dispatch(setCaloriesCount(formCount));
-  }, [formCount]);
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -396,7 +389,6 @@ const OnboardingTwo = ({
   countCalorie,
   valueForm,
   setValueForm,
-  formCount,
   formErr,
   setFormCount,
 }) => {
@@ -446,11 +438,6 @@ const OnboardingTwo = ({
         [name]: value,
       },
     });
-    setFormCount({
-      ...formCount,
-      [name]: value,
-      gender: valueForm.gender,
-    });
   };
 
   return (
@@ -459,11 +446,11 @@ const OnboardingTwo = ({
         <h1 className="text-lg">Fill Personal Data</h1>
       </div>
       <div className="flex flex-col justify-center w-full max-w-md space-y-4">
-        <div className="p-4 text-center text-white rounded-md bg-mainpurple-100">
+        {/* <div className="p-4 text-center text-white rounded-md bg-mainpurple-100">
           <label className="text-xl font-semibold">
             {countCalorie.calories}
           </label>
-        </div>
+        </div> */}
         <div>
           <label>Weight</label>
           <TextField
