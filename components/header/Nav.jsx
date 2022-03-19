@@ -87,11 +87,13 @@ export default function Nav(props) {
     <nav
       className={`${
         loc === "guest"
-          ? "bg-white text-mainpurple-100"
+          ? "bg-white text-mainpurple-100 shadow-lg"
           : loc === "user"
-          ? "bg-mainpurple-100 text-white"
+          ? "bg-mainpurple-100 text-white shadow-lg"
+          : loc === "home"
+          ? "  text-mainpurple-100"
           : "bg-white"
-      } py-2 shadow-lg absolute z-50 inset-x-0 top-0`}
+      } py-2 absolute z-50 inset-x-0 top-0`}
     >
       <div className="container px-10 mx-auto">
         <div className="flex items-center">
@@ -124,23 +126,25 @@ export default function Nav(props) {
               <XIcon className="w-8 h-8 " />
             </button>
             <ul className="flex flex-col mt-4 space-y-5 lg:space-x-14 lg:items-center lg:flex-row lg:mt-0 lg:space-y-0">
-              {loc === "guest"
-                ? guestNavList.map((item, index) => (
+              {loc === "user"
+                ? userNavList.map((item, index) => (
                     <li
                       key={index}
-                      className="font-regular hover:text-mainorange-100"
-                    >
-                      <Link href={item.link}>{item.title}</Link>
-                    </li>
-                  ))
-                : userNavList.map((item, index) => (
-                    <li
-                      key={index}
-                      className={`font-regular hover:text-mainorange-100 ${
+                      className={`font-regular group hover:text-mainorange-100 ${
                         router.asPath == item.link ? "text-mainorange-100 " : ""
                       }`}
                     >
                       <Link href={item.link}>{item.title}</Link>
+                      <div className="h-0.5 bg-mainorange-100 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out" />
+                    </li>
+                  ))
+                : guestNavList.map((item, index) => (
+                    <li
+                      key={index}
+                      className="font-regular group hover:text-mainorange-100 "
+                    >
+                      <Link href={item.link}>{item.title}</Link>
+                      <div className="h-0.5 bg-mainorange-100 scale-x-0 group-hover:scale-100 transition-transform origin-left rounded-full duration-300 ease-out" />
                     </li>
                   ))}
             </ul>

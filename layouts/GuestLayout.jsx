@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Head from "next/head";
 import Nav from "@/components/header/Nav";
 import Container from "@/components/Container";
+import Footer from "@/components/footer/Footer";
 
 export default function GuestLayout(props) {
-  const { children, pageTitle, container } = props;
+  const { children, pageTitle, container, loc } = props;
   const initContainer = typeof container !== "undefined" ? container : true;
   return (
     <>
@@ -13,15 +14,20 @@ export default function GuestLayout(props) {
         <meta name="description" content="Daily Calorie Apps" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="min-h-screen">
-        <Nav location="guest" />
-        <div className="">
+      <div
+        className={`min-h-screen ${
+          loc && "bg-gradient-to-br from-transparent to-mainpurple-100/30"
+        }`}
+      >
+        <Nav location={loc ? loc : "guest"} />
+        <div className=" overflow-hidden">
           {initContainer === true ? (
             <Container>{children}</Container>
           ) : (
             <div>{children}</div>
           )}
         </div>
+        <Footer />
       </div>
     </>
   );

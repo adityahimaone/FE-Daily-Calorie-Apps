@@ -35,6 +35,8 @@ export default function Register() {
     avatar_url:
       "https://icon-library.com/images/free-avatar-icon/free-avatar-icon-11.jpg",
     gender: "",
+    age: 0,
+    activity: 0,
     calorie: 0,
     weight: 0,
     height: 0,
@@ -54,7 +56,7 @@ export default function Register() {
     password: "",
     avatar_url: "",
     gender: "",
-    age:"",
+    age: "",
     calorie: "",
     weight: "",
     height: "",
@@ -62,7 +64,6 @@ export default function Register() {
 
   const [form, setForm] = useState(initValueForm);
   const [formErr, setFormErr] = useState(initFormErr);
-  const [formCount, setFormCount] = useState(initCountForm);
 
   const { user, mutate, loading, error } = useRegister(form);
 
@@ -177,13 +178,6 @@ export default function Register() {
     dispatch(setCaloriesCount(formCount));
   }, [formCount]);
 
-  useEffect(() => {
-    setForm({
-      ...form,
-      calorie: countCalorie.calories,
-    });
-  }, [countCalorie.calories]);
-
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -286,8 +280,6 @@ export default function Register() {
                   valueForm={form}
                   formErr={formErr}
                   setValueForm={setForm}
-                  formCount={formCount}
-                  setFormCount={setFormCount}
                   onChange={onChange}
                 />
               )}
@@ -479,7 +471,7 @@ const OnboardingTwo = ({
             fullWidth
             name="weight"
             onChange={onChange}
-            value={formCount.weight}
+            value={form.weight}
             type="number"
             size="small"
             helperText={formErr.weight !== "" ? formErr.weight : null}
@@ -493,7 +485,7 @@ const OnboardingTwo = ({
             name="height"
             type="number"
             onChange={onChange}
-            value={formCount.height}
+            value={form.height}
             size="small"
             helperText={formErr.height !== "" ? formErr.height : null}
           />
@@ -506,7 +498,7 @@ const OnboardingTwo = ({
             name="age"
             type="number"
             onChange={onChange}
-            value={formCount.age}
+            value={form.age}
             size="small"
             helperText={formErr.age !== "" ? formErr.age : null}
           />
@@ -518,7 +510,8 @@ const OnboardingTwo = ({
               id="demo-simple-select"
               name="activity"
               onChange={onChange}
-              value={formCount.activity}
+              value={form.activity}
+              size="small"
             >
               {activityValue.map((item) => (
                 <MenuItem key={item.id} value={item.value}>

@@ -10,6 +10,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Button from "@/components/Button";
 import UseCountCalories from "@/hooks/useCountCalories";
+import Image from "next/image";
+import Character from "@/public/img/EatingCuate.svg";
 
 export default function Calculator() {
   const initValueForm = {
@@ -119,11 +121,20 @@ export default function Calculator() {
     <GuestLayout container={false} pageTitle="Calculator" className="relative">
       <div className="flex flex-col md:flex-row w-full min-h-screen">
         <div
-          className={`w-full bg-gradient-to-t h-40 md:h-screen to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
-        ></div>
+          className={`w-full flex justify-center items-center bg-gradient-to-t h-40 md:h-screen to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
+        >
+          <div className="mt-11">
+            <div className="hidden md:block">
+              <Image src={Character} width={350} layout="intrinsic" />
+            </div>
+            <h1 className="text-xl font-semibold text-white block md:hidden">
+              Harrist-Benedict Calculator
+            </h1>
+          </div>
+        </div>
         <div className="flex flex-col w-full items-center justify-center px-5">
           <div>
-            <h1 className="text-xl font-semibold">
+            <h1 className="text-xl font-semibold hidden md:block ">
               Harrist-Benedict Calculator
             </h1>
           </div>
