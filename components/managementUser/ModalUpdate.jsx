@@ -15,13 +15,13 @@ export default function ModalUpdate(props) {
 
   const initValueForm = {
     name: rowData[1],
-    email: rowData[2],
-    password: rowData[3],
-    avatar_url: rowData[8],
-    gender: rowData[4],
-    calorie: rowData[5],
-    weight: rowData[7],
-    height: rowData[6],
+    email: rowData[3],
+    password: rowData[4],
+    avatar_url: rowData[2],
+    gender: rowData[5],
+    calorie: rowData[6],
+    weight: rowData[8],
+    height: rowData[7],
   };
 
   const initFormErr = {

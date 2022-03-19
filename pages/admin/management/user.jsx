@@ -35,6 +35,23 @@ export default function ManagementUser() {
       },
     },
     {
+      name: "avatar",
+      label: "Avatar",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value, tableMeta, updateValue) => {
+          return (
+            <div className="avatar">
+              <div className="w-8 rounded-full ring ring-slate-200">
+                <img src={value ? value : profile.src} />
+              </div>
+            </div>
+          );
+        },
+      },
+    },
+    {
       name: "email",
       label: "Email",
       options: {
@@ -61,7 +78,7 @@ export default function ManagementUser() {
     },
     {
       name: "calories",
-      label: "Calories",
+      label: "Calories (Kcal)",
       options: {
         filter: true,
         sort: true,
@@ -69,7 +86,7 @@ export default function ManagementUser() {
     },
     {
       name: "height",
-      label: "Height",
+      label: "Height (CM)",
       options: {
         filter: true,
         sort: true,
@@ -77,29 +94,13 @@ export default function ManagementUser() {
     },
     {
       name: "weight",
-      label: "Weight",
+      label: "Weight (KG)",
       options: {
         filter: true,
         sort: true,
       },
     },
-    {
-      name: "avatar",
-      label: "Avatar",
-      options: {
-        filter: false,
-        sort: false,
-        customBodyRender: (value, tableMeta, updateValue) => {
-          return (
-            <div className="avatar">
-              <div className="w-8 rounded-full ring ring-slate-200">
-                <img src={value ? value : profile.src} />
-              </div>
-            </div>
-          );
-        },
-      },
-    },
+
     {
       name: "action",
       label: "Action",

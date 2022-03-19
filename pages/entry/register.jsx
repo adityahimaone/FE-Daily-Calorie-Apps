@@ -54,6 +54,7 @@ export default function Register() {
     password: "",
     avatar_url: "",
     gender: "",
+    age:"",
     calorie: "",
     weight: "",
     height: "",

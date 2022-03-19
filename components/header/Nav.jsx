@@ -49,7 +49,7 @@ export default function Nav(props) {
 
   const guestNavList = [
     { title: "Home", link: "/" },
-    { title: "About", link: "/about" },
+    { title: "Calculator", link: "/calculator" },
   ];
 
   const userDropdownListLogin = [
