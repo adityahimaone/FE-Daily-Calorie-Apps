@@ -37,17 +37,8 @@ export default function Register() {
     gender: "",
     age: 0,
     activity: 0,
-    calorie: 0,
     weight: 0,
     height: 0,
-  };
-
-  const initCountForm = {
-    gender: "",
-    weight: 0,
-    height: 0,
-    age: 0,
-    activity: 0,
   };
 
   const initFormErr = {
@@ -57,7 +48,6 @@ export default function Register() {
     avatar_url: "",
     gender: "",
     age: "",
-    calorie: "",
     weight: "",
     height: "",
   };
@@ -158,18 +148,7 @@ export default function Register() {
     setPage((page) => page - 1);
   };
 
-  const updateData = (type, newData) => {
-    setData((data) => {
-      return { ...data, [type]: newData };
-    });
-  };
-
-  const onChangeAvatar = (e) => {
-    setData({
-      ...data,
-      avatar: e.target.files[0],
-    });
-  };
+  console.log(form);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -188,7 +167,7 @@ export default function Register() {
       formErr.height === "" &&
       formErr.age === ""
     ) {
-      mutate(form, false);
+      mutate(form, true);
       setForm(initValueForm);
     }
   };
@@ -281,7 +260,6 @@ export default function Register() {
                   valueForm={form}
                   formErr={formErr}
                   setValueForm={setForm}
-                  onChangeAvatar={onChangeAvatar}
                 />
               )}
               {page === 4 && <OnboardingFour />}
@@ -385,13 +363,7 @@ const OnboardingOne = ({ valueForm, formErr, onChange, update }) => {
   );
 };
 
-const OnboardingTwo = ({
-  countCalorie,
-  valueForm,
-  setValueForm,
-  formErr,
-  setFormCount,
-}) => {
+const OnboardingTwo = ({ valueForm, setValueForm, formErr, onChange }) => {
   const initInput = {
     weight: 0,
     height: 0,
@@ -428,18 +400,6 @@ const OnboardingTwo = ({
     },
   ];
 
-  const onChange = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setValueForm({
-      ...valueForm,
-      personal_data: {
-        ...valueForm.personal_data,
-        [name]: value,
-      },
-    });
-  };
-
   return (
     <div>
       <div className="my-3">
@@ -458,7 +418,7 @@ const OnboardingTwo = ({
             fullWidth
             name="weight"
             onChange={onChange}
-            value={form.weight}
+            value={valueForm.weight}
             type="number"
             size="small"
             helperText={formErr.weight !== "" ? formErr.weight : null}
@@ -472,7 +432,7 @@ const OnboardingTwo = ({
             name="height"
             type="number"
             onChange={onChange}
-            value={form.height}
+            value={valueForm.height}
             size="small"
             helperText={formErr.height !== "" ? formErr.height : null}
           />
@@ -485,7 +445,7 @@ const OnboardingTwo = ({
             name="age"
             type="number"
             onChange={onChange}
-            value={form.age}
+            value={valueForm.age}
             size="small"
             helperText={formErr.age !== "" ? formErr.age : null}
           />
@@ -497,7 +457,7 @@ const OnboardingTwo = ({
               id="demo-simple-select"
               name="activity"
               onChange={onChange}
-              value={form.activity}
+              value={valueForm.activity}
               size="small"
             >
               {activityValue.map((item) => (

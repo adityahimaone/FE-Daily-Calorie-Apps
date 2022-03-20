@@ -8,8 +8,8 @@ export default function useRegister(payload = null) {
     password: payload?.password,
     avatar_url: payload?.avatar_url,
     gender: payload?.gender,
-    age: payload?.age,
-    activity_type: payload?.activity,
+    age: parseInt(payload?.age),
+    activity_type: parseFloat(payload?.activity),
     personal_data: {
       calorie: parseFloat(payload?.calorie),
       weight: parseFloat(payload?.weight),

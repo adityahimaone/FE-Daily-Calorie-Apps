@@ -123,9 +123,14 @@ export default function Calculator() {
         <div
           className={`w-full flex justify-center items-center bg-gradient-to-t h-40 md:h-screen to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}
         >
-          <div className="mt-11">
+          <div className="mt-16">
             <div className="hidden md:block">
-              <Image src={Character} width={350} layout="intrinsic" />
+              <Image
+                src={Character}
+                width={350}
+                layout="intrinsic"
+                className="shadow-2xl"
+              />
             </div>
             <h1 className="text-xl font-semibold text-white block md:hidden">
               Harrist-Benedict Calculator

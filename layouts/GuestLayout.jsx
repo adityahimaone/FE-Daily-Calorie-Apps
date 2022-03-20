@@ -16,18 +16,19 @@ export default function GuestLayout(props) {
       </Head>
       <div
         className={`min-h-screen ${
-          loc && "bg-gradient-to-br from-transparent to-mainpurple-100/30"
+          loc === "home" &&
+          "bg-gradient-to-br from-transparent to-mainpurple-100"
         }`}
       >
         <Nav location={loc ? loc : "guest"} />
-        <div className=" overflow-hidden">
+        <div className="overflow-hidden">
           {initContainer === true ? (
             <Container>{children}</Container>
           ) : (
             <div>{children}</div>
           )}
         </div>
-        <Footer />
+        {loc === "home" && <Footer />}
       </div>
     </>
   );
