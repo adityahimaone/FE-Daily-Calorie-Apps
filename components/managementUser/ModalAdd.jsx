@@ -36,7 +36,7 @@ export default function ModalAdd(props) {
   const [form, setForm] = useState(initValueForm);
   const [formErr, setFormErr] = useState(initFormErr);
 
-  const regexName = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/;
+  const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
   const regexEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const regexPassword = /^[A-Za-z0-9]*$/;
@@ -165,6 +165,7 @@ export default function ModalAdd(props) {
                 fullWidth
                 name="password"
                 label="Password"
+                type="password"
                 onChange={onChange}
                 value={form.password}
                 size="small"
@@ -213,6 +214,7 @@ export default function ModalAdd(props) {
                 label="Calorie"
                 onChange={onChange}
                 value={form.calorie}
+                type="number"
                 size="small"
                 helperText={formErr.calorie !== "" ? formErr.calorie : null}
               />
@@ -225,6 +227,7 @@ export default function ModalAdd(props) {
                 label="Weight"
                 onChange={onChange}
                 value={form.weight}
+                type="number"
                 size="small"
                 helperText={formErr.weight !== "" ? formErr.weight : null}
               />
@@ -237,6 +240,7 @@ export default function ModalAdd(props) {
                 label="Height"
                 onChange={onChange}
                 value={form.height}
+                type="number"
                 size="small"
                 helperText={formErr.height !== "" ? formErr.height : null}
               />

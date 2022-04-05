@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import useGetAllFood from "@/hooks/admin/useGetAllFood";
 import Adminlayout from "@/layouts/AdminLayout";
 import MUIDataTable from "mui-datatables";
-import profile from "@/public/dummy.png";
+import profile from "@/public/ImageNotFound.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import { PlusIcon, PencilAltIcon, TrashIcon } from "@heroicons/react/solid";
 import ModalDelete from "@/components/managementFood/ModalDelete";

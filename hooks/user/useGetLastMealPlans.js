@@ -7,7 +7,7 @@ export default function useGetLastMealPlans() {
   const fetcher = (url) =>
     AxiosCustom.get(url, axiosConfig()).then((res) => res.data);
 
-  const { data, mutate, error } = useSWR("/api/v1/meal-plan", fetcher, {
+  const { data, mutate, error } = useSWR("/api/v1/meal-plan/last", fetcher, {
     revalidateOnFocus: true,
     revalidateOnMount: true,
     revalidateOnReconnect: true,

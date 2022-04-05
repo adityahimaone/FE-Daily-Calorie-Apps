@@ -20,7 +20,7 @@ import { useDispatch } from "react-redux";
 
 export default function Nav(props) {
   const { location } = props;
-  const [loc, setLoc] = useState();
+  const [loc, setLoc] = useState("");
   const [offcanvas, setOffcanvas] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
   const infoUser = useSelector((state) => state.user);
@@ -60,7 +60,7 @@ export default function Nav(props) {
     },
     {
       title: "Setting",
-      link: "/setting",
+      link: "/user/update",
       icon: <CogIcon className="w-4 h-4" />,
     },
     {
@@ -77,11 +77,14 @@ export default function Nav(props) {
 
   const spliceName = infoUser?.name ? infoUser?.name?.split(" ") : "Null";
 
-  const onLogout = () => {
+  const onLogout = async () => {
     dispatch(clearUser());
     cookies.remove("token", { path: "/", domain: window.location.hostname });
-    router.push("/");
+    await router.push("/");
+    router.reload(window.location.pathname);
   };
+
+  console.log(loc);
 
   return (
     <nav
@@ -91,7 +94,7 @@ export default function Nav(props) {
           : loc === "user"
           ? "bg-mainpurple-100 text-white shadow-lg"
           : loc === "home"
-          ? "  text-mainpurple-100"
+          ? "text-mainpurple-100"
           : "bg-white"
       } py-2 absolute z-50 inset-x-0 top-0`}
     >
@@ -195,7 +198,7 @@ export default function Nav(props) {
                         </Link>
                       </li>
                       <li className="border-b border-white/60 last:border-0">
-                        <Link href="/#">
+                        <Link href="/user/update">
                           <button className="flex w-full items-center px-2 py-2 hover:bg-violet-900/50 hover:rounded">
                             Setting
                             <span className="ml-2">

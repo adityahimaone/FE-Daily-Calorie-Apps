@@ -118,7 +118,12 @@ export default function Calculator() {
   };
 
   return (
-    <GuestLayout container={false} pageTitle="Calculator" className="relative">
+    <GuestLayout
+      container={false}
+      pageTitle="Calculator"
+      loc="guest"
+      className="relative"
+    >
       <div className="flex flex-col md:flex-row w-full min-h-screen">
         <div
           className={`w-full flex justify-center items-center bg-gradient-to-t h-40 md:h-screen to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}

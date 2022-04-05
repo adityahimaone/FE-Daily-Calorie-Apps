@@ -15,9 +15,9 @@ export default function GuestLayout(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div
-        className={`min-h-screen ${
-          loc === "home" &&
-          "bg-gradient-to-br from-transparent to-mainpurple-100"
+        className={`min-h-screen  ${
+          loc == "home" &&
+          " bg-gradient-to-br from-transparent to-mainpurple-100/30"
         }`}
       >
         <Nav location={loc ? loc : "guest"} />

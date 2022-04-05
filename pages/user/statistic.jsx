@@ -76,8 +76,8 @@ export default function statistic() {
                   <h1 className="font-semibold">Info User</h1>
                 </div>
                 <div className="flex flex-col justify-center items-center my-4">
-                  <div class="avatar">
-                    <div class="w-20 rounded-full ring ring-mainorange-100  ring-offset-0">
+                  <div className="avatar">
+                    <div className="w-20 rounded-full ring ring-mainorange-100  ring-offset-0">
                       <img
                         src={
                           infoUser.id !== 0 ? infoUser?.avatar_url : profile.src

@@ -15,7 +15,7 @@ export default function useUpdateFood(id, payload) {
 
   const fetcher = (url) =>
     AxiosCustom.put(url, payload, axiosConfigAdmin()).then((res) => res.data);
-  const { data, mutate, error } = useSWR(`/api/v1/foods/edit/` + id, fetcher, {
+  const { data, mutate, error } = useSWR(`/api/v1/foods/` + id, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnMount: false,

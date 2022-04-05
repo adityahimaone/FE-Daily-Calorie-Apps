@@ -8,7 +8,7 @@ export default function GetFood() {
   const [isLoading, setIsLoading] = useState(true);
   const sendDataToServer = async (payload) => {
     mainApiAuth
-      .get(`/api/v1/foods/api/?name=` + payload)
+      .get(`/api/v1/open-api/food/?name=` + payload)
       .then((res) => {
         setResponse(res.data);
       })

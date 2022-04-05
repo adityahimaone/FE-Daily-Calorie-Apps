@@ -19,7 +19,7 @@ export default function useUpdateUser(id, payload) {
   const fetcher = (url) =>
     AxiosCustom.put(url, payload, axiosConfigAdmin()).then((res) => res.data);
 
-  const { data, mutate, error } = useSWR(`/api/v1/users/edit/` + id, fetcher, {
+  const { data, mutate, error } = useSWR(`/api/v1/users/` + id, fetcher, {
     revalidateIfStale: false,
     revalidateOnFocus: false,
     revalidateOnMount: false,

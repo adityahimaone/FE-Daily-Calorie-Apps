@@ -7,7 +7,7 @@ export default function useGetAllUser() {
   const fetcher = (url) =>
     AxiosCustom.get(url, axiosConfigAdmin()).then((res) => res.data);
   const { data, mutate, error } = useSWR(
-    `${mainAPI}/api/v1/admin/users/`,
+    `${mainAPI}/api/v1/admin/users`,
     fetcher
   );
 

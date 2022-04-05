@@ -7,7 +7,7 @@ export default function useGetFood(name) {
   const fetcher = (url) =>
     AxiosCustom.get(url, axiosConfig()).then((res) => res.data);
   const { data, mutate, error } = useSWR(
-    `/api/v1/foods/api/?name=` + name,
+    `/api/v1/open-api/food/?name=` + name,
     fetcher,
     {
       revalidateOnFocus: false,

@@ -58,9 +58,9 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div class="hidden md:flex justify-end space-x-1 font-bold">
+          <div className="hidden md:flex justify-end space-x-1 font-bold">
             <span>Powered by</span>
-            <LightningBoltIcon class="w-6 h-6 text-gray-900 fill-current" />
+            <LightningBoltIcon className="w-6 h-6 text-gray-900 fill-current" />
             <span>EDAMAM API</span>
           </div>
         </div>

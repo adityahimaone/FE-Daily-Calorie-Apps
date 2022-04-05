@@ -28,7 +28,7 @@ export default function histories() {
 
   console.log(historiesLength, dataLength, "histories");
 
-  console.log(data?.data, "newData");
+  console.log(data, "newData");
   return (
     <Layout>
       <div>
@@ -45,20 +45,20 @@ export default function histories() {
                 >
                   <div className="flex items-center justify-center w-10 h-10 mr-4 rounded shadow-2xl bg-mainpurple-100">
                     <p className="text-white">
-                      {item.fullname.slice(0, 2).toUpperCase()}
+                      {item?.fullname?.slice(0, 2).toUpperCase()}
                     </p>
                   </div>
                   <div>
-                    <p>{item.date}</p>
+                    <p>{item?.date}</p>
                   </div>
                   <div>
-                    <p>{item.total_calories} Kcal</p>
+                    <p>{item?.total_calories} Kcal</p>
                   </div>
                   <div>
-                    <p>{item.water * 0.25} L</p>
+                    <p>{item?.water * 0.25} L</p>
                   </div>
                   <div>
-                    <p>{item.total_food} Food Total</p>
+                    <p>{item?.total_food} Food Total</p>
                   </div>
                   <div>
                     <Button

@@ -64,7 +64,7 @@ export default function Register() {
     }
   }, [user?.meta?.code]);
 
-  const regexName = /^[a-zA-Z]{2,}$/;
+  const regexName = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
   const regexEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const regexPassword = /^[A-Za-z0-9]*$/;
@@ -194,7 +194,7 @@ export default function Register() {
                 <div className="flex items-center justify-center w-4 h-4 p-1 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>1</p>
                 </div>
-                Fill personal info
+                Fill Self Information
               </li>
               <li
                 className={`flex items-center ${
@@ -206,7 +206,7 @@ export default function Register() {
                 <div className="flex items-center justify-center w-4 h-4 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>2</p>
                 </div>
-                Fill personal info
+                Fill Personal Data
               </li>
               <li
                 className={`flex items-center ${
@@ -216,7 +216,7 @@ export default function Register() {
                 <div className="flex items-center justify-center w-4 h-4 mr-2 font-bold bg-white rounded-full text-mainpurple-100">
                   <p>3</p>
                 </div>
-                Fill personal info
+                Uploud Avatar
               </li>
             </ul>
           </div>
@@ -298,7 +298,7 @@ const OnboardingOne = ({ valueForm, formErr, onChange, update }) => {
   return (
     <div>
       <div className="my-3">
-        <h1 className="text-lg">Fill Information Data</h1>
+        <h1 className="text-lg">Fill Self Information</h1>
       </div>
       <div className="flex flex-col justify-center w-full max-w-xs space-y-4">
         <div>

@@ -12,6 +12,8 @@ import { useRouter } from "next/router";
 
 export default function UserLogin() {
   const router = useRouter();
+  const infoUser = useSelector((state) => state.user);
+
   const initLogin = {
     email: "",
     password: "",
@@ -25,7 +27,8 @@ export default function UserLogin() {
 
   const [loginForm, setLoginForm] = useState(initLogin);
   const [formErr, setFormErr] = useState(initFormErr);
-  const { user, mutate, loading } = useLogin(loginForm);
+
+  const { data, mutate, error, loading } = useLogin(loginForm);
 
   const regexEmail =
     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -77,16 +80,21 @@ export default function UserLogin() {
       formErr.password === ""
     ) {
       mutate();
-      setLoginForm(initLogin);
     }
   };
 
-  // useEffect(() => {
-  //   if (user?.meta?.code === 200) {
-  //     return router.replace("/user/dashboard");
-  //     setLoginForm(initLogin);
-  //   }
-  // }, [user?.meta?.code]);
+  console.log(data, "data");
+
+  useEffect(() => {
+    if (data) {
+      if (data?.meta?.code === 200 && infoUser.id !== 0) {
+        setLoginForm(initLogin);
+        router.push("/user/dashboard");
+      }
+    }
+  }, [data?.meta?.code]);
+
+  console.log(infoUser, "infoUser");
 
   return (
     <GuestLayout container={false} pageTitle="Login" className="relative">
@@ -158,6 +166,11 @@ export default function UserLogin() {
                       ),
                     }}
                   />
+                </div>
+                <div className="my-1">
+                  <h4 className="text-xs text-red-600">
+                    {error ? "Email or password is incorrect" : ""}
+                  </h4>
                 </div>
                 <div>
                   <button

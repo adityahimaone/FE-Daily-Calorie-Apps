@@ -39,15 +39,16 @@ export default function useLogin(payload = null) {
           exp: decodedJWT.exp,
         })
       );
-      return router.push("/user/dashboard");
+      // return router.push("/user/dashboard");
     } catch (error) {
       console.log(error);
-      return router.push("/user/login");
+      // return router.push("/user/login");
     }
   }
 
+  console.log(data, error, "data api");
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;
 
-  return { user: data, mutate, loading, loggedOut };
+  return { data, error, mutate, loading, loggedOut };
 }
