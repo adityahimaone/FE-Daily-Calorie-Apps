@@ -24,7 +24,6 @@ export default function update() {
   const initValueForm = {
     name: "",
     email: "",
-    password: "",
     gender: "",
     avatar_url: "",
     calories: infoUser.calories,
@@ -148,7 +147,7 @@ export default function update() {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (
       formErr.name === "" &&
@@ -162,8 +161,11 @@ export default function update() {
       form.weight !== "" &&
       form.height !== ""
     ) {
-      mutate(null, false);
-      router.reload(window.location.pathname);
+      await mutate();
+      setTimeout(() => {
+        router.push("/user/dashboard");
+      }, 1000);
+      //   router.reload(window.location.pathname);
     }
   };
 
@@ -179,8 +181,8 @@ export default function update() {
 
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row md:gap-x-8">
-        <div className="w-full h-fit md:w-4/12 flex flex-col space-y-5 bg-white shadow-lg rounded-lg p-6">
+      <div className="flex flex-col lg:flex-row gap-y-6 md:gap-x-8 gap-x-0 md:gap-y-0">
+        <div className="w-full h-fit lg:w-4/12 flex flex-col space-y-5 bg-white shadow-lg rounded-lg p-6">
           <h1 className=" font-semibold text-2xl text-center">Data Profil</h1>
           <div className="avatar flex justify-center">
             <div className="w-32 rounded-full ring ring-mainorange-100  ring-offset-0">
@@ -189,10 +191,10 @@ export default function update() {
               />
             </div>
           </div>
-          <ul className="text-xl space-y-2 ">
-            <li className="border-b-2 border-black">{infoUser.name}</li>
-            <li className="border-b-2 border-black">{infoUser.email}</li>
-            <li className="border-b-2 border-black">{infoUser.gender}</li>
+          <ul className="text-xl space-y-2 text-gray-500">
+            <li className="border-b-2 border-gray">{infoUser.name}</li>
+            <li className="border-b-2 border-gray">{infoUser.email}</li>
+            <li className="border-b-2 border-gray">{infoUser.gender}</li>
           </ul>
           <div className="flex flex-row bg-slate-200 justify-around rounded-lg py-5">
             <div className="flex flex-col">
@@ -215,7 +217,7 @@ export default function update() {
             </div>
           </div>
         </div>
-        <div className="w-full md:w-8/12 bg-white shadow-lg rounded-lg p-6">
+        <div className="w-full lg:w-8/12 bg-white shadow-lg rounded-lg p-6">
           <div className="my-2">
             <h1 className="text-xl font-semibold">Personal Data</h1>
           </div>
