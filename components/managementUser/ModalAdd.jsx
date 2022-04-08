@@ -172,6 +172,7 @@ export default function ModalAdd(props) {
                 helperText={formErr.password !== "" ? formErr.password : null}
               />
             </div>
+
             <div>
               <input
                 type="file"

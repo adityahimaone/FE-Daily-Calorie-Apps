@@ -12,6 +12,7 @@ import { TextField } from "@mui/material";
 import { setCaloriesCount } from "@/store/caloriesSlice";
 import useUpdateUser from "@/hooks/admin/useUpdateUser";
 import { useRouter } from "next/router";
+import appFirebase from "@/firebase/firebaseConfig.js";
 
 export default function update() {
   const infoUser = useSelector((state) => state.user);
@@ -144,6 +145,20 @@ export default function update() {
     setForm({
       ...form,
       [name]: value,
+    });
+  };
+
+  const onChangeImage = (e) => {
+    const file = e.target.files[0];
+    const storageRef = appFirebase.storage().ref("avatar/");
+    const fileRef = storageRef.child(file.name);
+    fileRef.put(file).then((e) => {
+      e.ref.getDownloadURL().then(function (downloadURL) {
+        setForm({
+          ...form,
+          avatar_url: downloadURL,
+        });
+      });
     });
   };
 
@@ -284,7 +299,7 @@ export default function update() {
                   <input
                     type="file"
                     name="avatar_url"
-                    // onChange={onChangeImage}
+                    onChange={onChangeImage}
                     // value={form.avatar_url}
                     accept="image/*"
                     className="w-full p-2 border border-gray-300 rounded-md"

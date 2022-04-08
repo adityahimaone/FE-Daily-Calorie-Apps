@@ -182,6 +182,11 @@ export default function ModalUpdate(props) {
                 helperText={formErr.password !== "" ? formErr.password : null}
               />
             </div>
+            <div className="avatar">
+              <div className="w-20 rounded-full ring ring-mainorange-100 ring-offset-base-100 ring-offset-2">
+                <img src={form.avatar_url} className="avatar" alt="avatar" />
+              </div>
+            </div>
             <div>
               <input
                 type="file"
