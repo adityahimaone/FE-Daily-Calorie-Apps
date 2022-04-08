@@ -54,7 +54,6 @@ export default function useLogin(payload = null) {
   // }, [data?.meta?.code]);
 
   const loading = !data && !error;
-  const loggedOut = error && error.status === 403;
 
-  return { data, mutate, error };
+  return { data, mutate, error, loading };
 }

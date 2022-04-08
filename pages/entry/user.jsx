@@ -83,7 +83,6 @@ export default function UserLogin() {
     }
   };
 
-  console.log(data, "data");
 
   useEffect(() => {
     if (data) {
@@ -93,8 +92,6 @@ export default function UserLogin() {
       }
     }
   }, [data?.meta?.code]);
-
-  console.log(infoUser, "infoUser");
 
   return (
     <GuestLayout container={false} pageTitle="Login" className="relative">

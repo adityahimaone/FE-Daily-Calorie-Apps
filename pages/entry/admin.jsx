@@ -18,7 +18,7 @@ export default function AdminLogin() {
   };
 
   const [loginForm, setLoginForm] = useState(initLogin);
-  const { data, mutate, loading } = useLogin(loginForm);
+  const { data, mutate, error } = useLogin(loginForm);
 
   const onChange = (e) => {
     const name = e.target.name;
@@ -104,6 +104,11 @@ export default function AdminLogin() {
                     ),
                   }}
                 />
+              </div>
+              <div className="my-1">
+                <h4 className="text-xs text-red-600">
+                  {error ? "Email or password is incorrect" : ""}
+                </h4>
               </div>
               <div>
                 <button
