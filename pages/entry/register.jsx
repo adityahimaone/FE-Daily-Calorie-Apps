@@ -15,7 +15,7 @@ import useFetch from "@/hooks/useFetch";
 import { mainApiAuth, mainApiNoAuth } from "@/services/Api";
 // import RegisterAPI from "@/hooks/user/Register";
 import useRegister from "@/hooks/user/useRegister";
-import pattren from "@/styles/pattren.module.css";
+import pattren from "@/styles/Pattren.module.css";
 import appFirebase from "@/firebase/firebaseConfig.js";
 import successImg from "@/public/img/success.svg";
 import Image from "next/image";
