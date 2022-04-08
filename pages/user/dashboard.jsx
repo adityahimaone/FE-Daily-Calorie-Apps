@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from "react";
 import Layout from "@/layouts/UserLayout";
 import ProgessCircular from "@/components/dashboardUser/ProgessCircular";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import FormControl from "@mui/material/FormControl";
 import { SearchIcon, PlusIcon } from "@heroicons/react/solid";
-import { useAutocomplete } from "@mui/base/AutocompleteUnstyled";
-import food from "./dataFood";
 import Image from "next/image";
-import waterFill from "@/public/water-fill.png";
-import waterNofill from "@/public/water-nofill.png";
+import waterFill from "@/public/waterfill.png";
+import waterNofill from "@/public/waternofill.png";
 import Rating from "@mui/material/Rating";
-import { styled } from "@mui/material/styles";
 import { useSelector } from "react-redux";
 import GetFood from "@/hooks/GetFood";
 import profile from "@/public/dummy.png";
 import debounce from "lodash.debounce";
 import AddHistories from "@/hooks/user/AddHistories";
-import useFetch from "@/hooks/useFetch";
-import { mainApiAuth } from "@/services/Api";
 import useGetUser from "@/hooks/user/useGetUser";
-import useAddHistories from "@/hooks/user/useAddHistories";
 import useGetFood from "@/hooks/useGetFood";
 import useDeleteHistory from "@/hooks/user/useDeleteHistory";
 import useAddWater from "@/hooks/user/useAddWater";
@@ -52,9 +42,6 @@ export default function Dashboard() {
     error,
     data: respGetHistories,
   } = useGetLastHistories();
-
-  console.log(respGetHistories?.data?.water, "respGetHistories");
-  console.log(waterConsume, "waterConsume");
 
   useEffect(() => {
     setWaterConsume(respGetHistories?.data?.water);
@@ -105,6 +92,7 @@ export default function Dashboard() {
     addHistory(item);
     mutateGetHistories(null, true);
   };
+  console.log(waterFill.src, "waterFill");
 
   useEffect(() => {
     let percentage =
@@ -251,13 +239,21 @@ export default function Dashboard() {
             }}
             max={8}
             precision={1}
-            icon={<Image src={waterFill} width={50} height={50} alt="about" />}
+            icon={
+              <img src={waterFill.src} width={50} height={50} alt="waterFIll" />
+            }
             emptyIcon={
-              <Image src={waterNofill} width={50} height={50} alt="about" />
+              <img
+                src={waterNofill.src}
+                width={50}
+                height={50}
+                alt="waterNofill"
+              />
             }
           />
         </div>
       </div>
+      <img src={waterFill} alt="" />
       {/* Recent Food */}
       <div className="p-4 my-4 rounded-lg shadow-md bg-bluewhite">
         <div>
