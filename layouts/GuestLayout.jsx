@@ -16,8 +16,7 @@ export default function GuestLayout(props) {
       </Head>
       <div
         className={`min-h-screen  ${
-          loc == "home" &&
-          " bg-gradient-to-br from-transparent to-mainpurple-100/30"
+          loc == "home" && "bg-gradient-to-br from-white to-mainpurple-100"
         }`}
       >
         <Nav location={loc ? loc : "guest"} />

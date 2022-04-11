@@ -54,7 +54,7 @@ export default function AdminLogin() {
   }, [data?.meta?.code]);
 
   return (
-    <GuestLayout container={false}>
+    <GuestLayout pageTitle="Login" container={false}>
       <div className="flex justify-center items-center w-full min-h-screen">
         <div className="  rounded-lg max-w-screen-md md:p-10 md:shadow-lg">
           <h1 className="font-semibold text-xl">Sign in</h1>

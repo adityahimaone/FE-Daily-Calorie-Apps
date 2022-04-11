@@ -175,7 +175,7 @@ export default function Register() {
   const normalise = (value) => ((value - 0) * 100) / (3 - 0);
 
   return (
-    <GuestLayout container={false}>
+    <GuestLayout pageTitle="Register" container={false}>
       <div className="flex flex-col min-h-screen lg:flex-row">
         <div
           className={`flex items-center justify-center w-full text-white lg:w-1/3 bg-gradient-to-t to-indigo-900 from-mainpurple-100 ${pattren["food-pattren"]}`}

@@ -18,7 +18,7 @@ export default function Home() {
   dispatch(setPrivilege("guest"));
 
   return (
-    <GuestLayout loc="home" container={false}>
+    <GuestLayout pageTitle="Home" loc="home" container={false}>
       {/* Hero */}
       <section className="container mx-auto px-10 flex flex-col-reverse lg:flex-row max-h-fit py-20 lg:py-28 items-center ">
         <div className="flex-1 flex flex-col space-y-5">
