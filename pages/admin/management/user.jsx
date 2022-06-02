@@ -189,9 +189,8 @@ export default function ManagementUser() {
     };
   });
 
-  console.log(data, "data");
   return (
-    <Adminlayout>
+    <Adminlayout pageTitle="Management User">
       <div>
         <div>
           <h1 className="text-3xl font-bold">Management User</h1>

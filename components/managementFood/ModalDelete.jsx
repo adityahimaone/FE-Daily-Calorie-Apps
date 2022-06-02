@@ -13,8 +13,6 @@ export default function ModalDelete(props) {
 
   const { data, mutate, error } = useDeleteFood(foodID);
 
-  console.log(data, error);
-
   useEffect(() => {
     if (data?.meta?.code === 200) {
       handleClose();

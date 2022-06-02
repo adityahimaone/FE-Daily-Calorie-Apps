@@ -10,7 +10,7 @@ export default function Dashboard() {
   const countUser = dataUser?.data?.length;
   const countFood = dataFood?.data?.length;
   return (
-    <Adminlayout>
+    <Adminlayout pageTitle="Dashboard">
       <div>
         <div>
           <h1 className="text-3xl font-bold mb-4">Dahboard</h1>

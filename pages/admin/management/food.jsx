@@ -163,7 +163,7 @@ export default function food() {
   });
 
   return (
-    <Adminlayout>
+    <Adminlayout pageTitle="Management Food">
       <div>
         <div>
           <h1 className="text-3xl font-bold">Management Food</h1>

@@ -49,9 +49,9 @@ export default function statistic() {
       dataCard?.total_food?.length;
   }
 
-  console.log(infoUser, "dataset");
+  // console.log(infoUser, "dataset");
   return (
-    <Layout>
+    <Layout pageTitle="Statistic">
       <div>
         <div>
           <h1 className="text-2xl font-bold">Statistic</h1>

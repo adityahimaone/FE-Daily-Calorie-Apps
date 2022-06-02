@@ -21,7 +21,7 @@ export default function Home() {
     <GuestLayout pageTitle="Home" loc="home" container={false}>
       {/* Hero */}
       <section className="container mx-auto px-10 flex flex-col-reverse lg:flex-row max-h-fit py-20 lg:py-28 items-center ">
-        <div className="flex-1 flex flex-col space-y-5">
+        <div className="flex-1 flex flex-col space-y-5 ">
           <h1 className="text-2xl space-y-1 md:space-y-3 mt-4 lg:text-5xl text-left lg:text-left font-semibold text-mainorange-100 leading-tight">
             <p> Track your Daily Calories</p>
             <p>to help your </p>
@@ -95,11 +95,7 @@ export default function Home() {
               <h1>How to use</h1>
             </AccordionSummary>
             <AccordionDetails>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
-              </p>
+              <p>You can register to get full features of this application.</p>
             </AccordionDetails>
           </Accordion>
           <Accordion>
@@ -112,9 +108,8 @@ export default function Home() {
             </AccordionSummary>
             <AccordionDetails>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                You can get mealpan if you have account and you can costomize
+                mealplan using mealplan page.
               </p>
             </AccordionDetails>
           </Accordion>
@@ -128,9 +123,7 @@ export default function Home() {
             </AccordionSummary>
             <AccordionDetails>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-                eget.
+                You can get statistic after you input food in dashboard user.
               </p>
             </AccordionDetails>
           </Accordion>

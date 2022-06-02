@@ -30,7 +30,7 @@ export default function Mealplan() {
   const [page, setPage] = useState(1);
   const [dataMealPlan, setdataMealPlan] = useState({});
 
-  console.log(mealPlan, "mealPlan");
+  // console.log(mealPlan, "mealPlan");
 
   const {
     data: respGetMealPlan,
@@ -99,7 +99,7 @@ export default function Mealplan() {
   };
 
   return (
-    <Layout>
+    <Layout pageTitle="Meal Plan">
       {/* card */}
       <div className="flex flex-col lg:flex-row bg-mainorange-100 rounded-lg text-white my-4 p-2 w-full">
         <div className="flex flex-auto items-center ">
@@ -186,17 +186,25 @@ export default function Mealplan() {
               ))}
             </Tabs>
           </div>
-
+          {dataMealPlan === null && (
+            <div className="text-center">Meal Plan Not Found</div>
+          )}
           {dataMealPlan?.breakfast?.map((item, index) => (
             <TabPanel value={value} index={index}>
               <div className="flex justify-center h-full pb-24">
                 <div className="grid lg:grid-cols-3 space-y-5 lg:space-y-0 gap-10 items-stretch">
-                  <CardRecipe element={item} mealType="Breakfast" />
                   <CardRecipe
+                    key={item.recipeLabel + Math.floor(Math.random() * 100)}
+                    element={item}
+                    mealType="Breakfast"
+                  />
+                  <CardRecipe
+                    key={item.recipeLabel + Math.floor(Math.random() * 100)}
                     element={dataMealPlan?.lunch[index]}
                     mealType="Lunch"
                   />
                   <CardRecipe
+                    key={item.recipeLabel + Math.floor(Math.random() * 100)}
                     element={dataMealPlan?.dinner[index]}
                     mealType="Dinner"
                   />

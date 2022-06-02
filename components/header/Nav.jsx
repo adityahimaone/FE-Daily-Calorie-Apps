@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { clearUser } from "@/store/userSlice";
 import { useDispatch } from "react-redux";
+import classNames from "classnames";
 
 export default function Nav(props) {
   const { location } = props;
@@ -84,20 +85,17 @@ export default function Nav(props) {
     router.reload(window.location.pathname);
   };
 
-  // console.log(loc);
+  const avatarImageUrl =
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+
+  const cx = classNames("py-2 absolute z-50 inset-x-0 top-0", {
+    "bg-white text-mainpurple-100 shadow-lg": loc === "guest",
+    "bg-mainpurple-100 text-white shadow-lg": loc === "user",
+    "text-mainpurple-100": loc === "home",
+  });
 
   return (
-    <nav
-      className={`${
-        loc === "guest"
-          ? "bg-white text-mainpurple-100 shadow-lg"
-          : loc === "user"
-          ? "bg-mainpurple-100 text-white shadow-lg"
-          : loc === "home"
-          ? "text-mainpurple-100"
-          : "bg-white"
-      } py-2 absolute z-50 inset-x-0 top-0`}
-    >
+    <nav className={cx}>
       <div className="container px-10 mx-auto">
         <div className="flex items-center">
           <div className="w-3/12 lg:hidden">
@@ -166,7 +164,9 @@ export default function Nav(props) {
                   <div className="w-8 rounded-full ring ring-mainorange-100 ring-offset-1">
                     <img
                       src={
-                        infoUser.id !== 0 ? infoUser?.avatar_url : profile.src
+                        infoUser.id !== 0
+                          ? infoUser?.avatar_url
+                          : avatarImageUrl
                       }
                     />
                   </div>

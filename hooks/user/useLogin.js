@@ -46,7 +46,7 @@ export default function useLogin(payload = null) {
     }
   }
 
-  console.log(data, error, "data api");
+  // console.log(data, error, "data api");
   const loading = !data && !error;
   const loggedOut = error && error.status === 403;
 

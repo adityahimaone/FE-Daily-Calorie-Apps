@@ -26,7 +26,7 @@ export default function CardRecipe(props) {
               <ul className="">
                 {element?.recipeIngredients.map((item, index) => (
                   <li key={index}>
-                    <p className="font-light"> - {item}</p>
+                    <span className="font-light"> - {item}</span>
                   </li>
                 ))}
               </ul>

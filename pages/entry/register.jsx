@@ -36,7 +36,7 @@ export default function Register() {
       "https://icon-library.com/images/free-avatar-icon/free-avatar-icon-11.jpg",
     gender: "",
     age: 0,
-    activity: 0,
+    activity: 1.2,
     weight: 0,
     height: 0,
   };
@@ -147,8 +147,6 @@ export default function Register() {
     if (page === 1) return;
     setPage((page) => page - 1);
   };
-
-  console.log(form);
 
   const onSubmit = (e) => {
     e.preventDefault();
