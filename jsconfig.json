@@ -5,7 +5,13 @@
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/layouts/*": ["layouts/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/public/*": ["public/*"],
+      "@/context/*": ["context/*"],
+      "@/services/*": ["services/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/firebase/*": ["firebase/*"],
+      "@/store/*": ["store/*"]
     }
   }
 }

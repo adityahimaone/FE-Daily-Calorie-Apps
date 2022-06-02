@@ -1,16 +1,65 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.crop {
+  object-fit: cover;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.btn-main {
+  @apply px-2 py-1 transition-all rounded-md;
 }
 
-* {
-  box-sizing: border-box;
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+
+.btn-cancel {
+  @apply bg-slate-300 font-semibold text-black;
+}
+
+.btn-red {
+  @apply bg-red-500 text-white;
+}
+
+.btn-purple {
+  @apply text-white bg-mainpurple-100 focus:ring-indigo-900 hover:bg-indigo-800;
+}
+
+.btn-orange {
+  @apply text-white bg-mainorange-100 focus:ring-orange-600/70 hover:bg-orange-600/70;
+}
+
+.modal-main {
+  position: fixed;
+  visibility: visible;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 999;
+  padding-bottom: 25px;
+  background-color: hsl(var(--nf, var(--n)) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.4;
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, opacity;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 640px) {
+  .modal-main {
+    align-items: center;
+  }
+}
+
+.next-image {
+  object-fit: contain;
+  width: 100% !important;
+  position: relative !important;
+  height: unset !important;
 }
