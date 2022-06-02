@@ -61,8 +61,6 @@ export default function ModalUpdate(props) {
     }
   }, [data?.meta?.code]);
 
-  console.log(rowData);
-
   const onChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;

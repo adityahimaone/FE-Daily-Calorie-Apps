@@ -3,10 +3,19 @@ import Head from "next/head";
 import Nav from "@/components/header/Nav";
 import Container from "@/components/Container";
 import Footer from "@/components/footer/Footer";
+import classNames from "classnames";
+import Styles from "@/styles/Home.module.css";
 
 export default function GuestLayout(props) {
   const { children, pageTitle, container, loc } = props;
   const initContainer = typeof container !== "undefined" ? container : true;
+
+  const locValue = loc === "home";
+  const cx = classNames("overflow-hidden", {
+    "bg-[url('/img/mesh.png')] bg-no-repeat bg-cover": locValue,
+    "bg-white": !locValue,
+  });
+
   return (
     <>
       <Head>
@@ -14,13 +23,9 @@ export default function GuestLayout(props) {
         <meta name="description" content="Daily Calorie Apps" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`min-h-screen  ${
-          loc == "home" && "bg-gradient-to-br from-white to-mainpurple-100"
-        }`}
-      >
+      <div className={cx}>
         <Nav location={loc ? loc : "guest"} />
-        <div className="overflow-hidden">
+        <div className={cx}>
           {initContainer === true ? (
             <Container>{children}</Container>
           ) : (

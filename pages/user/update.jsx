@@ -20,8 +20,6 @@ export default function update() {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  console.log(calculation.countCalories.calories);
-
   const initValueForm = {
     name: "",
     email: "",
@@ -140,7 +138,7 @@ export default function update() {
       }
     }
 
-    console.log(form);
+    // console.log(form);
 
     setForm({
       ...form,
@@ -192,10 +190,10 @@ export default function update() {
     });
   }, [form.activity]);
 
-  console.log(form);
+  // console.log(form);
 
   return (
-    <Layout>
+    <Layout pageTitle="Update Profile">
       <div className="flex flex-col lg:flex-row gap-y-6 md:gap-x-8 gap-x-0 md:gap-y-0">
         <div className="w-full h-fit lg:w-4/12 flex flex-col space-y-5 bg-white shadow-lg rounded-lg p-6">
           <h1 className=" font-semibold text-2xl text-center">Data Profil</h1>
@@ -250,6 +248,7 @@ export default function update() {
                     onChange={onChange}
                     value={form.name}
                     size="small"
+                    required
                     placeholder={infoUser.name}
                     helperText={formErr.name !== "" ? formErr.name : null}
                   />

@@ -26,11 +26,8 @@ export default function histories() {
   const historiesLength = histories?.length;
   const dataLength = data?.data?.length;
 
-  console.log(historiesLength, dataLength, "histories");
-
-  console.log(data, "newData");
   return (
-    <Layout>
+    <Layout pageTitle="Histories">
       <div>
         <div>
           <h1 className="text-2xl font-bold">Histories</h1>

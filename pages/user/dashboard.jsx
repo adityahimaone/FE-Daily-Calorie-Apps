@@ -17,6 +17,7 @@ import useDeleteHistory from "@/hooks/user/useDeleteHistory";
 import useAddWater from "@/hooks/user/useAddWater";
 import useGetLastHistories from "@/hooks/user/useGetLastHistories";
 import { useRouter } from "next/router";
+import CardHistories from "@/components/dashboardUser/CardHistories";
 
 export default function Dashboard() {
   const infoUser = useSelector((state) => state.user);
@@ -92,7 +93,7 @@ export default function Dashboard() {
     addHistory(item);
     mutateGetHistories(null, true);
   };
-  console.log(waterFill.src, "waterFill");
+  // console.log(waterFill.src, "waterFill");
 
   useEffect(() => {
     let percentage =
@@ -106,7 +107,17 @@ export default function Dashboard() {
     // mutateDeleteHistory();
   };
 
-  console.log(dataUserHistories?.histories_details, "dataUserHistories");
+  const onDelete = (id) => {
+    setItemID(id);
+    mutateGetHistories(null, false);
+  };
+
+  const onGoHistoryPage = (id) => {
+    let foodID = id;
+    router.push(`/food/${foodID}`);
+  };
+
+  // console.log(dataUserHistories?.histories_details, "dataUserHistories");
 
   return (
     <Layout pageTitle="Dashboard">
@@ -260,62 +271,20 @@ export default function Dashboard() {
           <h2 className="text-xl font-semibold">Recent Food</h2>
         </div>
         <div>
+          {dataUserHistories?.histories_details?.length <= 0 && (
+            <div className="text-center p-4">Histories Not Found</div>
+          )}
           {dataUserHistories?.histories_details?.map((food) => (
-            <div
+            <CardHistories
               key={food?.food?.ID}
-              className="flex flex-col items-center w-full pb-4 mb-2 bg-white rounded-lg shadow-md lg:flex-row lg:p-4"
-            >
-              <div className="w-full lg:w-1/6 lg:h-1/5">
-                <img
-                  className="object-cover w-full h-48 rounded-t-lg lg:rounded-lg"
-                  src={
-                    food?.food?.imgURL
-                      ? food?.food?.imgURL
-                      : "https://assets.materialup.com/uploads/98622f57-ac59-4b44-8db2-3355bb43efed/preview.jpg"
-                  }
-                  // width={100}
-                  // height={100}
-                  alt={food?.food?.title}
-                />
-              </div>
-              <div className="flex flex-col items-center justify-between w-full px-4 lg:flex-row">
-                <div className="flex justify-between w-full p-4">
-                  <div>
-                    <p className="text-xl">{food?.food?.title}</p>
-                    <p>{food?.food?.serving_size} G</p>
-                  </div>
-                  <div>
-                    <p className="text-xl">
-                      +
-                      {food?.food?.calories !== 0
-                        ? food?.food?.calories?.toFixed(0)
-                        : 0}
-                      Kcal
-                    </p>
-                  </div>
-                </div>
-                <div className="w-full lg:w-1/6 space-y-2">
-                  <button
-                    onClick={() => {
-                      let foodID = food.food.ID;
-                      router.push(`/food/${foodID}`);
-                    }}
-                    className="w-full px-4 py-2 text-white rounded-lg bg-mainpurple-100 hover:bg-orange-700/80"
-                  >
-                    Detail
-                  </button>
-                  <button
-                    onClick={() => {
-                      setItemID(food.ID);
-                      mutateGetHistories(null, false);
-                    }}
-                    className="w-full px-4 py-2 text-white rounded-lg bg-mainorange-100 hover:bg-orange-700/80"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
+              id={food?.food?.ID}
+              title={food?.food?.title}
+              image={food?.food?.imgURL}
+              serving_size={food?.food?.serving_size}
+              calories={food?.food?.calories}
+              onDelete={onDelete}
+              onGoHistoryPage={onGoHistoryPage}
+            />
           ))}
         </div>
       </div>

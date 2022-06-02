@@ -16,6 +16,6 @@ export default function useGetFood(name) {
     }
   );
 
-  console.log(data, "data food");
+  // console.log(data, "data food");
   return { response: data, mutate, error };
 }

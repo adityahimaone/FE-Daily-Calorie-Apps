@@ -9,7 +9,6 @@ export default function HistoriesDetail() {
   const { id } = router.query;
   const { data, mutate, error } = useGetHistoriesDetail(id);
 
-  console.log(data, "data");
   return (
     <Layout>
       <div>

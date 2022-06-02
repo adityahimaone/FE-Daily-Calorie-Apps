@@ -26,8 +26,6 @@ export default function useLogin(payload = null) {
     revalidateOnReconnect: false,
   });
 
-  console.log(data?.data?.token, "data token");
-
   if (data?.meta?.code === 200) {
     try {
       cookies.set("token", data?.data?.token, {

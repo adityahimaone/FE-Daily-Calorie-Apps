@@ -11,8 +11,6 @@ export default function useInsertMealPlan(payload) {
     meal_plans: payload?.mealPlan,
   };
 
-  console.log(payload);
-
   const fetcher = (url) =>
     AxiosCustom.post(url, payload, axiosConfig()).then((res) => res.data);
 
