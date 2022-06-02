@@ -84,7 +84,7 @@ export default function Nav(props) {
     router.reload(window.location.pathname);
   };
 
-  console.log(loc);
+  // console.log(loc);
 
   return (
     <nav
