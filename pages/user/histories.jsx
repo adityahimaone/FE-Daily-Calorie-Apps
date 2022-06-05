@@ -38,9 +38,9 @@ export default function histories() {
               return (
                 <div
                   key={item.id}
-                  className="w-full bg-bluewhite rounded-lg shadow-lg flex items-center justify-between py-3 px-4"
+                  className="w-full bg-bluewhite rounded-lg shadow-lg flex flex-col sm:flex-row sm:items-center justify-start sm:justify-between py-3 px-4 space-y-2"
                 >
-                  <div className="flex items-center justify-center w-10 h-10 mr-4 rounded shadow-2xl bg-mainpurple-100">
+                  <div className="flex items-center justify-center sm:w-10 h-10 mr-4 w-full rounded shadow-2xl bg-mainpurple-100">
                     <p className="text-white">
                       {item?.fullname?.slice(0, 2).toUpperCase()}
                     </p>
@@ -59,7 +59,7 @@ export default function histories() {
                   </div>
                   <div>
                     <Button
-                      className="btn-orange px-4"
+                      className="btn-orange px-4 w-full"
                       onClick={() => {
                         router.push(`/user/histories/${item.id}`);
                       }}

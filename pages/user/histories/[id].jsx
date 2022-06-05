@@ -37,7 +37,7 @@ export default function HistoriesDetail() {
                   <div>
                     <h3 className="text-2xl font-semibold">{item.food_name}</h3>
                   </div>
-                  <div className="flex flex-row shadow-md gap-5 space-x-4 p-2 bg-slate-100 rounded-lg">
+                  <div className="flex flex-row shadow-md md:gap-4 space-x-4 p-2 bg-slate-100 rounded-lg justify-center">
                     <div className="flex flex-col text-center">
                       <p className="font-semibold">Calories</p>
                       <p>{item.food_calories.toFixed(0)} Kcal</p>

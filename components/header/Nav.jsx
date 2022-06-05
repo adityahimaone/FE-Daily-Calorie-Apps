@@ -96,7 +96,7 @@ export default function Nav(props) {
 
   return (
     <nav className={cx}>
-      <div className="container px-10 mx-auto">
+      <div className="container px-6 mx-auto">
         <div className="flex items-center">
           <div className="w-3/12 lg:hidden">
             <button type="button" onClick={() => setOffcanvas(!offcanvas)}>

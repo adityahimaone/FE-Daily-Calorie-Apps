@@ -11,16 +11,18 @@ import { LightningBoltIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   dispatch(setPrivilege("guest"));
 
   return (
     <GuestLayout pageTitle="Home" loc="home" container={false}>
       {/* Hero */}
-      <section className="container mx-auto px-10 flex flex-col-reverse lg:flex-row max-h-fit py-20 lg:py-28 items-center ">
+      <section className="container mx-auto px-6 flex flex-col-reverse lg:flex-row max-h-fit py-20 lg:py-28 items-center ">
         <div className="flex-1 flex flex-col space-y-5 ">
           <h1 className="text-2xl space-y-1 md:space-y-3 mt-4 lg:text-5xl text-left lg:text-left font-semibold text-mainorange-100 leading-tight">
             <p> Track your Daily Calories</p>
@@ -31,7 +33,10 @@ export default function Home() {
             A food diary application, calorie calculation, and food database
           </p>
           <div className="flex justify-center lg:justify-start">
-            <button className="bg-mainpurple-100 px-8 py-4 font-medium rounded-lg text-white hover:shadow-primary transition-shadow duration-300">
+            <button
+              onClick={() => router.push("/entry/register")}
+              className="bg-mainpurple-100 px-8 py-4 font-medium rounded-lg text-white hover:shadow-primary transition-shadow duration-300"
+            >
               START FOR FREE
             </button>
           </div>
@@ -65,7 +70,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="mx-auto px-10 flex flex-col lg:flex-row items-center justify-around bg-white py-10">
+      <section className="mx-auto px-6 flex flex-col lg:flex-row items-center justify-around bg-white py-10">
         <div>
           <Image src={About} width={450} height={450} layout="intrinsic" />
         </div>
@@ -80,7 +85,7 @@ export default function Home() {
           </p>
         </div>
       </section>
-      <section className="container mx-auto px-10 flex justify-center items-center flex-col py-16 space-y-4">
+      <section className="container mx-auto px-6 flex justify-center items-center flex-col py-16 space-y-4">
         <div className="text-center">
           <h1 className="text-2xl font-semibold">FAQ</h1>
           <p className="text-gray-700">more information can be read here</p>
