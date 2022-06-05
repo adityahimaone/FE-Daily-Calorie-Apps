@@ -90,7 +90,7 @@ export default function statistic() {
                   </h2>
                 </div>
                 <div>
-                  <div className="flex flex-row bg-slate-200 justify-around rounded-lg py-5">
+                  <div className="flex flex-col md:flex-row bg-slate-200 justify-around rounded-lg py-5">
                     <div className="flex flex-col">
                       <p className="text-lg text-center font-bold">
                         {infoUser.calories} Kcal

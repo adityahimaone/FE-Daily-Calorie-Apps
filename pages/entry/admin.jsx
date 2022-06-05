@@ -1,47 +1,47 @@
-import React, { useState, useEffect } from "react";
-import GuestLayout from "@/layouts/GuestLayout";
-import { TextField } from "@mui/material";
-import InputAdornment from "@mui/material/InputAdornment";
-import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid";
-import IconButton from "@mui/material/IconButton";
-import Link from "next/link";
-import useLogin from "@/hooks/admin/useLogin";
-import Router from "next/router";
-import { useRouter } from "next/router";
+import React, { useState, useEffect } from 'react';
+import GuestLayout from '@/layouts/GuestLayout';
+import { TextField } from '@mui/material';
+import InputAdornment from '@mui/material/InputAdornment';
+import { EyeIcon, EyeOffIcon } from '@heroicons/react/solid';
+import IconButton from '@mui/material/IconButton';
+import Link from 'next/link';
+import useLogin from '@/hooks/admin/useLogin';
+import Router from 'next/router';
+import { useRouter } from 'next/router';
 
 export default function AdminLogin() {
   const router = useRouter();
   const initLogin = {
-    username: "",
-    password: "",
-    showPassword: false,
+    username: '',
+    password: '',
+    showPassword: false
   };
 
   const [loginForm, setLoginForm] = useState(initLogin);
   const { data, mutate, error } = useLogin(loginForm);
 
-  const onChange = (e) => {
+  const onChange = e => {
     const name = e.target.name;
     const value = e.target.value;
 
     setLoginForm({
       ...loginForm,
-      [name]: value,
+      [name]: value
     });
   };
 
   const handleClickShowPassword = () => {
     setLoginForm({
       ...loginForm,
-      showPassword: !loginForm.showPassword,
+      showPassword: !loginForm.showPassword
     });
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = event => {
     event.preventDefault();
   };
 
-  const onClick = (e) => {
+  const onClick = e => {
     e.preventDefault();
     mutate(null, true);
     setLoginForm(initLogin);
@@ -49,15 +49,15 @@ export default function AdminLogin() {
 
   useEffect(() => {
     if (data?.meta?.code === 200) {
-      router.replace("/admin/dashboard");
+      router.replace('/admin/dashboard');
     }
   }, [data?.meta?.code]);
 
   return (
     <GuestLayout pageTitle="Login" container={false}>
-      <div className="flex justify-center items-center w-full min-h-screen">
-        <div className="  rounded-lg max-w-screen-md md:p-10 md:shadow-lg">
-          <h1 className="font-semibold text-xl">Sign in</h1>
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <div className="max-w-screen-md rounded-lg md:p-10 md:shadow-lg">
+          <h1 className="text-xl font-semibold">Sign in</h1>
           <div className="my-3">
             <form onSubmit={onClick}>
               <div className="mb-4">
@@ -79,7 +79,7 @@ export default function AdminLogin() {
                   required
                   label="Password"
                   name="password"
-                  type={loginForm.showPassword ? "text" : "password"}
+                  type={loginForm.showPassword ? 'text' : 'password'}
                   value={loginForm.password}
                   onChange={onChange}
                   color="primary"
@@ -95,25 +95,25 @@ export default function AdminLogin() {
                           edge="end"
                         >
                           {loginForm.showPassword ? (
-                            <EyeOffIcon className="w-5 h-5" />
+                            <EyeOffIcon className="h-5 w-5" />
                           ) : (
-                            <EyeIcon className="w-5 h-5" />
+                            <EyeIcon className="h-5 w-5" />
                           )}
                         </IconButton>
                       </InputAdornment>
-                    ),
+                    )
                   }}
                 />
               </div>
               <div className="my-1">
                 <h4 className="text-xs text-red-600">
-                  {error ? "Email or password is incorrect" : ""}
+                  {error ? 'Email or password is incorrect' : ''}
                 </h4>
               </div>
               <div>
                 <button
                   onSubmit={onClick}
-                  className="w-full px-2 py-2 text-white rounded-md bg-mainpurple-100 "
+                  className="w-full rounded-md bg-mainpurple-100 px-2 py-2 text-white "
                 >
                   <span>Login </span>
                 </button>

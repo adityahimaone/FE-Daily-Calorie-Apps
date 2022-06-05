@@ -149,9 +149,9 @@ export default function Dashboard() {
         </div>
         <div className="w-full p-4 text-white rounded-lg shadow-md bg-mainpurple-100">
           <div className="absolute">
-            <h2 className="relative ">Calorie Stats</h2>
+            <h2 className="relative">Calorie Stats</h2>
           </div>
-          <div className="flex items-center justify-center h-full p-4">
+          <div className="flex items-center justify-center h-full p-6">
             <div>
               <h1 className="text-4xl font-bold">
                 {dataUserHistories?.total_calories}

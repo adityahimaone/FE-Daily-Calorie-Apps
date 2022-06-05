@@ -40,7 +40,7 @@ export default function FoodDetail() {
               <div className="mb-4">
                 <h2 className="font-semibold">Ringkasan Gizi</h2>
               </div>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-2">
                 <div className=" bg-white rounded-md p-5 flex flex-col items-center">
                   <h1 className="font-semibold">Calories</h1>
                   <h1>{data?.data?.calories.toFixed(0)} Kcal</h1>
